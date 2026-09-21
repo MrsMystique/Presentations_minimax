@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>_Геометрия_1_11 — читалка</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<style>
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; font-size:16px; line-height:1.6; color:#3E2723; background:#F5F2EB; background-image:linear-gradient(180deg, rgba(245,242,235,1) 0%, rgba(240,235,225,1) 100%); }
+.layout { display:flex; min-height:100vh; }
+nav.toc { width:320px; flex-shrink:0; background:#FAF6EE; border-right:1px solid #D4C8B5; padding:24px 16px; position:sticky; top:0; height:100vh; overflow-y:auto; }
+nav.toc h1 { font-size:17px; margin:0 0 12px 0; color:#3E2723; font-weight:700; }
+nav.toc .block-header { display:block; margin-top:14px; margin-bottom:4px; font-weight:700; font-size:13px; color:#4a5568; text-transform:uppercase; letter-spacing:0.04em; text-decoration:none; }
+nav.toc .section-header { display:block; margin-top:14px; margin-bottom:4px; font-weight:700; font-size:13px; color:#6B5B95; text-transform:uppercase; letter-spacing:0.05em; }
+nav.toc .slide-link { display:block; padding:4px 8px; font-size:13px; color:#2b6cb0; text-decoration:none; border-radius:4px; }
+nav.toc .slide-link:hover { background:#ebf8ff; }
+nav.toc .slide-link.sub-slide { padding-left: 20px; color: #4a5568; font-size: 12px; }
+main.content { flex:1; max-width:880px; padding:40px 48px; margin:0 auto; background:transparent; }
+section.slide { background:#FFFFFF; border-radius:8px; box-shadow:0 2px 8px rgba(74,44,42,0.08); padding:28px 32px; margin-bottom:28px; scroll-margin-top:20px; border:1px solid #E8DFD0; }
+section.slide.final-slide { border-left:4px solid #38a169; }
+section.slide.reference-slide { border-left:4px solid #d69e2e; background:#fffff0; }
+header.slide-header { display:flex; align-items:baseline; gap:12px; margin-bottom:16px; border-bottom:1px solid #edf2f7; padding-bottom:12px; }
+.slide-num { background:#EFE5D6; color:#4A2C2A; padding:2px 10px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap; border:1px solid #D4C8B5; }
+.slide-num.ref { background:#fefcbf; color:#975a16; }
+.slide-num.sub { background:#edf2f7; color:#4a5568; }
+header.slide-header h2 { font-size:22px; margin:0; color:#3E2723; line-height:1.3; font-weight:700; letter-spacing:-0.01em; }
+.slide-body p { margin:0 0 12px 0; }
+.slide-body h3 { font-size:18px; margin:20px 0 10px 0; color:#4A2C2A; font-weight:600; }
+.slide-body h4 { font-size:16px; margin:16px 0 8px 0; color:#5D4037; font-weight:600; }
+.slide-body ul, .slide-body ol { margin:0 0 12px 0; padding-left:24px; }
+.slide-body li { margin-bottom:4px; }
+.slide-body blockquote { margin:12px 0; padding:12px 18px; background:#F8E8E5; border-left:4px solid #C97D6F; color:#5D2E2A; border-radius:6px; font-style:normal; }
+.slide-body blockquote p:last-child { margin-bottom:0; }
+.slide-body table { border-collapse:collapse; margin:14px 0; font-size:13px; width:100%; }
+.slide-body th, .slide-body td { border:1px solid #e2e8f0; padding:8px 12px; text-align:left; vertical-align:top; }
+.slide-body th { background:#F5F0E0; font-weight:600; color:#2d3748; }
+.slide-body code { background:#edf2f7; padding:1px 6px; border-radius:3px; font-family:'JetBrains Mono',Consolas,Monaco,monospace; font-size:0.92em; }
+.math-block { text-align:center; margin:0.9em 0; padding:0.2em 0; overflow-x:auto; overflow-y:hidden; }
+.math-block .katex-display { margin:0; }
+.slide-body .katex { font-weight: 700; color: #2C2C2C; }
+.slide-body p > .katex, .slide-body li > .katex { font-size: 1.05em; }
+.slide-body img.slide-image { display:block; max-width:100%; height:auto; margin:14px auto; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+.inline-stamp-float { float:right; margin:0 0 16px 22px; clear:right; }
+.inline-stamp { height:120px; width:auto; max-width:none; object-fit:contain; filter:drop-shadow(0 3px 6px rgba(74,44,42,0.25)); transition:transform 0.2s ease; cursor:pointer; }
+.inline-stamp:hover { transform:scale(1.05); }
+button.back-to-toc { position:fixed; bottom:24px; right:24px; background:#4A2C2A; color:#F5F2EB; border:none; padding:10px 16px; border-radius:999px; cursor:pointer; font-size:14px; box-shadow:0 4px 12px rgba(74,44,42,0.3); z-index:10; font-weight:600; }
+button.back-to-toc:hover { background:#3E2723; }
+@media (max-width:900px) { .layout { flex-direction:column; } nav.toc { width:100%; height:auto; position:relative; } main.content { padding:20px; } }
+
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc">
+<h1 style="color:#3E2723;font-weight:700;letter-spacing:-0.01em;">_Геометрия_1_11</h1><a class="section-header">Алгоритм мышления: с чего начать, когда видишь задачу</a><a class="slide-link" href="#slide-1">1. Шаг 1. Распознай фигуру</a><a class="slide-link" href="#slide-2">2. Шаг 2. Что известно?</a><a class="slide-link" href="#slide-3">3. Шаг 3. Что ищем?</a><a class="slide-link" href="#slide-4">4. Шаг 4. Какая формула?</a><a class="slide-link" href="#slide-5">5. Шаг 5. Проверь</a><a class="slide-link" href="#slide-6">6. Содержание</a><a class="block-header">Блок 1. (1–4 класс). Точка, линия, луч, отрезок, простые фигуры</a><a class="slide-link" href="#slide-7">7. Точка, линия, луч, отрезок</a><a class="slide-link" href="#slide-8">8. Простые фигуры (плоские)</a><a class="slide-link" href="#slide-9">9. Периметр</a><a class="slide-link" href="#slide-10">10. Площадь</a><a class="slide-link" href="#slide-11">11. Единицы измерения длины, площади, объёма</a><a class="block-header">Блок 2. (5 класс). Углы, биссектриса угла</a><a class="slide-link" href="#slide-12">12. Что такое угол</a><a class="slide-link" href="#slide-13">13. Смежные и вертикальные углы</a><a class="slide-link" href="#slide-14">14. Биссектриса угла</a><a class="slide-link" href="#slide-15">15. Перпендикулярные прямые</a><a class="slide-link" href="#slide-16">16. Параллельные прямые</a><a class="block-header">Блок 3. (5–7 класс). Треугольники</a><a class="slide-link" href="#slide-17">17. 7 типов треугольников</a><a class="slide-link" href="#slide-18">18. 7 формул площади треугольника</a><a class="slide-link" href="#slide-19">19. Медиана, биссектриса, высота треугольника</a><a class="slide-link" href="#slide-20">20. Сумма углов треугольника</a><a class="slide-link" href="#slide-21">21. Теорема синусов</a><a class="slide-link" href="#slide-22">22. Теорема косинусов</a><a class="slide-link" href="#slide-23">23. Теорема Пифагора — глубокое объяснение</a><a class="slide-link" href="#slide-24">24. Признаки равенства треугольников</a><a class="slide-link" href="#slide-25">25. Признаки подобия треугольников</a><a class="block-header">Блок 4. (5–8 класс). Четырёхугольники</a><a class="slide-link" href="#slide-26">26. 6 типов четырёхугольников</a><a class="slide-link" href="#slide-27">27. Свойства-фишки четырёхугольников</a><a class="block-header">Блок 5. (5–9 класс). Окружность и круг</a><a class="slide-link" href="#slide-28">28. Основные понятия</a><a class="slide-link" href="#slide-29">29. Основные формулы</a><a class="slide-link" href="#slide-30">30. Вписанный и центральный углы</a><a class="slide-link" href="#slide-31">31. Описанная и вписанная окружности</a><a class="block-header">Блок 6. (7–9 класс). Подобие</a><a class="slide-link" href="#slide-32">32. Что такое подобие</a><a class="slide-link" href="#slide-33">33. Что как меняется при подобии</a><a class="block-header">Блок 7. (9–11 класс). Векторы и координаты</a><a class="slide-link" href="#slide-34">34. Что такое вектор</a><a class="slide-link" href="#slide-35">35. Координаты вектора</a><a class="slide-link" href="#slide-36">36. Сложение и вычитание векторов</a><a class="slide-link" href="#slide-37">37. Скалярное произведение векторов</a><a class="slide-link" href="#slide-38">38. Уравнение прямой на плоскости</a><a class="block-header">Блок 8. (10–11 класс). Стереометрия — базовые понятия</a><a class="slide-link" href="#slide-39">39. Что такое стереометрия</a><a class="slide-link" href="#slide-40">40. Основные понятия</a><a class="slide-link" href="#slide-41">41. Аксиомы стереометрии</a><a class="slide-link" href="#slide-42">42. Многогранник — основные элементы</a><a class="block-header">Блок 9. (10–11 класс). Многогранники — виды и формулы</a><a class="slide-link" href="#slide-43">43. Призма</a><a class="slide-link" href="#slide-44">44. Пирамида</a><a class="slide-link" href="#slide-45">45. Усечённая пирамида</a><a class="slide-link" href="#slide-46">46. Составные тела</a><a class="slide-link" href="#slide-47">47. Тела с отверстиями</a><a class="block-header">Блок 10. (11 класс). Тела вращения</a><a class="slide-link" href="#slide-48">48. Цилиндр</a><a class="slide-link" href="#slide-49">49. Конус</a><a class="slide-link" href="#slide-50">50. Сфера и шар</a><a class="slide-link" href="#slide-51">51. Шаровой сегмент, сектор, слой</a><a class="slide-link" href="#slide-52">52. Усечённый конус</a><a class="block-header">Блок 11. Фишки и лайфхаки (20 приёмов)</a><a class="slide-link" href="#slide-53">53. Лайфхак 1. Диагональ многогранника → почти всегда Пифагор.</a><a class="slide-link" href="#slide-54">54. Лайфхак 2. V известно, ищем ребро → оборачиваем формулу.</a><a class="slide-link" href="#slide-55">55. Лайфхак 3. Усечённая пирамида — два пути.</a><a class="slide-link" href="#slide-56">56. Лайфхак 4. Правильный многоугольник → используй готовые формулы.</a><a class="slide-link" href="#slide-57">57. Лайфхак 5. Биссектриса к основанию в равнобедренном треугольнике = медиана = высота.</a><a class="slide-link" href="#slide-58">58. Лайфхак 6. Высота не дана → ищи прямоугольный треугольник внутри фигуры.</a><a class="slide-link" href="#slide-59">59. Лайфхак 7. Составное тело → рисуй два тела отдельно.</a><a class="slide-link" href="#slide-60">60. Лайфхак 8. Проверяй размерность ответа.</a><a class="slide-link" href="#slide-61">61. Лайфхак 9. Правильная треугольная пирамида со всеми рёбрами \(a\).</a><a class="slide-link" href="#slide-62">62. Лайфхак 10. Сечение параллельно основанию → объёмы как кубы линейных размеров.</a><a class="slide-link" href="#slide-63">63. Лайфхак 11. Сосуд с жидкостью → V = S·h.</a><a class="slide-link" href="#slide-64">64. Лайфхак 12. Обведи ключевые слова в условии.</a><a class="slide-link" href="#slide-65">65. Лайфхак 13. Пространственный Пифагор для коробки.</a><a class="slide-link" href="#slide-66">66. Лайфхак 14. Сечение отверстия — круг: V = πr²h.</a><a class="slide-link" href="#slide-67">67. Лайфхак 15. Сквозное отверстие через параллелепипед: высота = длина ребра.</a><a class="slide-link" href="#slide-68">68. Лайфхак 16. Глухое отверстие — глубину ищи через подобие или Пифагора.</a><a class="slide-link" href="#slide-69">69. Лайфхак 17. Проверяй знак результата.</a><a class="slide-link" href="#slide-70">70. Лайфхак 18. «Вырезать куб» из параллелепипеда = призматическое отверстие с квадратным сечением.</a><a class="slide-link" href="#slide-71">71. Лайфхак 19. Касательная ⊥ радиус.</a><a class="slide-link" href="#slide-72">72. Лайфхак 20. Косинус в стереометрии.</a><a class="section-header">Сборник формул</a><a class="slide-link" href="#slide-73">73. Площади плоских фигур</a><a class="slide-link" href="#slide-74">74. Окружность</a><a class="slide-link" href="#slide-75">75. Теоремы</a><a class="slide-link" href="#slide-76">76. Объёмы тел</a><a class="slide-link" href="#slide-77">77. Площади поверхностей тел вращения</a><a class="slide-link" href="#slide-78">78. Подобие</a><a class="slide-link" href="#slide-79">79. Расстояния для правильных пирамид</a><a class="slide-link" href="#slide-80">80. Обратные формулы</a><a class="section-header">Достраивание фигур: как получить нужную формулу</a><a class="slide-link" href="#slide-81">81. Главная идея</a><a class="slide-link" href="#slide-82">82. Дополнительные приёмы (окружность и многоугольники)</a><a class="section-header">Площадь поверхности тела</a><a class="slide-link" href="#slide-83">83. Что это</a><a class="slide-link" href="#slide-84">84. Микро-примеры</a><a class="slide-link" href="#slide-85">85. Главная путаница: \(h\) vs \(l\)</a><a class="section-header">Глоссарий: все термины от А до Я</a><a class="slide-link" href="#slide-86">86. Базовые понятия</a><a class="slide-link" href="#slide-87">87. Отношения между прямыми и плоскостями</a><a class="slide-link" href="#slide-88">88. Элементы треугольника</a><a class="slide-link" href="#slide-89">89. Элементы окружности</a><a class="slide-link" href="#slide-90">90. Элементы многогранника</a><a class="slide-link" href="#slide-91">91. Площадь, объём, периметр</a><a class="slide-link" href="#slide-92">92. Частые определения (запомни как таблицу умножения)</a>
+</nav>
+<main class="content">
+<section class="slide" id="slide-1">
+<header class="slide-header"><span class="slide-num">Слайд 1</span><h2>Шаг 1. Распознай фигуру</h2></header>
+<div class="slide-body">
+<p>Первое, что ты делаешь — понимаешь, <strong>что перед тобой</strong> нарисовано (или что описано словами).</p>
+<ul><li><strong>3D или 2D?</strong> Если в задаче есть высота, ребро, объём — это стереометрия (3D). Если только стороны и углы — планиметрия (2D).</li><li><strong>Если 3D — какое основание?</strong> Треугольник, квадрат, шестиугольник, круг?</li><li><strong>Если призма — прямая или наклонная?</strong> Прямая: боковое ребро перпендикулярно основанию. Наклонная: боковое ребро наклонено.</li><li><strong>Если пирамида — правильная или нет?</strong> Правильная: вершина проецируется в <strong>центр</strong> основания.</li></ul>
+<blockquote><p><strong>Фишка.</strong> Если сомневаешься — нарисуй. Один рисунок стоит тысячи слов.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-2">
+<header class="slide-header"><span class="slide-num">Слайд 2</span><h2>Шаг 2. Что известно?</h2></header>
+<div class="slide-body">
+<p>Выпиши все данные из условия. Обычно это размеры: стороны основания, высота, диагональ, боковое ребро, радиус.</p>
+<ul><li>Размеры основания (стороны, радиус).</li><li>Высота.</li><li>Диагональ (многогранника, грани).</li><li>Боковое ребро.</li><li>Угол (между плоскостями, между прямой и плоскостью, двугранный).</li></ul>
+<blockquote><p><strong>Подсказка.</strong> Обведи ключевые слова в условии: «призма», «пирамида», «правильная», «высота», «диагональ», «апофема», «боковое ребро». Это превращает задачу в набор опорных точек.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-3">
+<header class="slide-header"><span class="slide-num">Слайд 3</span><h2>Шаг 3. Что ищем?</h2></header>
+<div class="slide-body">
+<p>Определи, <strong>какой ответ</strong> от тебя хотят.</p>
+<ul><li><strong>Объём</strong> → нужны \(S_{\text{осн}}\) и \(h\).</li><li><strong>Площадь поверхности</strong> → нужны площади всех граней.</li><li><strong>Высоту, ребро, диагональ</strong> → обратная задача: из формулы выражаешь то, что нужно.</li><li><strong>Площадь сечения</strong> → нужно понять, какая фигура получилась в сечении.</li></ul>
+</div>
+</section>
+<section class="slide" id="slide-4">
+<header class="slide-header"><span class="slide-num">Слайд 4</span><h2>Шаг 4. Какая формула?</h2></header>
+<div class="slide-body">
+<p>Вот тут у многих ступор: формулу забыл. Что делать?</p>
+<ul><li>Если помнишь формулу — примени.</li><li>Если забыл — <strong>дострой фигуру</strong> (см. раздел «Достраивание фигур» дальше).</li><li>Если совсем не знаешь, с чего начать — попробуй <strong>Пифагор</strong> или <strong>подобие</strong> (это два самых частых ключа в стереометрии).</li></ul>
+</div>
+</section>
+<section class="slide" id="slide-5">
+<header class="slide-header"><span class="slide-num">Слайд 5</span><h2>Шаг 5. Проверь</h2></header>
+<div class="slide-body">
+<p>Когда получил ответ — проверь его тремя способами.</p>
+<ul><li><strong>Размерность.</strong> Объём — в кубических единицах (см³, м³). Площадь — в квадратных (см², м²). Если не сходится — где-то потерял умножение.</li><li><strong>Логика.</strong> Объём не может быть отрицательным. Сторона не может быть больше диагонали. Высота не может быть больше бокового ребра.</li><li><strong>Граничные случаи.</strong> Если в задаче все стороны одинаковые (куб, равносторонний треугольник) — ответ должен быть «симметричным».</li></ul>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-6">
+<header class="slide-header"><span class="slide-num">Слайд 6</span><h2>Содержание</h2></header>
+<div class="slide-body">
+<ul><li><strong>Алгоритм мышления.</strong> С чего начать задачу (5 шагов)</li><li><strong>Блок 1 (1–4 класс).</strong> Точка, линия, луч, отрезок, простые фигуры, периметр, площадь, единицы</li><li><strong>Блок 2 (5 класс).</strong> Углы, биссектриса угла</li><li><strong>Блок 3 (5–7 класс).</strong> Треугольники — виды, 7 формул площади, признаки равенства, признаки подобия, теорема синусов и косинусов</li><li><strong>Блок 4 (5–8 класс).</strong> Четырёхугольники — все 6 типов</li><li><strong>Блок 5 (5–9 класс).</strong> Окружность и круг</li><li><strong>Блок 6 (7–9 класс).</strong> Подобие (k, k², k³ для объёмов)</li><li><strong>Блок 7 (9–11 класс).</strong> Векторы и координаты</li><li><strong>Блок 8 (10–11 класс).</strong> Стереометрия — базовые понятия</li><li><strong>Блок 9 (10–11 класс).</strong> Многогранники — виды и формулы, тела с отверстиями</li><li><strong>Блок 10 (11 класс).</strong> Тела вращения</li><li><strong>Блок 11.</strong> Фишки и лайфхаки (20 приёмов)</li><li><strong>Сборник формул</strong></li><li><strong>Достраивание фигур.</strong> Как получить нужную формулу</li><li><strong>Площадь поверхности.</strong> Что это и формулы для каждого тела</li><li><strong>Глоссарий.</strong> Все термины от А до Я</li></ul>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-7">
+<header class="slide-header"><span class="slide-num">Слайд 7</span><h2>Точка, линия, луч, отрезок</h2></header>
+<div class="slide-body">
+<p><strong>Точка</strong> — место в пространстве. Не имеет размера. Обозначается большой буквой: \(A, B, C\).</p>
+<p><strong>Прямая</strong> — бесконечная линия без изгибов. Не имеет начала и конца. Обозначается двумя точками или одной строчной буквой: \(AB, l\).</p>
+<p><strong>Луч</strong> — часть прямой, у которой есть <strong>начало</strong>, но <strong>нет конца</strong>. Обозначается: луч \(AB\) (начинается в \(A\), идёт через \(B\) и дальше бесконечно).</p>
+<p><strong>Отрезок</strong> — часть прямой, ограниченная двумя точками. Имеет длину. Обозначается: \(AB\).</p>
+<blockquote><p><strong>Пример.</strong> Линейка — отрезок. Солнечный луч — это луч (у света есть начало, но нет конца). Железная дорога вдали — это прямая (она бесконечна в обе стороны).</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-8">
+<header class="slide-header"><span class="slide-num">Слайд 8</span><h2>Простые фигуры (плоские)</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Фигура</th><th>Что это</th><th>Пример из жизни</th></tr></thead><tbody><tr><td><strong>Треугольник</strong></td><td>3 точки, соединённые отрезками</td><td>Дорожный знак «уступи дорогу», элементы стропильной системы крыши</td></tr><tr><td><strong>Четырёхугольник</strong></td><td>4 точки, соединённые отрезками</td><td>Лист бумаги, экран телефона</td></tr><tr><td><strong>Круг</strong></td><td>Все точки на расстоянии \(r\) от центра</td><td>Тарелка, монета</td></tr><tr><td><strong>Многоугольник</strong></td><td>Замкнутая ломаная из \(n\) отрезков</td><td>Шестиугольная гайка, пятиугольная звезда</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-9">
+<header class="slide-header"><span class="slide-num">Слайд 9</span><h2>Периметр</h2></header>
+<div class="slide-body">
+<p><strong>Периметр</strong> — это сумма длин всех сторон фигуры.</p>
+<p>\(P = a + b + c\) (для треугольника) \(P = a + b + c + d\) (для четырёхугольника)</p>
+<p><strong>Словами:</strong> обойди всю фигуру по сторонам и сложи длины.</p>
+<p><strong>Зачем нужен.</strong> Чтобы узнать, сколько метров забора нужно вокруг участка, сколько тесьмы по краю салфетки, сколько рамы по периметру окна.</p>
+<p><strong>Пример.</strong> Квадрат со стороной 5 см. \(P = 5 + 5 + 5 + 5 = 20\) см.</p>
+</div>
+</section>
+<section class="slide" id="slide-10">
+<header class="slide-header"><span class="slide-num">Слайд 10</span><h2>Площадь</h2></header>
+<div class="slide-body">
+<p><strong>Площадь</strong> — это сколько места фигура занимает на плоскости. Измеряется в <strong>квадратных</strong> единицах: см², м², км².</p>
+<table><thead><tr><th>Фигура</th><th>Формула площади (словами)</th><th>Формула (в символах)</th></tr></thead><tbody><tr><td><strong>Квадрат</strong></td><td>Квадрат стороны</td><td>\(S = a^2\)</td></tr><tr><td><strong>Прямоугольник</strong></td><td>Длину умножить на ширину</td><td>\(S = a\cdot b\)</td></tr><tr><td><strong>Треугольник</strong></td><td>Половина произведения стороны на высоту</td><td>\(S = \tfrac{1}{2}\cdot a\cdot h\)</td></tr></tbody></table>
+<blockquote><p><strong>Важно.</strong> Площадь измеряется в <strong>квадратных</strong> единицах: см² (сантиметр в квадрате), м² (метр в квадрате). Если ты посчитал и получил просто «сантиметры» — где-то потерял умножение.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-11">
+<header class="slide-header"><span class="slide-num">Слайд 11</span><h2>Единицы измерения длины, площади, объёма</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Что измеряем</th><th>Единицы</th></tr></thead><tbody><tr><td><strong>Длина</strong></td><td>мм, см, м, км</td></tr><tr><td><strong>Площадь</strong></td><td>мм², см², м², км², га (гектар = 10 000 м²), а (ар = 100 м²)</td></tr><tr><td><strong>Объём</strong></td><td>мм³, см³, м³, л (литр = 1 дм³ = 1000 см³)</td></tr></tbody></table>
+<blockquote><p><strong>Переводы, которые нужно помнить наизусть:</strong> - 1 см = 10 мм - 1 м = 100 см - 1 км = 1000 м - 1 дм = 10 см - 1 л = 1 дм³ = 1000 см³ (один литр — это кубик со стороной 10 см)</p></blockquote>
+<blockquote><p><strong>Микро-проверка.</strong> Если прямоугольник 3 см × 4 см, его площадь = 12 <strong>см²</strong>. Не 12 см. Площадь — это «12 квадратиков со стороной 1 см».</p></blockquote>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-12">
+<header class="slide-header"><span class="slide-num">Слайд 12</span><h2>Что такое угол</h2></header>
+<div class="slide-body">
+<p><strong>Угол</strong> — это фигура из двух лучей с общим началом (вершиной).</p>
+<p>Угол измеряется в <strong>градусах</strong>. Полный оборот = 360°. Прямой угол = 90°. Развёрнутый угол = 180°.</p>
+<table><thead><tr><th>Тип угла</th><th>Сколько градусов</th><th>Как выглядит</th></tr></thead><tbody><tr><td><strong>Острый</strong></td><td>меньше 90°</td><td>Узкий «уголок»</td></tr><tr><td><strong>Прямой</strong></td><td>ровно 90°</td><td>Квадратный «уголок»</td></tr><tr><td><strong>Тупой</strong></td><td>больше 90°, но меньше 180°</td><td>Широкий «уголок»</td></tr><tr><td><strong>Развёрнутый</strong></td><td>180°</td><td>Прямая линия</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-13">
+<header class="slide-header"><span class="slide-num">Слайд 13</span><h2>Смежные и вертикальные углы</h2></header>
+<div class="slide-body">
+<p><strong>Смежные углы</strong> — два угла, у которых общая вершина и одна общая сторона, а другие две стороны — продолжения друг друга. Сумма смежных углов = 180°.</p>
+<p><strong>Вертикальные углы</strong> — два угла напротив друг друга при пересечении двух прямых. Вертикальные углы <strong>равны</strong>.</p>
+<blockquote><p><strong>Пример.</strong> Перекресток. Дороги пересекаются — получаются 4 угла. Углы напротив друг друга (например, северо-восточный и юго-западный) — вертикальные, они равны.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-14">
+<header class="slide-header"><span class="slide-num">Слайд 14</span><h2>Биссектриса угла</h2></header>
+<div class="slide-body">
+<p><strong>Биссектриса</strong> — это луч, который делит угол <strong>пополам</strong>.</p>
+<p>Если у тебя угол 60°, биссектриса даёт два угла по 30°. Если угол 90°, биссектриса даёт два угла по 45°.</p>
+<blockquote><p><strong>Словарик:</strong> «Бис» — два, «сек» — резать. Биссектриса = режет угол на две равные части.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-15">
+<header class="slide-header"><span class="slide-num">Слайд 15</span><h2>Перпендикулярные прямые</h2></header>
+<div class="slide-body">
+<p><strong>Перпендикулярные прямые</strong> — это прямые, которые пересекаются под углом 90°. Обозначается: \(l_1 \perp l_2\).</p>
+</div>
+</section>
+<section class="slide" id="slide-16">
+<header class="slide-header"><span class="slide-num">Слайд 16</span><h2>Параллельные прямые</h2></header>
+<div class="slide-body">
+<p><strong>Параллельные прямые</strong> — это прямые, которые <strong>не пересекаются</strong>, сколько бы их ни продолжали. Обозначается: \(l_1 \| l_2\).</p>
+<blockquote><p><strong>Пример.</strong> Две железнодорожные рельсы — параллельны. Стороны тетрадного листа — параллельны.</p></blockquote>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-17">
+<header class="slide-header"><span class="slide-num">Слайд 17</span><h2>7 типов треугольников</h2></header>
+<div class="slide-body">
+<h3>По сторонам</h3>
+<table><thead><tr><th>Тип</th><th>Что это</th><th>Пример</th></tr></thead><tbody><tr><td><strong>Разносторонний</strong></td><td>Все три стороны разной длины</td><td>3 см, 4 см, 5 см</td></tr><tr><td><strong>Равнобедренный</strong></td><td>Две стороны равны, третья — другая</td><td>5 см, 5 см, 8 см</td></tr><tr><td><strong>Равносторонний</strong> (правильный)</td><td>Все три стороны равны</td><td>5 см, 5 см, 5 см (все углы по 60°)</td></tr></tbody></table>
+<h3>По углам</h3>
+<table><thead><tr><th>Тип</th><th>Что это</th><th>Пример</th></tr></thead><tbody><tr><td><strong>Остроугольный</strong></td><td>Все три угла меньше 90°</td><td>60°, 60°, 60°</td></tr><tr><td><strong>Прямоугольный</strong></td><td>Один угол ровно 90°</td><td>30°, 60°, 90°</td></tr><tr><td><strong>Тупоугольный</strong></td><td>Один угол больше 90°</td><td>30°, 30°, 120°</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-18">
+<header class="slide-header"><span class="slide-num">Слайд 18</span><h2>7 формул площади треугольника</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>№</th><th>Когда применять</th><th>Формула (словами)</th><th>Формула (в символах)</th></tr></thead><tbody><tr><td>1</td><td>Любой треугольник, дано основание и высота к нему</td><td>Половина произведения стороны на высоту, опущенную к этой стороне</td><td>\(S = \tfrac{1}{2}\cdot a\cdot h_a\)</td></tr><tr><td>2</td><td>Любой треугольник, даны две стороны и угол между ними</td><td>Половина произведения двух сторон на синус угла между ними</td><td>\(S = \tfrac{1}{2}\cdot a\cdot b\cdot \sin C\)</td></tr><tr><td>3</td><td>Любой треугольник, даны три стороны</td><td>Квадратный корень из произведения полупериметра на три разности (формула Герона)</td><td>\(p = \dfrac{a + b + c}{2} \quad \Longrightarrow \quad \text{Словами: сложить три стороны и разделить строго на 2.}\) → \(S = \sqrt{p(p-a)(p-b)(p-c)}\)</td></tr><tr><td>4</td><td>Прямоугольный треугольник</td><td>Половина произведения двух катетов</td><td>\(S = \tfrac{1}{2}\cdot a\cdot b\)</td></tr><tr><td>5</td><td>Равнобедренный, через боковую сторону и основание</td><td>Половина произведения основания на высоту, где высота равна \(\sqrt{a^2 - \tfrac{b^2}{4}}\)</td><td>\(S = \tfrac{1}{2}\cdot b\cdot \sqrt{a^2 - \tfrac{b^2}{4}}\)</td></tr><tr><td>6</td><td>Равнобедренный (фишка: биссектриса к основанию = медиана = высота)</td><td>Длина биссектрисы (она же медиана, она же высота) = \(\sqrt{a^2 - \tfrac{b^2}{4}}\)</td><td>\(l = \sqrt{a^2 - \tfrac{b^2}{4}}\)</td></tr><tr><td>7</td><td>Равносторонний (правильный)</td><td>Квадрат стороны, умноженный на \(\\sqrt{3}\) и делённый на 4</td><td>\(S = \tfrac{a^2\\sqrt{3}}{4}\)</td></tr></tbody></table>
+<blockquote><p><strong>Когда какую применять:</strong></p></blockquote>
+<table><thead><tr><th>Что дано в задаче</th><th>Какую формулу брать</th></tr></thead><tbody><tr><td>Сторона и высота к ней</td><td>№1: \(S = \tfrac{1}{2}\cdot a\cdot h_a\)</td></tr><tr><td>Две стороны и угол между ними</td><td>№2: \(S = \tfrac{1}{2}\cdot a\cdot b\cdot \sin C\)</td></tr><tr><td>Три стороны (углы не даны)</td><td>№3: Герон \(S = \sqrt{p(p-a)(p-b)(p-c)}\), где \(p = \tfrac{a+b+c}{2}\) — полупериметр</td></tr><tr><td>Прямоугольный (есть угол 90°)</td><td>№4: \(S = \tfrac{1}{2}\cdot a\cdot b\) через катеты</td></tr><tr><td>Равносторонний (или правильный)</td><td>№7: \(S = \tfrac{a^2\\sqrt{3}}{4}\)</td></tr></tbody></table>
+<blockquote><p><strong>Микро-проверка.</strong> Равносторонний треугольник со стороной 4. По формуле №7: \(S = \tfrac{4^2\\sqrt{3}}{4} = 4\\sqrt{3} \approx 6{,}93\). Если в голове сразу появилось это число — формула усвоена.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-19">
+<header class="slide-header"><span class="slide-num">Слайд 19</span><h2>Медиана, биссектриса, высота треугольника</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Термин</th><th>Что делает</th><th>В какой фигуре совпадают с другими</th></tr></thead><tbody><tr><td><strong>Медиана</strong></td><td>Делит противоположную сторону пополам (соединяет вершину с серединой противоположной стороны)</td><td>В <strong>равнобедренном</strong> треугольнике медиана к основанию = биссектриса = высота</td></tr><tr><td><strong>Биссектриса</strong></td><td>Делит угол пополам (соединяет вершину с точкой на противоположной стороне)</td><td>То же самое</td></tr><tr><td><strong>Высота</strong></td><td>Перпендикуляр к противоположной стороне</td><td>То же самое</td></tr><tr><td><strong>Серединный перпендикуляр</strong></td><td>Перпендикуляр к отрезку через его середину</td><td>В <strong>равнобедренном</strong> — проходит через вершину</td></tr></tbody></table>
+<blockquote><p><strong>Следствие (важное для задач).</strong> Если в равнобедренном треугольнике провели биссектрису к основанию, её длина = \(\sqrt{a^2 - \tfrac{b^2}{4}}\), где \(a\) — боковая сторона, \(b\) — основание. Эта же линия — медиана и высота. Эта формула ловится в каждой второй задаче на правильную треугольную пирамиду.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-20">
+<header class="slide-header"><span class="slide-num">Слайд 20</span><h2>Сумма углов треугольника</h2></header>
+<div class="slide-body">
+<p>Сумма углов <strong>любого</strong> треугольника = 180°.</p>
+<p>Если знаешь два угла, третий = 180° − (угол 1 + угол 2).</p>
+</div>
+</section>
+<section class="slide" id="slide-21">
+<header class="slide-header"><span class="slide-num">Слайд 21</span><h2>Теорема синусов</h2></header>
+<div class="slide-body">
+<p>В любом треугольнике стороны пропорциональны синусам противоположных углов:</p>
+<div class="math-block">\[\tfrac{a}{\sin A} = \tfrac{b}{\sin B} = \tfrac{c}{\sin C} = 2R\]</div>
+<p>где \(R\) — радиус описанной окружности.</p>
+<p><strong>Словами:</strong> сторона относится к синусу противоположного угла одинаково для всех трёх сторон. И это отношение равно двум радиусам описанной окружности.</p>
+</div>
+</section>
+<section class="slide" id="slide-22">
+<header class="slide-header"><span class="slide-num">Слайд 22</span><h2>Теорема косинусов</h2></header>
+<div class="slide-body">
+<p>В любом треугольнике квадрат стороны равен сумме квадратов двух других сторон минус удвоенное произведение этих сторон на косинус угла между ними:</p>
+<div class="math-block">\[c^2 = a^2 + b^2 - 2ab\cdot \cos C\]</div>
+<p><strong>Словами:</strong> это обобщение теоремы Пифагора. Если угол \(C\) прямой, \(\cos C = 0\), и формула превращается в \(c^2 = a^2 + b^2\).</p>
+</div>
+</section>
+<section class="slide" id="slide-23">
+<header class="slide-header"><span class="slide-num">Слайд 23</span><h2>Теорема Пифагора — глубокое объяснение</h2></header>
+<div class="slide-body">
+<blockquote><p><strong>Зачем этот раздел важен.</strong> Теорема Пифагора — это не просто формула. Это <strong>ключ</strong>, который открывает 80% задач по геометрии. Если ты её по-настоящему понимаешь, ты сможешь достроить любую формулу через неё.</p></blockquote>
+<h3>Что такое прямоугольный треугольник</h3>
+<p><strong>Прямоугольный треугольник</strong> — это треугольник, у которого <strong>один угол = 90°</strong>.</p>
+<p>Этот прямой угол — ключ ко всему. Именно он создаёт «правило», по которому связаны три стороны.</p>
+<h3>Катеты и гипотенуза</h3>
+<p>У прямоугольного треугольника есть <strong>два катета</strong> и <strong>одна гипотенуза</strong>.</p>
+<table><thead><tr><th>Название</th><th>Что это</th><th>Как запомнить</th></tr></thead><tbody><tr><td><strong>Катет</strong></td><td>Сторона, <strong>прилегающая</strong> к прямому углу (одна из двух)</td><td>Это «ноги» треугольника. Они перпендикулярны друг другу</td></tr><tr><td><strong>Гипотенуза</strong></td><td>Сторона <strong>напротив</strong> прямого угла</td><td>Это «пол» треугольника — сторона, на которой он «стоит». <strong>Самая длинная</strong> сторона</td></tr></tbody></table>
+<blockquote><p><strong>Запомни.</strong> Катеты — две короткие стороны у прямого угла. Гипотенуза — одна длинная сторона напротив.</p></blockquote>
+<h3>Сама формула</h3>
+<p>В прямоугольном треугольнике:</p>
+<div class="math-block">\[c^2 = a^2 + b^2\]</div>
+<p>где \(c\) — гипотенуза, \(a\) и \(b\) — катеты.</p>
+<p><strong>Словами:</strong> квадрат гипотенузы равен сумме квадратов катетов. Или наоборот: сумма квадратов катетов равна квадрату гипотенузы.</p>
+<h3>Почему плюс, а не минус</h3>
+<p>Потому что мы <strong>складываем квадраты катетов</strong>, чтобы получить <strong>квадрат гипотенузы</strong>. Гипотенуза больше любого катета (она лежит напротив большего угла), поэтому её квадрат тоже больше.</p>
+<h3>Когда какой знак</h3>
+<p>Задача: тебе даны две стороны, нужно найти третью. Откуда взять знак?</p>
+<table><thead><tr><th>Что ищем</th><th>Формула</th><th>Знак</th></tr></thead><tbody><tr><td><strong>Гипотенузу</strong> (самую длинную сторону)</td><td>\(c = \sqrt{a^2 + b^2}\)</td><td><strong>Плюс</strong></td></tr><tr><td><strong>Катет</strong> (короткую сторону у прямого угла)</td><td>\(a = \sqrt{c^2 - b^2}\)</td><td><strong>Минус</strong></td></tr></tbody></table>
+<p><strong>Правило мышления:</strong></p>
+<ul><li>Если ищешь <strong>гипотенузу</strong> → плюс (она всегда больше катетов).</li><li>Если ищешь <strong>катет</strong> → минус (катет всегда меньше гипотенузы, поэтому его квадрат вычитаем из большего квадрата).</li></ul>
+<h3>Порядок мышления (5 шагов)</h3>
+<p>Когда видишь задачу с прямоугольным треугольником, делай так:</p>
+<ol><li><strong>Нарисуй треугольник с прямым углом.</strong> Где он — определи по условию (часто сказано «в точке...» или дан угол 90°).</li><li><strong>Назови стороны:</strong> катеты (прилегают к 90°) и гипотенузу (напротив 90°).</li><li><strong>Что дано и что ищем?</strong> Выпиши.</li><li><strong>Если ищем гипотенузу → плюс.</strong> Если катет → минус.</li><li><strong>Подставь и реши.</strong></li></ol>
+<h3>Микро-пример: треугольник 3-4-5</h3>
+<p>Самый знаменитый прямоугольный треугольник в мире.</p>
+<p>Катеты: 3 и 4. Гипотенуза: ?</p>
+<div class="math-block">\[c = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5\]</div>
+<p><strong>Проверка:</strong> \(5^2 = 25 = 9 + 16 = 3^2 + 4^2\). Сходится.</p>
+<h3>Обратная задача: ищем катет</h3>
+<p>Дан катет 3, гипотенуза 5. Найти второй катет.</p>
+<div class="math-block">\[b = \sqrt{c^2 - a^2} = \sqrt{5^2 - 3^2} = \sqrt{25 - 9} = \sqrt{16} = 4\]</div>
+<h3>Что делать, если нет прямого угла</h3>
+<p>Теорема Пифагора работает <strong>только</strong> в прямоугольном треугольнике. Если в задаче нет угла 90°, напрямую через Пифагор решить нельзя. Тогда используй теорему косинусов или другие приёмы.</p>
+<h3>3D Пифагор (коробка)</h3>
+<p>Если у тебя есть <strong>прямоугольный параллелепипед</strong> (коробка) с рёбрами \(a\), \(b\), \(c\), то его <strong>диагональ</strong> \(d\) (от одного угла до противоположного):</p>
+<div class="math-block">\[d^2 = a^2 + b^2 + c^2\]</div>
+<p><strong>Словами:</strong> квадрат диагонали коробки равен сумме квадратов всех трёх рёбер.</p>
+<blockquote><p><strong>Микро-пример.</strong> Куб с ребром 10. Диагональ \(d = \sqrt{10^2 + 10^2 + 10^2} = \sqrt{300} = 10\sqrt{3} \approx 17{,}32\).</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-24">
+<header class="slide-header"><span class="slide-num">Слайд 24</span><h2>Признаки равенства треугольников</h2></header>
+<div class="slide-body">
+<p>Два треугольника <strong>равны</strong>, если у них равны соответствующие стороны и углы. Проверять все шесть величин не нужно — достаточно <strong>трёх</strong>.</p>
+<table><thead><tr><th>№</th><th>Признак (словами)</th><th>Что должно совпасть</th><th>Сокращение</th></tr></thead><tbody><tr><td>1</td><td>По двум сторонам и углу между ними</td><td>Две стороны и угол между ними</td><td>СУС</td></tr><tr><td>2</td><td>По стороне и двум прилежащим углам</td><td>Одна сторона и два угла у её концов</td><td>УСУ</td></tr><tr><td>3</td><td>По трём сторонам</td><td>Все три стороны</td><td>ССС</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-25">
+<header class="slide-header"><span class="slide-num">Слайд 25</span><h2>Признаки подобия треугольников</h2></header>
+<div class="slide-body">
+<p>Два треугольника <strong>подобны</strong>, если у них углы равны, а стороны пропорциональны. Коэффициент подобия \(k\) — это отношение соответствующих сторон.</p>
+<table><thead><tr><th>№</th><th>Признак (словами)</th><th>Что должно совпасть</th><th>Сокращение</th></tr></thead><tbody><tr><td>1</td><td>По двум углам</td><td>Два угла одного = двум углам другого</td><td>УУ</td></tr><tr><td>2</td><td>По двум сторонам и углу между ними</td><td>Две стороны пропорциональны и угол между ними равен</td><td>СУС</td></tr><tr><td>3</td><td>По трём сторонам</td><td>Все три стороны пропорциональны</td><td>ССС</td></tr></tbody></table>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-26">
+<header class="slide-header"><span class="slide-num">Слайд 26</span><h2>6 типов четырёхугольников</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Фигура</th><th>Свойства</th><th>Формула площади (словами)</th><th>Формула (в символах)</th></tr></thead><tbody><tr><td><strong>Квадрат</strong></td><td>4 равные стороны, все углы 90°, диагонали равны и перпендикулярны</td><td>Квадрат стороны</td><td>\(S = a^2\)</td></tr><tr><td><strong>Прямоугольник</strong></td><td>4 стороны попарно равны, все углы 90°, диагонали равны</td><td>Произведение двух смежных сторон (длины на ширину)</td><td>\(S = a\cdot b\)</td></tr><tr><td><strong>Ромб</strong></td><td>4 равные стороны, углы НЕ 90° (обычно), диагонали перпендикулярны и делят углы пополам</td><td>Произведение диагоналей пополам <strong>ИЛИ</strong> квадрат стороны на синус угла</td><td>\(S = \tfrac{d_1\cdot d_2}{2} = a^2\cdot \sin\alpha\)</td></tr><tr><td><strong>Параллелограмм</strong></td><td>Противоположные стороны параллельны и равны, противоположные углы равны</td><td>Произведение стороны на высоту <strong>ИЛИ</strong> произведение двух сторон на синус угла между ними</td><td>\(S = a\cdot h = a\cdot b\cdot \sin\alpha\)</td></tr><tr><td><strong>Трапеция</strong></td><td>Две стороны параллельны (основания), две — нет</td><td>Полусумма оснований, умноженная на высоту</td><td>\(S = \tfrac{a+b}{2}\cdot h\)</td></tr><tr><td><strong>Произвольный</strong></td><td>Никаких гарантий</td><td>Разбить на 2 треугольника и сложить их площади</td><td>\(S = S_{\triangle 1} + S_{\triangle 2}\)</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-27">
+<header class="slide-header"><span class="slide-num">Слайд 27</span><h2>Свойства-фишки четырёхугольников</h2></header>
+<div class="slide-body">
+<ul><li><strong>Прямоугольник:</strong> диагонали равны. Если знаешь одну сторону и диагональ — вторую находишь по Пифагору.</li><li><strong>Ромб:</strong> диагонали перпендикулярны. Если даны обе диагонали — площадь \(\tfrac{d_1\cdot d_2}{2}\).</li><li><strong>Равнобедренная трапеция:</strong> углы при каждом основании равны; диагонали равны.</li><li><strong>Квадрат:</strong> частный случай и прямоугольника, и ромба — все свойства работают.</li><li><strong>Параллелограмм:</strong> диагонали точкой пересечения делятся пополам (но сами диагонали <strong>не равны</strong>, в отличие от прямоугольника).</li></ul>
+<blockquote><p><strong>Закон равенства синусов смежных углов.</strong> Запомни фишку числовой прямой: синус тупого угла строго равен синусу его острого соседа. Если в задаче дан угол 120°, смело заменяй его на острый угол 60° (180° − 120° = 60°). Их синусы абсолютно одинаковы: \(\sin 120° = \sin 60° = \tfrac{\\sqrt{3}}{2}\). Это спасёт тебя в любой задаче на параллелограмм, где тупой угол дан через синус.</p></blockquote>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-28">
+<header class="slide-header"><span class="slide-num">Слайд 28</span><h2>Основные понятия</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Понятие</th><th>Что это (словами)</th><th>Обозначение</th></tr></thead><tbody><tr><td><strong>Окружность</strong></td><td>Множество точек, равноудалённых от центра</td><td>—</td></tr><tr><td><strong>Круг</strong></td><td>Окружность плюс все точки внутри неё</td><td>—</td></tr><tr><td><strong>Радиус</strong></td><td>Отрезок от центра к точке на окружности</td><td>\(r\)</td></tr><tr><td><strong>Диаметр</strong></td><td>Отрезок через центр, соединяющий две точки окружности (= 2 радиуса)</td><td>\(d = 2r\)</td></tr><tr><td><strong>Хорда</strong></td><td>Отрезок, соединяющий две точки окружности (не через центр)</td><td>—</td></tr><tr><td><strong>Касательная</strong></td><td>Прямая, которая касается окружности ровно в одной точке. Она перпендикулярна радиусу, проведённому в точку касания</td><td>—</td></tr><tr><td><strong>Секущая</strong></td><td>Прямая, пересекающая окружность в двух точках</td><td>—</td></tr><tr><td><strong>Дуга</strong></td><td>Часть окружности между двумя точками</td><td>—</td></tr><tr><td><strong>Сектор</strong></td><td>«Кусок» круга между двумя радиусами и дугой</td><td>—</td></tr><tr><td><strong>Сегмент</strong></td><td>«Кусок» круга между хордой и дугой</td><td>—</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-29">
+<header class="slide-header"><span class="slide-num">Слайд 29</span><h2>Основные формулы</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Что ищем</th><th>Формула (словами)</th><th>Формула (в символах)</th></tr></thead><tbody><tr><td><strong>Длина окружности</strong> \(C\)</td><td>Два пи, умноженное на радиус</td><td>\(C = 2\pi r\)</td></tr><tr><td><strong>Площадь круга</strong> \(S\)</td><td>Пи, умноженное на квадрат радиуса</td><td>\(S = \pi r^2\)</td></tr><tr><td><strong>Длина дуги</strong> \(l\)</td><td>Доля окружности, равная отношению угла к 360°</td><td>\(l = \tfrac{\alpha}{360°}\cdot 2\pi r\)</td></tr><tr><td><strong>Площадь сектора</strong> \(S_{\text{сект}}\)</td><td>Доля площади круга, равная отношению угла к 360°</td><td>\(S_{\text{сект}} = \tfrac{\alpha}{360°}\cdot \pi r^2\)</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-30">
+<header class="slide-header"><span class="slide-num">Слайд 30</span><h2>Вписанный и центральный углы</h2></header>
+<div class="slide-body">
+<p><strong>Центральный угол</strong> — угол с вершиной <strong>в центре</strong> окружности. Он равен дуге, на которую опирается.</p>
+<p><strong>Вписанный угол</strong> — угол с вершиной <strong>на окружности</strong>, стороны пересекают окружность в двух других точках.</p>
+<p><strong>Главное свойство:</strong> вписанный угол равен <strong>половине</strong> центрального угла, опирающегося на ту же дугу.</p>
+<blockquote><p><strong>Словами:</strong> если центральный угол = 60°, то вписанный угол, опирающийся на ту же дугу, = 30°.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-31">
+<header class="slide-header"><span class="slide-num">Слайд 31</span><h2>Описанная и вписанная окружности</h2></header>
+<div class="slide-body">
+<ul><li><strong>Описанная окружность</strong> — окружность, проходящая через все вершины фигуры. Центр описанной окружности — это точка, равноудалённая от всех вершин.</li><li><strong>Вписанная окружность</strong> — окружность, касающаяся всех сторон фигуры изнутри. Центр вписанной окружности — это точка, равноудалённая от всех сторон.</li></ul>
+<table><thead><tr><th>Фигура</th><th>Радиус описанной \(R\)</th><th>Радиус вписанной \(r\)</th></tr></thead><tbody><tr><td>Правильный треугольник</td><td>\(\tfrac{a}{\\sqrt{3}} = \tfrac{a\\sqrt{3}}{3}\)</td><td>\(\tfrac{a}{2\\sqrt{3}} = \tfrac{a\\sqrt{3}}{6}\)</td></tr><tr><td>Квадрат</td><td>\(\tfrac{a\\sqrt{2}}{2}\)</td><td>\(\tfrac{a}{2}\)</td></tr><tr><td>Правильный шестиугольник</td><td>\(a\)</td><td>\(\tfrac{a\\sqrt{3}}{2}\)</td></tr></tbody></table>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-32">
+<header class="slide-header"><span class="slide-num">Слайд 32</span><h2>Что такое подобие</h2></header>
+<div class="slide-body">
+<p>Две фигуры называются <strong>подобными</strong>, если они имеют одинаковую форму, но разный размер. Углы у подобных фигур равны, а стороны пропорциональны.</p>
+<p><strong>Коэффициент подобия</strong> \(k\) — это отношение соответствующих линейных размеров:</p>
+<div class="math-block">\[k = \tfrac{a_1}{a_2} = \tfrac{b_1}{b_2} = \tfrac{c_1}{c_2}\]</div>
+</div>
+</section>
+<section class="slide" id="slide-33">
+<header class="slide-header"><span class="slide-num">Слайд 33</span><h2>Что как меняется при подобии</h2></header>
+<div class="slide-body">
+<p><strong>Главная таблица подобия — запомни её навсегда:</strong></p>
+<table><thead><tr><th>Величина</th><th>Как меняется при подобии с коэффициентом \(k\)</th></tr></thead><tbody><tr><td><strong>Линейный размер</strong> (сторона, высота, периметр, радиус)</td><td>Умножается на \(k\)</td></tr><tr><td><strong>Площадь</strong></td><td>Умножается на \(k^2\)</td></tr><tr><td><strong>Объём</strong></td><td>Умножается на \(k^3\)</td></tr></tbody></table>
+<p>Формулами:</p>
+<ul><li>\(a_{\text{нов}} = a_{\text{стар}}\cdot k\)</li><li>\(S_{\text{нов}} = S_{\text{стар}}\cdot k^2\)</li><li>\(V_{\text{нов}} = V_{\text{стар}}\cdot k^3\)</li></ul>
+<blockquote><p><strong>Пример.</strong> Две подобные пирамиды. Коэффициент \(k = 2\) (одна в 2 раза больше другой). Объём большей: \(V_{\text{бол}} = V_{\text{мал}}\cdot 2^3 = 8\cdot V_{\text{мал}}\). То есть объём больше в 8 раз, хотя выглядит «всего в 2 раза больше». Это типичная «ошибка восприятия» на ЦТ.</p></blockquote>
+<blockquote><p><strong>Микро-проверка.</strong> Если в задаче сказано «сечение, параллельное основанию, проходит на расстоянии 1/3 от вершины», то линейные размеры сечения = 1/3 от основания, площадь сечения = 1/9 от площади основания, объём отсечённой верхней части = 1/27 от объёма полной пирамиды. Все три числа 1/3, 1/9, 1/27 = это степени \(\tfrac{1}{3}^1, \tfrac{1}{3}^2, \tfrac{1}{3}^3\).</p></blockquote>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-34">
+<header class="slide-header"><span class="slide-num">Слайд 34</span><h2>Что такое вектор</h2></header>
+<div class="slide-body">
+<p><strong>Вектор</strong> — это направленный отрезок. У него есть <strong>длина</strong> (модуль) и <strong>направление</strong>. Обозначается: \(\vec{a}\) или \(\overrightarrow{AB}\).</p>
+<p>Вектор можно задать двумя точками: \(\vec{AB}\) идёт из точки \(A\) в точку \(B\).</p>
+</div>
+</section>
+<section class="slide" id="slide-35">
+<header class="slide-header"><span class="slide-num">Слайд 35</span><h2>Координаты вектора</h2></header>
+<div class="slide-body">
+<p>Если начало вектора в точке \(A(x_1, y_1)\), а конец в точке \(B(x_2, y_2)\), то координаты вектора:</p>
+<div class="math-block">\[\vec{AB} = (x_2 - x_1, y_2 - y_1)\]</div>
+<p><strong>Словами:</strong> из координат конца вычти координаты начала.</p>
+<p><strong>Длина вектора:</strong></p>
+<div class="math-block">\[|\vec{AB}| = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}\]</div>
+</div>
+</section>
+<section class="slide" id="slide-36">
+<header class="slide-header"><span class="slide-num">Слайд 36</span><h2>Сложение и вычитание векторов</h2></header>
+<div class="slide-body">
+<p>Векторы складываются покомпонентно:</p>
+<div class="math-block">\[\vec{a} + \vec{b} = (a_x + b_x, a_y + b_y)\]</div>
+<div class="math-block">\[\vec{a} - \vec{b} = (a_x - b_x, a_y - b_y)\]</div>
+</div>
+</section>
+<section class="slide" id="slide-37">
+<header class="slide-header"><span class="slide-num">Слайд 37</span><h2>Скалярное произведение векторов</h2></header>
+<div class="slide-body">
+<div class="math-block">\[\vec{a}\cdot \vec{b} = a_x\cdot b_x + a_y\cdot b_y = |\vec{a}|\cdot |\vec{b}|\cdot \cos\alpha\]</div>
+<p>где \(\alpha\) — угол между векторами.</p>
+<p><strong>Словами:</strong> произведение длин векторов на косинус угла между ними.</p>
+<p><strong>Следствие.</strong> Если \(\vec{a}\perp \vec{b}\), то \(\vec{a}\cdot \vec{b} = 0\). И наоборот: если скалярное произведение = 0, то векторы перпендикулярны.</p>
+</div>
+</section>
+<section class="slide" id="slide-38">
+<header class="slide-header"><span class="slide-num">Слайд 38</span><h2>Уравнение прямой на плоскости</h2></header>
+<div class="slide-body">
+<p>Прямая на плоскости задаётся уравнением:</p>
+<div class="math-block">\[y = kx + b\]</div>
+<p>где \(k\) — угловой коэффициент (тангенс угла наклона), \(b\) — свободный член (точка пересечения с осью \(y\)).</p>
+<p><strong>Уравнение окружности</strong> с центром \((x_0, y_0)\) и радиусом \(r\):</p>
+<div class="math-block">\[(x - x_0)^2 + (y - y_0)^2 = r^2\]</div>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-39">
+<header class="slide-header"><span class="slide-num">Слайд 39</span><h2>Что такое стереометрия</h2></header>
+<div class="slide-body">
+<p><strong>Стереометрия</strong> — это геометрия в пространстве (3D). В отличие от планиметрии (геометрия на плоскости), здесь добавляется третье измерение — высота, глубина.</p>
+</div>
+</section>
+<section class="slide" id="slide-40">
+<header class="slide-header"><span class="slide-num">Слайд 40</span><h2>Основные понятия</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Понятие</th><th>Что это</th></tr></thead><tbody><tr><td><strong>Точка</strong></td><td>Место в пространстве</td></tr><tr><td><strong>Прямая</strong></td><td>Бесконечная линия</td></tr><tr><td><strong>Плоскость</strong></td><td>Бесконечная ровная поверхность (не имеет толщины)</td></tr><tr><td><strong>Параллельные прямые</strong></td><td>Не пересекаются</td></tr><tr><td><strong>Перпендикулярные прямые</strong></td><td>Пересекаются под 90°</td></tr><tr><td><strong>Прямая, перпендикулярная плоскости</strong></td><td>Перпендикулярна каждой прямой в этой плоскости</td></tr><tr><td><strong>Параллельные плоскости</strong></td><td>Не пересекаются</td></tr><tr><td><strong>Перпендикулярные плоскости</strong></td><td>Угол между ними = 90°</td></tr><tr><td><strong>Угол между прямой и плоскостью</strong></td><td>Угол между прямой и её проекцией на плоскость</td></tr><tr><td><strong>Угол между плоскостями</strong></td><td>Угол между двумя пересекающимися прямыми, по которым плоскости пересекают одну и ту же плоскость, перпендикулярную их линии пересечения</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-41">
+<header class="slide-header"><span class="slide-num">Слайд 41</span><h2>Аксиомы стереометрии</h2></header>
+<div class="slide-body">
+<ol><li>Через любые три точки, не лежащие на одной прямой, проходит <strong>ровно одна</strong> плоскость.</li><li>Если две точки прямой лежат в плоскости, то вся прямая лежит в этой плоскости.</li><li>Если две плоскости имеют общую точку, то они пересекаются по прямой, проходящей через эту точку.</li></ol>
+</div>
+</section>
+<section class="slide" id="slide-42">
+<header class="slide-header"><span class="slide-num">Слайд 42</span><h2>Многогранник — основные элементы</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Понятие</th><th>Что это</th></tr></thead><tbody><tr><td><strong>Многогранник</strong></td><td>Тело, ограниченное плоскими многоугольниками</td></tr><tr><td><strong>Грань</strong></td><td>Плоский многоугольник, ограничивающий многогранник</td></tr><tr><td><strong>Ребро</strong></td><td>Отрезок, по которому пересекаются две грани</td></tr><tr><td><strong>Вершина</strong></td><td>Точка, в которой сходятся три (или больше) грани</td></tr><tr><td><strong>Диагональ многогранника</strong></td><td>Отрезок, соединяющий две вершины, не лежащие на одной грани</td></tr><tr><td><strong>Сечение</strong></td><td>Плоская фигура, получившаяся при разрезе многогранника плоскостью</td></tr></tbody></table>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-43">
+<header class="slide-header"><span class="slide-num">Слайд 43</span><h2>Призма</h2></header>
+<div class="slide-body">
+<p><strong>Призма</strong> = два одинаковых основания, соединённых параллельными гранями. Это «стопка одинаковых плоских фигур».</p>
+<table><thead><tr><th>Вид</th><th>Описание</th><th>Объём (формула)</th><th>Объём (словами)</th></tr></thead><tbody><tr><td><strong>Прямая призма</strong></td><td>Боковое ребро перпендикулярно основанию</td><td>\(V = S_{\text{осн}}\cdot h\)</td><td>Площадь основания, умноженная на высоту</td></tr><tr><td><strong>Наклонная призма</strong></td><td>Боковое ребро наклонено к основанию (h ≠ бок.ребру)</td><td>\(V = S_{\text{осн}}\cdot h\)</td><td>То же самое, важно: h — это перпендикуляр</td></tr><tr><td><strong>Параллелепипед</strong></td><td>В основании — параллелограмм</td><td>\(V = S_{\text{осн}}\cdot h\)</td><td>То же самое</td></tr><tr><td><strong>Прямоугольный параллелепипед</strong></td><td>Все углы прямые</td><td>\(V = a\cdot b\cdot c\)</td><td>Произведение трёх измерений</td></tr><tr><td><strong>Куб</strong></td><td>Все рёбра равны, все углы прямые</td><td>\(V = a^3\)</td><td>Ребро в кубе</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-44">
+<header class="slide-header"><span class="slide-num">Слайд 44</span><h2>Пирамида</h2></header>
+<div class="slide-body">
+<p><strong>Пирамида</strong> = одно основание + одна вершина над ним. Это «стопка, сходящаяся в одну точку».</p>
+<table><thead><tr><th>Вид</th><th>Описание</th><th>Объём (формула)</th><th>Объём (словами)</th></tr></thead><tbody><tr><td><strong>Любая пирамида</strong></td><td>Одна вершина, любое основание</td><td>\(V = \tfrac{1}{3}\cdot S_{\text{осн}}\cdot h\)</td><td>Одна треть произведения площади основания на высоту</td></tr><tr><td><strong>Правильная пирамида</strong></td><td>Вершина проецируется в центр основания</td><td>\(V = \tfrac{1}{3}\cdot S_{\text{осн}}\cdot h\)</td><td>То же самое</td></tr><tr><td><strong>Тетраэдр</strong></td><td>В основании — треугольник (4 грани, 4 вершины)</td><td>\(V = \tfrac{1}{3}\cdot S_{\text{осн}}\cdot h\)</td><td>То же самое</td></tr><tr><td><strong>Правильный тетраэдр</strong></td><td>Все 6 рёбер равны \(a\)</td><td>\(V = \tfrac{a^3\\sqrt{2}}{12}\)</td><td>Готовая формула, не нужно искать h</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-45">
+<header class="slide-header"><span class="slide-num">Слайд 45</span><h2>Усечённая пирамида</h2></header>
+<div class="slide-body">
+<p><strong>Усечённая пирамида</strong> — часть полной пирамиды между двумя параллельными сечениями. У неё <strong>два</strong> основания (верхнее и нижнее) и боковая поверхность.</p>
+<div class="math-block">\[V = \tfrac{1}{3}\cdot h\cdot (S_1 + \sqrt{S_1\cdot S_2} + S_2)\]</div>
+<p><strong>Словами:</strong> одна треть высоты усечённой части, умноженная на сумму трёх слагаемых: площадь первого основания, корень из произведения площадей, площадь второго основания.</p>
+</div>
+</section>
+<section class="slide" id="slide-46">
+<header class="slide-header"><span class="slide-num">Слайд 46</span><h2>Составные тела</h2></header>
+<div class="slide-body">
+<p><strong>Составное тело</strong> = объединение нескольких простых тел. Объём составного тела = <strong>сумма</strong> объёмов частей.</p>
+<div class="math-block">\[V_{\text{сост}} = V_1 + V_2 + ... + V_n\]</div>
+<p><strong>Пример.</strong> К параллелепипеду сверху приклеена пирамида. Объём = объём параллелепипеда + объём пирамиды.</p>
+</div>
+</section>
+<section class="slide" id="slide-47">
+<header class="slide-header"><span class="slide-num">Слайд 47</span><h2>Тела с отверстиями</h2></header>
+<div class="slide-body">
+<p><strong>Тело с отверстием</strong> = сплошное тело, в котором вырезана часть. Объём = <strong>разность</strong> объёмов.</p>
+<div class="math-block">\[V_{\text{конеч}} = V_{\text{внеш}} - V_{\text{отверст}}\]</div>
+<h3>Типы отверстий и формулы их объёмов</h3>
+<table><thead><tr><th>Форма отверстия</th><th>Формула объёма отверстия</th></tr></thead><tbody><tr><td><strong>Цилиндрическое</strong> (круглое сечение)</td><td>\(V_{\text{отверст}} = \pi r^2\cdot h\)</td></tr><tr><td><strong>Призматическое</strong> (сечение — многоугольник)</td><td>\(V_{\text{отверст}} = S_{\text{сеч}}\cdot h\)</td></tr><tr><td><strong>Пирамидальное</strong> (сужающееся отверстие)</td><td>\(V_{\text{отверст}} = \tfrac{1}{3}\cdot S_{\text{сеч}}\cdot h\)</td></tr><tr><td><strong>Коническое</strong> (круглое сужающееся)</td><td>\(V_{\text{отверст}} = \tfrac{1}{3}\cdot \pi r^2\cdot h\)</td></tr></tbody></table>
+<h3>Алгоритм «Тело с отверстием»</h3>
+<ol><li>Нарисуй внешнее тело.</li><li>Нарисуй отверстие внутри (или вырез).</li><li>Определи форму отверстия (часто это <strong>цилиндр</strong> через параллелепипед или <strong>призма</strong> через другую призму).</li><li>Запиши формулу: \(V_{\text{конеч}} = V_{\text{внеш}} - V_{\text{отверст}}\).</li><li>Подставь и реши.</li></ol>
+<blockquote><p><strong>Пример.</strong> В кубе с ребром 10 просверлено цилиндрическое отверстие вдоль диагонали куба. Диаметр отверстия 4. Найди объём оставшейся части. - \(V_{\text{внеш}} = 10^3 = 1000\). - Длина диагонали куба = \(10\\sqrt{3}\). Это высота цилиндра-отверстия. - Радиус отверстия = \(\tfrac{4}{2} = 2\). - \(V_{\text{отверст}} = \pi\cdot 2^2\cdot 10\\sqrt{3} = 40\pi\\sqrt{3} \approx 217{,}6\). - \(V_{\text{конеч}} = 1000 - 40\pi\\sqrt{3} \approx 782{,}4\).</p></blockquote>
+<h3>Главная путаница: составное тело vs тело с отверстием</h3>
+<table><thead><tr><th></th><th>Составное тело</th><th>Тело с отверстием</th></tr></thead><tbody><tr><td><strong>Что это</strong></td><td>Два (или больше) тел соединены</td><td>Одно тело, из которого удалена часть</td></tr><tr><td><strong>Что делаем с объёмами</strong></td><td>Складываем</td><td>Вычитаем</td></tr><tr><td><strong>Маркер в условии</strong></td><td>«из двух брусков», «составное», «склеены»</td><td>«отверстие», «вырез», «просверлено», «полость»</td></tr><tr><td><strong>Знак в формуле</strong></td><td>\(V = V_1 + V_2\)</td><td>\(V = V_{\text{внеш}} - V_{\text{отверст}}\)</td></tr></tbody></table>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-48">
+<header class="slide-header"><span class="slide-num">Слайд 48</span><h2>Цилиндр</h2></header>
+<div class="slide-body">
+<p><strong>Цилиндр</strong> = прямоугольник, «обёрнутый» вокруг оси. Два одинаковых круга в основаниях, соединённых боковой поверхностью.</p>
+<div class="math-block">\[V = \pi r^2 \cdot h\]</div>
+<div class="math-block">\[S_{\text{бок}} = 2\pi r\cdot h\]</div>
+<div class="math-block">\[S_{\text{полн}} = 2\pi r\cdot h + 2\pi r^2 = 2\pi r(h + r)\]</div>
+<p><strong>Словами:</strong> объём = пи умножить на радиус в квадрате и на высоту. Площадь боковой поверхности = два пи радиус на высоту (это «развёртка» боковой поверхности — прямоугольник).</p>
+</div>
+</section>
+<section class="slide" id="slide-49">
+<header class="slide-header"><span class="slide-num">Слайд 49</span><h2>Конус</h2></header>
+<div class="slide-body">
+<p><strong>Конус</strong> = круг (основание) + одна вершина над центром. Это «треугольник, обёрнутый» вокруг оси.</p>
+<div class="math-block">\[V = \tfrac{1}{3}\cdot \pi r^2\cdot h\]</div>
+<div class="math-block">\[S_{\text{бок}} = \pi r\cdot l\]</div>
+<div class="math-block">\[S_{\text{полн}} = \pi r\cdot l + \pi r^2 = \pi r(l + r)\]</div>
+<p>где \(l\) — образующая (длина боковой стороны конуса от вершины до точки на окружности).</p>
+<p><strong>Словами:</strong> объём = одна треть от произведения пи, радиуса в квадрате и высоты. Площадь боковой поверхности = пи радиус на образующую (это «развёртка» — сектор).</p>
+</div>
+</section>
+<section class="slide" id="slide-50">
+<header class="slide-header"><span class="slide-num">Слайд 50</span><h2>Сфера и шар</h2></header>
+<div class="slide-body">
+<p><strong>Сфера</strong> — все точки, равноудалённые от центра на расстояние \(r\). Только поверхность.</p>
+<p><strong>Шар</strong> — сфера плюс все точки внутри. Тело.</p>
+<div class="math-block">\[V_{\text{шара}} = \tfrac{4}{3}\cdot \pi r^3\]</div>
+<div class="math-block">\[S_{\text{сферы}} = 4\pi r^2\]</div>
+<p><strong>Словами:</strong> объём шара = четыре трети пи радиус в кубе. Площадь сферы = четыре пи радиус в квадрате.</p>
+<blockquote><p><strong>Микро-проверка.</strong> Объём шара радиуса 3 = \(\tfrac{4}{3}\cdot \pi\cdot 27 = 36\pi \approx 113{,}1\). Если это число в голове не щёлкнуло — повтори формулу.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-51">
+<header class="slide-header"><span class="slide-num">Слайд 51</span><h2>Шаровой сегмент, сектор, слой</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Тело</th><th>Объём (формула)</th></tr></thead><tbody><tr><td><strong>Шаровой сегмент</strong> (отсечённая «крышка» шара)</td><td>\(V = \tfrac{\pi h^2}{3}\cdot (3R - h)\), где \(h\) — высота сегмента, \(R\) — радиус шара</td></tr><tr><td><strong>Шаровой сектор</strong> (конус + шаровой сегмент)</td><td>\(V = \tfrac{2}{3}\cdot \pi R^2\cdot h\)</td></tr><tr><td><strong>Шаровой слой</strong> (между двумя параллельными сечениями)</td><td>\(V = \tfrac{\pi h}{6}\cdot (3r_1^2 + 3r_2^2 + h^2)\)</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-52">
+<header class="slide-header"><span class="slide-num">Слайд 52</span><h2>Усечённый конус</h2></header>
+<div class="slide-body">
+<p><strong>Усечённый конус</strong> = часть конуса между двумя параллельными сечениями.</p>
+<div class="math-block">\[V = \tfrac{1}{3}\cdot \pi h\cdot (R^2 + R\cdot r + r^2)\]</div>
+<p>где \(R\) — радиус нижнего основания, \(r\) — радиус верхнего, \(h\) — высота усечённой части.</p>
+<blockquote><p><strong>Образующая \(l\) — это наклонный бок конуса.</strong> <strong>Высота \(h\) — это вертикальный перпендикуляр по центру.</strong> Они всегда связаны прямоугольным треугольником на черновике:</p></blockquote>
+<div class="math-block">\[l^2 = h^2 + (R - r)^2\]</div>
+<blockquote><p><strong>Не подставляй наклонный бок \(l\) туда, где формула требует вертикальную высоту \(h\)!</strong> Это две разные величины, и путаница между ними — самая частая потеря балла в задачах на тела вращения.</p></blockquote>
+<p><strong>Микро-пример.</strong> Усечённый конус с \(R = 5\), \(r = 3\), \(h = 4\).</p>
+<div class="math-block">\[V = \tfrac{1}{3}\cdot \pi\cdot 4\cdot (25 + 15 + 9) = \tfrac{4\pi}{3}\cdot 49 = \tfrac{196\pi}{3} \approx 205{,}25\]</div>
+<p>Образующая: \(l = \sqrt{h^2 + (R-r)^2} = \sqrt{16 + 4} = \sqrt{20} = 2\sqrt{5} \approx 4{,}47\). Видишь: \(h = 4\) и \(l \approx 4{,}47\) — это <strong>разные числа</strong>.</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-53">
+<header class="slide-header"><span class="slide-num">Слайд 53</span><h2>Лайфхак 1. Диагональ многогранника → почти всегда Пифагор.</h2></header>
+<div class="slide-body">
+<p>Если в задаче дана диагональ многогранника — почти всегда её надо «отбросить» через Пифагора, чтобы получить высоту или ребро основания. Не подставляй диагональ напрямую в формулу объёма.</p>
+</div>
+</section>
+<section class="slide" id="slide-54">
+<header class="slide-header"><span class="slide-num">Слайд 54</span><h2>Лайфхак 2. V известно, ищем ребро → оборачиваем формулу.</h2></header>
+<div class="slide-body">
+<p>Если объём известен, а нужно найти ребро — не паникуй. Просто вырази нужную величину из формулы. Это алгебра, не геометрия.</p>
+</div>
+</section>
+<section class="slide" id="slide-55">
+<header class="slide-header"><span class="slide-num">Слайд 55</span><h2>Лайфхак 3. Усечённая пирамида — два пути.</h2></header>
+<div class="slide-body">
+<p>Либо прямая формула \(V = \tfrac{1}{3}\cdot h\cdot (S_1 + \sqrt{S_1\cdot S_2} + S_2)\), либо разность двух полных пирамид.</p>
+</div>
+</section>
+<section class="slide" id="slide-56">
+<header class="slide-header"><span class="slide-num">Слайд 56</span><h2>Лайфхак 4. Правильный многоугольник → используй готовые формулы.</h2></header>
+<div class="slide-body">
+<p>Если в основании правильный треугольник, квадрат или шестиугольник — используй готовые формулы для площади и расстояния от центра до вершины (\(\tfrac{a}{\\sqrt{3}}, \tfrac{a\\sqrt{2}}{2}, a\) соответственно).</p>
+</div>
+</section>
+<section class="slide" id="slide-57">
+<header class="slide-header"><span class="slide-num">Слайд 57</span><h2>Лайфхак 5. Биссектриса к основанию в равнобедренном треугольнике = медиана = высота.</h2></header>
+<div class="slide-body">
+<p>Длина = \(\sqrt{a^2 - \tfrac{b^2}{4}}\). Ловится в задачах на правильную треугольную пирамиду.</p>
+</div>
+</section>
+<section class="slide" id="slide-58">
+<header class="slide-header"><span class="slide-num">Слайд 58</span><h2>Лайфхак 6. Высота не дана → ищи прямоугольный треугольник внутри фигуры.</h2></header>
+<div class="slide-body">
+<p>В правильной пирамиде треугольник «вершина — центр основания — середина стороны» всегда прямоугольный.</p>
+</div>
+</section>
+<section class="slide" id="slide-59">
+<header class="slide-header"><span class="slide-num">Слайд 59</span><h2>Лайфхак 7. Составное тело → рисуй два тела отдельно.</h2></header>
+<div class="slide-body">
+<p>Если задача на составное тело — рисуй два тела отдельно, считай объёмы отдельно, складывай (или вычитай). Не пытайся увидеть «общую формулу».</p>
+</div>
+</section>
+<section class="slide" id="slide-60">
+<header class="slide-header"><span class="slide-num">Слайд 60</span><h2>Лайфхак 8. Проверяй размерность ответа.</h2></header>
+<div class="slide-body">
+<p>\(V\) должен быть в <strong>кубических</strong> единицах. \(S\) — в <strong>квадратных</strong>. Если не сходится, ты потерял умножение.</p>
+</div>
+</section>
+<section class="slide" id="slide-61">
+<header class="slide-header"><span class="slide-num">Слайд 61</span><h2>Лайфхак 9. Правильная треугольная пирамида со всеми рёбрами \(a\).</h2></header>
+<div class="slide-body">
+<p>Используй готовую формулу \(V = \tfrac{a^3\\sqrt{2}}{12}\). Это правильный тетраэдр.</p>
+</div>
+</section>
+<section class="slide" id="slide-62">
+<header class="slide-header"><span class="slide-num">Слайд 62</span><h2>Лайфхак 10. Сечение параллельно основанию → объёмы как кубы линейных размеров.</h2></header>
+<div class="slide-body">
+<p>Объёмы частей относятся как <strong>кубы</strong> линейных размеров: \(k^3\).</p>
+</div>
+</section>
+<section class="slide" id="slide-63">
+<header class="slide-header"><span class="slide-num">Слайд 63</span><h2>Лайфхак 11. Сосуд с жидкостью → V = S·h.</h2></header>
+<div class="slide-body">
+<p>Если задача про сосуд — это прямая задача \(V = S\cdot h\).</p>
+</div>
+</section>
+<section class="slide" id="slide-64">
+<header class="slide-header"><span class="slide-num">Слайд 64</span><h2>Лайфхак 12. Обведи ключевые слова в условии.</h2></header>
+<div class="slide-body">
+<p>«Призма/пирамида/основание/высота/ребро/диагональ/апофема» — это превращает задачу в набор ключевых слов.</p>
+</div>
+</section>
+<section class="slide" id="slide-65">
+<header class="slide-header"><span class="slide-num">Слайд 65</span><h2>Лайфхак 13. Пространственный Пифагор для коробки.</h2></header>
+<div class="slide-body">
+<p>Диагональ прямоугольного параллелепипеда \(d\) связана с тремя его рёбрами \(a, b, c\) формулой:</p>
+<div class="math-block">\[d^2 = a^2 + b^2 + c^2\]</div>
+<p>Это расширение обычного Пифагора на 3 измерения: квадрат диагонали равен сумме квадратов всех трёх измерений. <strong>Пример.</strong> Куб с ребром 10 → диагональ \(= \sqrt{10^2 + 10^2 + 10^2} = \sqrt{300} = 10\\sqrt{3} \approx 17{,}32\). Этот приём спасёт тебя в задачах, где надо найти диагональ коробки или высоту через диагональ.</p>
+</div>
+</section>
+<section class="slide" id="slide-66">
+<header class="slide-header"><span class="slide-num">Слайд 66</span><h2>Лайфхак 14. Сечение отверстия — круг: V = πr²h.</h2></header>
+<div class="slide-body">
+<p>Для конического отверстия — \(\tfrac{1}{3}\cdot \pi r^2\cdot h\).</p>
+</div>
+</section>
+<section class="slide" id="slide-67">
+<header class="slide-header"><span class="slide-num">Слайд 67</span><h2>Лайфхак 15. Сквозное отверстие через параллелепипед: высота = длина ребра.</h2></header>
+<div class="slide-body">
+<p>Не ищи высоту отверстия отдельно — она = длине ребра, через которое оно проходит.</p>
+</div>
+</section>
+<section class="slide" id="slide-68">
+<header class="slide-header"><span class="slide-num">Слайд 68</span><h2>Лайфхак 16. Глухое отверстие — глубину ищи через подобие или Пифагора.</h2></header>
+<div class="slide-body">
+<p>Если отверстие не насквозь — высоту отверстия определяют через подобие треугольников или Пифагора.</p>
+</div>
+</section>
+<section class="slide" id="slide-69">
+<header class="slide-header"><span class="slide-num">Слайд 69</span><h2>Лайфхак 17. Проверяй знак результата.</h2></header>
+<div class="slide-body">
+<p>Если \(V_{\text{конеч}} &lt; 0\) — где-то ошибка: отверстие не может быть больше внешнего тела.</p>
+</div>
+</section>
+<section class="slide" id="slide-70">
+<header class="slide-header"><span class="slide-num">Слайд 70</span><h2>Лайфхак 18. «Вырезать куб» из параллелепипеда = призматическое отверстие с квадратным сечением.</h2></header>
+<div class="slide-body">
+<p>\(V_{\text{отверст}} = a^2\cdot b\), где \(a\) — сторона куба, \(b\) — глубина выреза.</p>
+</div>
+</section>
+<section class="slide" id="slide-71">
+<header class="slide-header"><span class="slide-num">Слайд 71</span><h2>Лайфхак 19. Касательная ⊥ радиус.</h2></header>
+<div class="slide-body">
+<p>Касательная к окружности всегда перпендикулярна радиусу, проведённому в точку касания. Если в задаче дана касательная — сразу ищи прямоугольный треугольник.</p>
+</div>
+</section>
+<section class="slide" id="slide-72">
+<header class="slide-header"><span class="slide-num">Слайд 72</span><h2>Лайфхак 20. Косинус в стереометрии.</h2></header>
+<div class="slide-body">
+<p>Если в задаче есть двугранный угол или угол между прямой и плоскостью — это почти всегда даёт тебе \(\cos\) или \(\tan\) для нахождения высоты. Запиши: \(h = \) (что-то) × \(\tan\) (угла).</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-73">
+<header class="slide-header"><span class="slide-num">Слайд 73</span><h2>Площади плоских фигур</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Фигура</th><th>Формула (символы)</th><th>Что означает словами</th></tr></thead><tbody><tr><td>Квадрат</td><td>\(S = a^2\)</td><td>Площадь = сторона в квадрате (сторона умноженная сама на себя)</td></tr><tr><td>Прямоугольник</td><td>\(S = a\cdot b\)</td><td>Площадь = первая сторона × вторая сторона (длина на ширину)</td></tr><tr><td>Ромб</td><td>\(S = \tfrac{d_1\cdot d_2}{2} = a^2\cdot \sin\alpha\)</td><td>Площадь = половина произведения диагоналей <strong>ИЛИ</strong> квадрат стороны на синус угла</td></tr><tr><td>Параллелограмм</td><td>\(S = a\cdot b\cdot \sin\alpha = a\cdot h\)</td><td>Площадь = первая сторона × вторая × синус угла между ними. α — угол между сторонами</td></tr><tr><td>Трапеция</td><td>\(S = \tfrac{a+b}{2}\cdot h\)</td><td>Площадь = полусумма оснований × высота. <strong>a, b — основания</strong>, <strong>h — высота</strong> (перпендикуляр между ними)</td></tr><tr><td>Треугольник (через сторону и высоту)</td><td>\(S = \tfrac{1}{2}\cdot a\cdot h_a\)</td><td>Площадь = половина × основание × высота к этому основанию</td></tr><tr><td>Треугольник (через две стороны и угол)</td><td>\(S = \tfrac{1}{2}\cdot a\cdot b\cdot \sin C\)</td><td>Площадь = половина × первая сторона × вторая × синус угла между ними</td></tr><tr><td>Треугольник (Герон)</td><td>\(S = \sqrt{p(p-a)(p-b)(p-c)}\), где \(p = \tfrac{a+b+c}{2}\)</td><td>Площадь = корень из произведения четырёх скобок: полупериметр и три разности (полупериметр минус каждая сторона). \(p\) — полупериметр = сумма трёх сторон, делённая на 2</td></tr><tr><td>Прямоугольный треугольник</td><td>\(S = \tfrac{1}{2}\cdot a\cdot b\)</td><td>Площадь = половина × первый катет × второй катет</td></tr><tr><td>Равносторонний треугольник</td><td>\(S = \tfrac{a^2\sqrt{3}}{4}\)</td><td>Площадь = квадрат стороны, умноженный на корень из 3 и делённый на 4</td></tr><tr><td>Круг</td><td>\(S = \pi r^2\)</td><td>Площадь = пи × радиус в квадрате</td></tr><tr><td>Сектор круга</td><td>\(S = \tfrac{\alpha}{360°}\cdot \pi r^2\)</td><td>Площадь = доля от площади круга (равная отношению угла к 360°)</td></tr><tr><td>Правильный n-угольник</td><td>\(S = \tfrac{n\cdot a^2}{4\cdot \tan(\pi/n)}\)</td><td>Площадь = n × квадрат стороны / (4 × тангенс пи делить на n)</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-74">
+<header class="slide-header"><span class="slide-num">Слайд 74</span><h2>Окружность</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Что</th><th>Формула (символы)</th><th>Что означает словами</th></tr></thead><tbody><tr><td>Длина окружности</td><td>\(C = 2\pi r\)</td><td>Длина = два пи × радиус</td></tr><tr><td>Длина дуги</td><td>\(l = \tfrac{\alpha}{360°}\cdot 2\pi r\)</td><td>Длина дуги = доля длины окружности (равная отношению центрального угла к 360°)</td></tr><tr><td>Диаметр</td><td>\(d = 2r\)</td><td>Диаметр = два радиуса</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-75">
+<header class="slide-header"><span class="slide-num">Слайд 75</span><h2>Теоремы</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Теорема</th><th>Формула (символы)</th><th>Что означает словами</th></tr></thead><tbody><tr><td>Пифагора</td><td>\(c^2 = a^2 + b^2\)</td><td>Квадрат гипотенузы = сумма квадратов двух катетов</td></tr><tr><td>Синусов</td><td>\(\tfrac{a}{\sin A} = \tfrac{b}{\sin B} = \tfrac{c}{\sin C} = 2R\)</td><td>Сторона / синус противоположного угла = одно и то же число для всех сторон = два радиуса описанной окружности</td></tr><tr><td>Косинусов</td><td>\(c^2 = a^2 + b^2 - 2ab\cdot \cos C\)</td><td>Квадрат стороны = сумма квадратов двух других сторон минус удвоенное произведение этих сторон на косинус угла между ними</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-76">
+<header class="slide-header"><span class="slide-num">Слайд 76</span><h2>Объёмы тел</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Тело</th><th>Формула объёма (символы)</th><th>Что означает словами</th><th>Микро-пример</th></tr></thead><tbody><tr><td>Призма (любая)</td><td>\(V = S_{\text{осн}}\cdot h\)</td><td>Объём = площадь основания × высота</td><td>\(S_{\text{осн}} = 12,\ h = 5\): \(V = 12\cdot 5 = 60\)</td></tr><tr><td>Параллелепипед</td><td>\(V = S_{\text{осн}}\cdot h\)</td><td>Объём = площадь основания × высота</td><td>\(S_{\text{осн}} = 24,\ h = 5\): \(V = 24\cdot 5 = 120\)</td></tr><tr><td>Прямоугольный параллелепипед</td><td>\(V = a\cdot b\cdot c\)</td><td>Объём = первая сторона × вторая × третья. <strong>Одна из сторон — это высота</strong> (ребро, перпендикулярное основанию)</td><td>\(3\times 4\times 5\): \(V = 3\cdot 4\cdot 5 = 60\)</td></tr><tr><td>Куб</td><td>\(V = a^3\)</td><td>Объём = ребро в кубе</td><td>Ребро 4: \(V = 4^3 = 64\)</td></tr><tr><td>Пирамида (любая)</td><td>\(V = \tfrac{1}{3}\cdot S_{\text{осн}}\cdot h\)</td><td>Объём = одна треть × площадь основания × высота</td><td>\(S_{\text{осн}} = 36,\ h = 5\): \(V = \tfrac{1}{3}\cdot 36\cdot 5 = 60\)</td></tr><tr><td>Правильный тетраэдр</td><td>\(V = \tfrac{a^3\sqrt{2}}{12}\)</td><td>Объём = ребро в кубе × корень из 2 / 12</td><td>Ребро 6: \(V = \tfrac{216\sqrt{2}}{12} = 18\sqrt{2} \approx 25{,}46\)</td></tr><tr><td>Усечённая пирамида</td><td>\(V = \tfrac{1}{3}\cdot h\cdot (S_1 + \sqrt{S_1\cdot S_2} + S_2)\)</td><td>Объём = одна треть высоты × (площадь нижнего + корень из произведения площадей + площадь верхнего)</td><td>\(h = 4,\ S_1 = 9,\ S_2 = 4\): \(V = \tfrac{1}{3}\cdot 4\cdot (9 + 6 + 4) = \tfrac{76}{3} \approx 25{,}33\)</td></tr><tr><td>Цилиндр</td><td>\(V = \pi r^2\cdot h\)</td><td>Объём = пи × радиус в квадрате × высота</td><td>\(r = 2,\ h = 10\): \(V = \pi\cdot 4\cdot 10 = 40\pi \approx 125{,}66\)</td></tr><tr><td>Конус</td><td>\(V = \tfrac{1}{3}\cdot \pi r^2\cdot h\)</td><td>Объём = одна треть × пи × радиус в квадрате × высота</td><td>\(r = 3,\ h = 5\): \(V = \tfrac{1}{3}\cdot 9\pi\cdot 5 = 15\pi \approx 47{,}12\)</td></tr><tr><td>Усечённый конус</td><td>\(V = \tfrac{1}{3}\cdot \pi h\cdot (R^2 + R\cdot r + r^2)\)</td><td>Объём = одна треть × пи × высота × (квадрат большого радиуса + произведение радиусов + квадрат малого)</td><td>\(R = 5,\ r = 3,\ h = 4\): \(V = \tfrac{1}{3}\cdot \pi\cdot 4\cdot 49 = \tfrac{196\pi}{3} \approx 205{,}25\)</td></tr><tr><td>Шар</td><td>\(V = \tfrac{4}{3}\cdot \pi r^3\)</td><td>Объём = четыре трети × пи × радиус в кубе</td><td>\(r = 3\): \(V = \tfrac{4}{3}\cdot 27\pi = 36\pi \approx 113{,}1\)</td></tr><tr><td><strong>Тело с отверстием</strong></td><td>\(V = V_{\text{внеш}} - V_{\text{отверст}}\)</td><td>Объём = объём внешнего тела минус объём вырезанной части</td><td>\(V_{\text{внеш}} = 240,\ V_{\text{отверст}} = 31{,}4\): \(V = 208{,}6\)</td></tr><tr><td><strong>Цилиндрическое отверстие</strong></td><td>\(V_{\text{отверст}} = \pi r^2\cdot h\)</td><td>Объём = пи × радиус в квадрате × высота (отверстия)</td><td>\(r = 1,\ h = 10\): \(V = 10\pi \approx 31{,}4\)</td></tr><tr><td><strong>Призматическое отверстие</strong></td><td>\(V_{\text{отверст}} = S_{\text{сеч}}\cdot h\)</td><td>Объём = площадь сечения × высота (отверстия)</td><td>\(S = 4,\ h = 5\): \(V = 20\)</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-77">
+<header class="slide-header"><span class="slide-num">Слайд 77</span><h2>Площади поверхностей тел вращения</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Тело</th><th>Боковая поверхность (символы)</th><th>Полная поверхность (символы)</th><th>Что означает словами</th><th>Микро-пример</th></tr></thead><tbody><tr><td>Цилиндр</td><td>\(S_{\text{бок}} = 2\pi r\cdot h\)</td><td>\(S_{\text{полн}} = 2\pi r\cdot (h + r)\)</td><td>Боковая = длина окружности × высота. Полная = боковая + два круга (две крышки)</td><td>\(r = 2,\ h = 10\): \(S_{\text{полн}} = 4\pi\cdot 12 = 48\pi \approx 150{,}8\)</td></tr><tr><td>Конус</td><td>\(S_{\text{бок}} = \pi r\cdot l\)</td><td>\(S_{\text{полн}} = \pi r\cdot (l + r)\)</td><td>Боковая = пи × радиус × образующая. Полная = боковая + круг (крышка). \(l\) — образующая (наклонная боковая)</td><td>\(r = 3,\ l = 5\): \(S_{\text{полн}} = 3\pi\cdot 8 = 24\pi \approx 75{,}4\)</td></tr><tr><td>Сфера</td><td>—</td><td>\(S = 4\pi r^2\)</td><td>Площадь = четыре пи × радиус в квадрате</td><td>\(r = 3\): \(S = 4\pi\cdot 9 = 36\pi \approx 113{,}1\)</td></tr></tbody></table>
+<p>где \(l\) — образующая конуса.</p>
+</div>
+</section>
+<section class="slide" id="slide-78">
+<header class="slide-header"><span class="slide-num">Слайд 78</span><h2>Подобие</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Величина</th><th>Как меняется при коэффициенте \(k\)</th></tr></thead><tbody><tr><td>Линейный размер</td><td>\(\cdot k\)</td></tr><tr><td>Площадь</td><td>\(\cdot k^2\)</td></tr><tr><td>Объём</td><td>\(\cdot k^3\)</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-79">
+<header class="slide-header"><span class="slide-num">Слайд 79</span><h2>Расстояния для правильных пирамид</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Основание</th><th>Расстояние от центра до вершины</th></tr></thead><tbody><tr><td>Правильный треугольник</td><td>\(\tfrac{a}{\\sqrt{3}} = \tfrac{a\\sqrt{3}}{3}\)</td></tr><tr><td>Квадрат</td><td>\(\tfrac{a\\sqrt{2}}{2}\)</td></tr><tr><td>Правильный шестиугольник</td><td>\(a\)</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-80">
+<header class="slide-header"><span class="slide-num">Слайд 80</span><h2>Обратные формулы</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Что дано</th><th>Что находим</th><th>Формула</th></tr></thead><tbody><tr><td>\(V_{\text{призмы}}\) и \(S_{\text{осн}}\)</td><td>\(h\)</td><td>\(h = \tfrac{V}{S_{\text{осн}}}\)</td></tr><tr><td>\(V_{\text{пирамиды}}\) и \(S_{\text{осн}}\)</td><td>\(h\)</td><td>\(h = \tfrac{3V}{S_{\text{осн}}}\)</td></tr><tr><td>\(V_{\text{призмы}}\) и \(h\)</td><td>\(S_{\text{осн}}\)</td><td>\(S_{\text{осн}} = \tfrac{V}{h}\)</td></tr><tr><td>\(V_{\text{пирамиды}}\) и \(h\)</td><td>\(S_{\text{осн}}\)</td><td>\(S_{\text{осн}} = \tfrac{3V}{h}\)</td></tr></tbody></table>
+<p>---</p>
+<blockquote><p><strong>Главное, что нужно вынести из этого справочника:</strong> 1. Любая формула запоминается через <strong>два слоя</strong>: символы + слова. Если забыл формулу — прочитай её словами и вспомни. 2. У каждой формулы есть <strong>условие применимости</strong>. Проверь его, прежде чем подставлять числа. 3. Объём всегда в <strong>кубических</strong> единицах. Площадь — в <strong>квадратных</strong>. Это самая быстрая проверка правильности. 4. Если не знаешь, какую формулу взять — нарисуй фигуру и перебери все, что знаешь. Одна подойдёт. 5. Не путай <strong>составное тело</strong> (плюс) и <strong>тело с отверстием</strong> (минус). Обведи ключевые слова в условии — они подскажут знак.</p></blockquote>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-81">
+<header class="slide-header"><span class="slide-num">Слайд 81</span><h2>Главная идея</h2></header>
+<div class="slide-body">
+<p>Любая сложная фигура <strong>состоит из простых</strong>. Если ты знаешь формулы для простых фигур (квадрат, прямоугольный треугольник, круг), то сложную можно <strong>разобрать на части</strong>.</p>
+<table><thead><tr><th>Что забыл</th><th>Как достроить</th><th>Что получишь</th></tr></thead><tbody><tr><td><strong>Площадь ромба</strong></td><td>Ромб = 2 одинаковых равнобедренных треугольника</td><td>\(S_{\text{ромб}} = 2 \cdot \tfrac{1}{2} \cdot a \cdot h = a \cdot h = \tfrac{d_1 \cdot d_2}{2}\)</td></tr><tr><td><strong>Площадь трапеции</strong></td><td>Дострой до прямоугольника, вычти 2 треугольника по бокам</td><td>\(S_{\text{трап}} = S_{\text{прямоуг}} - 2 \cdot S_{\triangle}\)</td></tr><tr><td><strong>Площадь правильного треугольника</strong></td><td>Удвой до ромба (два одинаковых равносторонних треугольника)</td><td>\(S_{\triangle} = \tfrac{1}{2} \cdot a^2 \cdot \sin 60° = \tfrac{a^2 \sqrt{3}}{4}\)</td></tr><tr><td><strong>Площадь произвольного треугольника</strong></td><td>Удвой до параллелограмма</td><td>\(S_{\triangle} = \tfrac{1}{2} \cdot S_{\text{параллел}}\)</td></tr><tr><td><strong>Объём тела с отверстием</strong></td><td>Не достраивай — вычти</td><td>\(V = V_{\text{внеш}} - V_{\text{отверст}}\)</td></tr><tr><td><strong>Высота наклонной призмы</strong></td><td>Опусти перпендикуляр из верхней вершины в нижнюю плоскость</td><td>\(h \neq\) боковое ребро (это <strong>разные</strong> величины)</td></tr><tr><td><strong>Высота правильной пирамиды</strong></td><td>Из вершины опусти перпендикуляр в <strong>центр</strong> основания</td><td>\(h \neq\) апофема (высота боковой грани)</td></tr><tr><td><strong>Гипотенуза</strong> (прямоугольный треугольник)</td><td>Примени Пифагор</td><td>\(c = \sqrt{a^2 + b^2}\)</td></tr><tr><td><strong>Катет</strong></td><td>Вычти квадраты</td><td>\(a = \sqrt{c^2 - b^2}\)</td></tr><tr><td><strong>Диагональ параллелепипеда</strong></td><td>3D Пифагор</td><td>\(d = \sqrt{a^2 + b^2 + c^2}\)</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide final-slide" id="slide-82">
+<header class="slide-header"><span class="slide-num">Слайд 82</span><h2>Дополнительные приёмы (окружность и многоугольники)</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Что забыл</th><th>Как достроить</th><th>Что получишь</th></tr></thead><tbody><tr><td><strong>Сторона квадрата через диагональ</strong></td><td>Опиши окружность вокруг квадрата → диагональ = диаметр</td><td>\(a = \tfrac{d}{\sqrt{2}} = \tfrac{d\sqrt{2}}{2}\)</td></tr><tr><td><strong>Радиус окружности вокруг правильного треугольника</strong></td><td>Проведи луч от центра к вершине через середину стороны</td><td>\(R = \tfrac{a}{\sqrt{3}} = \tfrac{a\sqrt{3}}{3}\)</td></tr><tr><td><strong>Радиус окружности внутри правильного треугольника</strong></td><td>Перпендикуляр из центра к стороне</td><td>\(r = \tfrac{a}{2\sqrt{3}} = \tfrac{a\sqrt{3}}{6}\)</td></tr><tr><td><strong>Радиус окружности вокруг квадрата</strong></td><td>Половина диагонали</td><td>\(R = \tfrac{a\sqrt{2}}{2}\)</td></tr><tr><td><strong>Радиус окружности внутри квадрата</strong></td><td>Половина стороны</td><td>\(r = \tfrac{a}{2}\)</td></tr></tbody></table>
+<blockquote><p><strong>Микро-пример (площадь ромба).</strong> Забыл формулу. Ромб — это 4 одинаковые стороны. Проведи одну диагональ — получишь 2 равных равнобедренных треугольника. Площадь каждого = \(\tfrac{1}{2} \cdot \text{основание} \cdot \text{высота}\). Основание — это диагональ \(d_1\), высота треугольника — это половина второй диагонали \(d_2/2\). Итого: \(S = 2 \cdot \tfrac{1}{2} \cdot d_1 \cdot \tfrac{d_2}{2} = \tfrac{d_1 \cdot d_2}{2}\). Готово.</p></blockquote>
+<blockquote><p><strong>Микро-пример (правильная пирамида).</strong> Забыл высоту. У правильной пирамиды вершина проецируется в <strong>центр</strong> основания. Опусти перпендикуляр из вершины в центр — это и есть высота \(h\). Это <strong>не</strong> апофема (апофема идёт из вершины к середине стороны основания, по боковой грани).</p></blockquote>
+<p>---</p>
+</div>
+</section>
+<section class="slide final-slide" id="slide-83">
+<header class="slide-header"><span class="slide-num">Слайд 83</span><h2>Что это</h2></header>
+<div class="slide-body">
+<p><strong>Площадь поверхности</strong> — это сумма площадей всех «кусков», которыми покрыто тело снаружи. Для куба — это 6 одинаковых квадратов. Для цилиндра — 2 круга и боковая «обёртка» (прямоугольник в развёртке).</p>
+<table><thead><tr><th>Тело</th><th>Боковая поверхность (словами + формула)</th><th>Полная поверхность (словами + формула)</th></tr></thead><tbody><tr><td><strong>Куб</strong></td><td>(нет разделения на боковую и полную)</td><td>\(S_{\text{полн}} = 6a^2\) — шесть одинаковых квадратов со стороной \(a\)</td></tr><tr><td><strong>Прямоугольный параллелепипед</strong></td><td>(нет разделения)</td><td>\(S_{\text{полн}} = 2(ab + bc + ac)\) — сумма площадей трёх пар граней</td></tr><tr><td><strong>Призма (любая)</strong></td><td>\(S_{\text{бок}} = P_{\text{осн}} \cdot h\) — периметр основания, умноженный на высоту</td><td>\(S_{\text{полн}} = S_{\text{бок}} + 2 S_{\text{осн}}\) — боковая плюс два основания</td></tr><tr><td><strong>Пирамида (правильная)</strong></td><td>\(S_{\text{бок}} = \tfrac{1}{2} \cdot P_{\text{осн}} \cdot l\), где \(l\) — апофема</td><td>\(S_{\text{полн}} = S_{\text{бок}} + S_{\text{осн}}\) — боковая плюс одно основание</td></tr><tr><td><strong>Цилиндр</strong></td><td>\(S_{\text{бок}} = 2\pi r h\) — длина окружности, умноженная на высоту</td><td>\(S_{\text{полн}} = 2\pi r (h + r)\) — боковая плюс два круга</td></tr><tr><td><strong>Конус</strong></td><td>\(S_{\text{бок}} = \pi r l\), где \(l\) — образующая</td><td>\(S_{\text{полн}} = \pi r (l + r)\) — боковая плюс круг</td></tr><tr><td><strong>Усечённый конус</strong></td><td>\(S_{\text{бок}} = \pi (R + r) \cdot l\)</td><td>\(S_{\text{полн}} = S_{\text{бок}} + \pi R^2 + \pi r^2\) — боковая плюс два круга</td></tr><tr><td><strong>Сфера</strong></td><td>—</td><td>\(S = 4\pi r^2\) — четыре пи радиус в квадрате</td></tr></tbody></table>
+<p><strong>Словами:</strong></p>
+<ul><li><strong>Боковая поверхность</strong> — это «стенки» (без верхней и нижней крышки).</li><li><strong>Полная поверхность</strong> — это «стенки + крышки».</li></ul>
+</div>
+</section>
+<section class="slide reference-slide" id="slide-84">
+<header class="slide-header"><span class="slide-num ref">Слайд 84</span><h2>Микро-примеры</h2></header>
+<div class="slide-body">
+<p><strong>Цилиндр.</strong> \(r = 2\), \(h = 10\). \(S_{\text{полн}} = 2\pi \cdot 2 \cdot (10 + 2) = 4\pi \cdot 12 = 48\pi \approx 150{,}8\).</p>
+<p><strong>Конус.</strong> \(r = 3\), \(l = 5\). \(S_{\text{полн}} = \pi \cdot 3 \cdot (5 + 3) = 3\pi \cdot 8 = 24\pi \approx 75{,}4\).</p>
+<p><strong>Правильная четырёхугольная пирамида.</strong> Сторона основания 4, апофема 5. Периметр основания \(P = 16\). \(S_{\text{бок}} = \tfrac{1}{2} \cdot 16 \cdot 5 = 40\). Площадь основания \(S_{\text{осн}} = 16\). \(S_{\text{полн}} = 40 + 16 = 56\).</p>
+</div>
+</section>
+<section class="slide reference-slide" id="slide-85">
+<header class="slide-header"><span class="slide-num ref">Слайд 85</span><h2>Главная путаница: \(h\) vs \(l\)</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Величина</th><th>Что это</th></tr></thead><tbody><tr><td><strong>Высота \(h\)</strong></td><td>Вертикальный перпендикуляр (кратчайшее расстояние)</td></tr><tr><td><strong>Образующая \(l\)</strong> (для конуса)</td><td>Наклонная боковая линия от вершины до точки на окружности</td></tr><tr><td><strong>Апофема \(l\)</strong> (для пирамиды)</td><td>Высота боковой грани (от вершины до середины стороны основания)</td></tr></tbody></table>
+<p>Это <strong>разные</strong> величины. Они связаны прямоугольным треугольником:</p>
+<ul><li>Для конуса: \(l^2 = h^2 + r^2\).</li><li>Для правильной четырёхугольной пирамиды: \(l^2 = h^2 + \left(\tfrac{a}{2}\right)^2\).</li></ul>
+<blockquote><p><strong>Не подставляй наклонный бок \(l\) туда, где формула требует вертикальную высоту \(h\).</strong> Это две разные величины, и путаница между ними — самая частая потеря балла.</p></blockquote>
+<p>---</p>
+</div>
+</section>
+<section class="slide reference-slide" id="slide-86">
+<header class="slide-header"><span class="slide-num ref">Слайд 86</span><h2>Базовые понятия</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Термин</th><th>Что это</th><th>Пример из жизни</th></tr></thead><tbody><tr><td><strong>Точка</strong></td><td>Место в пространстве без размера</td><td>Кончик иглы, точка от карандаша на бумаге</td></tr><tr><td><strong>Линия</strong></td><td>След от движения точки</td><td>Нитка, натянутая между двумя пальцами</td></tr><tr><td><strong>Прямая</strong></td><td>Бесконечная линия без изгибов</td><td>Линия горизонта вдали</td></tr><tr><td><strong>Луч</strong></td><td>Часть прямой с началом, но без конца</td><td>Солнечный луч (у света есть начало — Солнце, но нет конца)</td></tr><tr><td><strong>Отрезок</strong></td><td>Часть прямой, ограниченная двумя точками</td><td>Линейка, карандаш</td></tr><tr><td><strong>Ломаная</strong></td><td>Несколько отрезков, соединённых концами</td><td>Зигзаг молнии, график биржевых котировок</td></tr><tr><td><strong>Угол</strong></td><td>Фигура из двух лучей с общим началом</td><td>Угол стола, угол между стрелками часов</td></tr><tr><td><strong>Плоскость</strong></td><td>Бесконечная ровная поверхность без толщины</td><td>Поверхность воды в пруду (в идеале)</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide reference-slide" id="slide-87">
+<header class="slide-header"><span class="slide-num ref">Слайд 87</span><h2>Отношения между прямыми и плоскостями</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Термин</th><th>Что это</th><th>Пример из жизни</th></tr></thead><tbody><tr><td><strong>Параллельные прямые</strong></td><td>Не пересекаются, сколько бы их ни продолжали</td><td>Два железнодорожных рельса, две стороны тетрадного листа</td></tr><tr><td><strong>Перпендикулярные прямые</strong></td><td>Пересекаются под углом 90°</td><td>Стена и пол, перекрестье прицела</td></tr><tr><td><strong>Наклонная</strong></td><td>Прямая, которая не перпендикулярна и не параллельна данной</td><td>Лестница, прислонённая к стене</td></tr><tr><td><strong>Параллельные плоскости</strong></td><td>Не пересекаются</td><td>Пол и потолок комнаты</td></tr><tr><td><strong>Перпендикулярные плоскости</strong></td><td>Пересекаются под прямым углом</td><td>Стена и пол</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide reference-slide" id="slide-88">
+<header class="slide-header"><span class="slide-num ref">Слайд 88</span><h2>Элементы треугольника</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Термин</th><th>Что это</th><th>Пример</th></tr></thead><tbody><tr><td><strong>Вершина</strong></td><td>Точка, где сходятся две стороны треугольника</td><td>Угол крыши дома</td></tr><tr><td><strong>Сторона</strong></td><td>Отрезок между двумя вершинами</td><td>Боковая кромка крыши</td></tr><tr><td><strong>Медиана</strong></td><td>Отрезок от вершины к <strong>середине</strong> противоположной стороны</td><td>Линия от вершины крыши к середине основания</td></tr><tr><td><strong>Биссектриса</strong></td><td>Луч из вершины, <strong>делящий угол пополам</strong></td><td>Линия, разрезающая угол пополам</td></tr><tr><td><strong>Высота</strong></td><td><strong>Перпендикуляр</strong> из вершины к противоположной стороне</td><td>Стрела от вершины крыши прямо вниз к основанию</td></tr><tr><td><strong>Серединный перпендикуляр</strong></td><td>Перпендикуляр к отрезку через его середину</td><td>Линия, проходящая через середину стены строго под 90°</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide reference-slide" id="slide-89">
+<header class="slide-header"><span class="slide-num ref">Слайд 89</span><h2>Элементы окружности</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Термин</th><th>Что это</th></tr></thead><tbody><tr><td><strong>Окружность</strong></td><td>Множество точек, равноудалённых от центра (только граница)</td></tr><tr><td><strong>Круг</strong></td><td>Окружность плюс все точки внутри неё</td></tr><tr><td><strong>Радиус</strong></td><td>Отрезок от центра к точке на окружности</td></tr><tr><td><strong>Диаметр</strong></td><td>Хорда, проходящая через центр (= 2 радиуса, самая длинная хорда)</td></tr><tr><td><strong>Хорда</strong></td><td>Отрезок, соединяющий две точки на окружности (не обязательно через центр)</td></tr><tr><td><strong>Дуга</strong></td><td>Часть окружности между двумя точками</td></tr><tr><td><strong>Касательная</strong></td><td>Прямая, касающаяся окружности <strong>в одной точке</strong> и <strong>перпендикулярная радиусу</strong> в этой точке</td></tr><tr><td><strong>Секущая</strong></td><td>Прямая, пересекающая окружность <strong>в двух точках</strong></td></tr><tr><td><strong>Сектор</strong></td><td>«Кусок пирога» — часть круга между двумя радиусами</td></tr><tr><td><strong>Сегмент</strong></td><td>«Ломтик» — часть круга между хордой и дугой</td></tr><tr><td><strong>Вписанный угол</strong></td><td>Угол с вершиной <strong>на окружности</strong>, стороны пересекают её ещё в двух точках</td></tr><tr><td><strong>Центральный угол</strong></td><td>Угол с вершиной <strong>в центре</strong> окружности</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide reference-slide" id="slide-90">
+<header class="slide-header"><span class="slide-num ref">Слайд 90</span><h2>Элементы многогранника</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Термин</th><th>Что это</th></tr></thead><tbody><tr><td><strong>Многогранник</strong></td><td>Тело, ограниченное плоскими многоугольниками (гранями)</td></tr><tr><td><strong>Грань</strong></td><td>Плоская поверхность, ограничивающая тело (стена коробки)</td></tr><tr><td><strong>Ребро</strong></td><td>Линия пересечения двух граней (угол коробки)</td></tr><tr><td><strong>Вершина</strong></td><td>Точка, где сходятся 3 (или больше) грани (угол коробки)</td></tr><tr><td><strong>Диагональ многогранника</strong></td><td>Отрезок между двумя вершинами, <strong>не лежащими на одной грани</strong> (через внутренность тела)</td></tr><tr><td><strong>Апофема</strong></td><td>Высота боковой грани правильной пирамиды (от вершины пирамиды до середины стороны основания)</td></tr><tr><td><strong>Боковое ребро</strong></td><td>Ребро, не лежащее в основании (соединяет верхнее и нижнее основания в призме или идёт от основания к вершине в пирамиде)</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide reference-slide" id="slide-91">
+<header class="slide-header"><span class="slide-num ref">Слайд 91</span><h2>Площадь, объём, периметр</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Термин</th><th>Что это</th></tr></thead><tbody><tr><td><strong>Периметр</strong></td><td>Сумма длин всех сторон фигуры (как обойти забором участок)</td></tr><tr><td><strong>Площадь</strong></td><td>Сколько места фигура занимает на плоскости (измеряется в квадратных единицах)</td></tr><tr><td><strong>Объём</strong></td><td>Сколько места тело занимает в пространстве (измеряется в кубических единицах)</td></tr><tr><td><strong>Пропорциональность</strong></td><td>Две величины изменяются вместе (растут вместе или убывают вместе)</td></tr><tr><td><strong>Обратная пропорциональность</strong></td><td>Одна растёт — другая убывает (чем больше скорость, тем меньше время)</td></tr><tr><td><strong>Коэффициент подобия \(k\)</strong></td><td>Отношение соответствующих линейных размеров (стороны новой / стороны старой)</td></tr><tr><td><strong>\(k^2\)</strong></td><td>Множитель для площадей при подобии</td></tr><tr><td><strong>\(k^3\)</strong></td><td>Множитель для объёмов при подобии</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide reference-slide" id="slide-92">
+<header class="slide-header"><span class="slide-num ref">Слайд 92</span><h2>Частые определения (запомни как таблицу умножения)</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Термин</th><th>Что это</th><th>Запомни через</th></tr></thead><tbody><tr><td><strong>Правильный многоугольник</strong></td><td>У которого <strong>все стороны равны И все углы равны</strong></td><td>Правильный треугольник = равносторонний; правильный четырёхугольник = квадрат; правильный шестиугольник — все стороны равны, все углы по 120°</td></tr><tr><td><strong>Равнобедренный треугольник</strong></td><td>У которого <strong>две стороны равны</strong> (не три, не одна — именно две)</td><td>Как штаны: две штанины равны, а третья сторона (пояс) может быть другой</td></tr><tr><td><strong>Равносторонний треугольник</strong></td><td>У которого <strong>все три стороны равны</strong></td><td>= правильный треугольник</td></tr><tr><td><strong>Прямоугольный треугольник</strong></td><td>У которого <strong>один угол = 90°</strong></td><td>Уголок стола</td></tr><tr><td><strong>Тупоугольный треугольник</strong></td><td>У которого <strong>один угол больше 90°</strong> (но меньше 180°)</td><td>Широкий угол</td></tr><tr><td><strong>Остроугольный треугольник</strong></td><td>У которого <strong>все углы меньше 90°</strong></td><td>Узкие углы (как стрелки пиковых часов)</td></tr><tr><td><strong>Равнобедренная трапеция</strong></td><td>У которой <strong>боковые стороны равны</strong> (не основания)</td><td>Боковые стороны — наклонные, основания — параллельные</td></tr><tr><td><strong>Прямоугольная трапеция</strong></td><td>У которой <strong>один угол = 90°</strong></td><td>Одна сторона строго вертикальная</td></tr><tr><td><strong>Касательная</strong></td><td>Прямая, которая касается окружности <strong>в одной точке</strong> и <strong>перпендикулярна радиусу</strong> в этой точке</td><td>Колесо на дороге: дорога касается колеса в одной точке, радиус в этой точке перпендикулярен дороге</td></tr><tr><td><strong>Секущая</strong></td><td>Прямая, которая пересекает окружность <strong>в двух точках</strong></td><td>Нож, разрезающий яблоко на две части</td></tr><tr><td><strong>Хорда</strong></td><td>Отрезок, соединяющий <strong>две точки на окружности</strong></td><td>Струна (хорда по-гречески)</td></tr><tr><td><strong>Диаметр</strong></td><td><strong>Хорда, проходящая через центр</strong> (самая длинная хорда)</td><td>Линия через центр мяча</td></tr></tbody></table>
+<p>---</p>
+<blockquote><p><strong>Главное, что нужно вынести из этого справочника:</strong> 1. Любая формула запоминается через <strong>два слоя</strong>: символы + слова. Если забыл формулу — прочитай её словами и вспомни. 2. У каждой формулы есть <strong>условие применимости</strong>. Проверь его, прежде чем подставлять числа. 3. Объём всегда в <strong>кубических</strong> единицах. Площадь — в <strong>квадратных</strong>. Это самая быстрая проверка правильности. 4. Если не знаешь, какую формулу взять — нарисуй фигуру и перебери все, что знаешь. Одна подойдёт. 5. Не путай <strong>составное тело</strong> (плюс) и <strong>тело с отверстием</strong> (минус). Обведи ключевые слова в условии — они подскажут знак. 6. <strong>Не знаешь формулу — дострой фигуру</strong> до знакомой. Любая сложная фигура состоит из простых. 7. <strong>Не видишь, с чего начать задачу</strong> — открой «Алгоритм мышления» и пройди 5 шагов.</p></blockquote>
+</div>
+</section>
+
+</main>
+</div>
+<button class="back-to-toc" onclick="window.scrollTo(0,0)">Наверх</button>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/cancel.min.js"></script>
+<script>
+function renderMath() {
+  if (typeof renderMathInElement === "undefined") return;
+  renderMathInElement(document.body, {
+    delimiters: [{left: "\\(", right: "\\)", display: false}, {left: "\\[", right: "\\]", display: true}],
+    throwOnError: false
+  });
+}
+window.addEventListener("load", renderMath);
+if (document.readyState === "complete") renderMath();
+</script>
+</body>
+</html>

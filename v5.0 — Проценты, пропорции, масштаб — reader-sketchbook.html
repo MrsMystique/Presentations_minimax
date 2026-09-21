@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Чистовые слайды v5.0 — Проценты, пропорции, масштаб — читалка — скетчбук</title>
+<link href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" rel="stylesheet"/>
+<style>
+
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat/Montserrat-Regular.ttf'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat/Montserrat-Bold.ttf'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat/Montserrat-ExtraBold.ttf'); font-weight: 800; font-style: normal; font-display: swap; }
+
+:root {
+  --field: #F5F2EB;
+  --paper: #FAF6EE;
+  --dark: #2B2B2A;
+  --ink: #4A3B37;
+  --cream: #F5F2EB;
+  --line: #6E554F;
+  --mint: #618B8B;
+  --mustard: #D1A153;
+  --terracotta: #D97443;
+  --note-bg: #F3EBE3;
+  --dark-note: #332F2C;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--field);
+  color: var(--ink);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.layout { display:flex; min-height:100vh; }
+nav.toc {
+  width:300px;
+  flex-shrink:0;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:auto;
+  background:var(--field);
+  border-right:1px solid var(--line);
+  padding:24px 18px;
+}
+nav.toc h1 {
+  margin:0 0 14px;
+  color:var(--ink);
+  font-size:18px;
+  line-height:1.3;
+  font-weight:700;
+}
+nav.toc a {
+  color:var(--ink);
+  text-decoration:none;
+  border-left:2px solid transparent;
+}
+nav.toc a:hover { color:var(--mint); }
+nav.toc .block-header,
+nav.toc .bridge-header {
+  display:block;
+  margin:16px 0 6px;
+  padding-left:6px;
+  font-size:13px;
+  line-height:1.35;
+  font-weight:700;
+  letter-spacing:0.03em;
+  text-transform:uppercase;
+}
+nav.toc .bridge-header {
+  color:var(--line);
+  text-transform:none;
+  letter-spacing:0.01em;
+}
+nav.toc .slide-link {
+  display:block;
+  padding:4px 0 4px 10px;
+  font-size:13px;
+  line-height:1.35;
+}
+nav.toc .slide-link.sub-slide { padding-left:22px; font-size:12px; }
+nav.toc a.is-active { color:var(--mint); border-left-color:var(--mint); }
+nav.toc a[data-order]::before {
+  content: attr(data-order) " · ";
+  color: var(--line);
+  font-size: 0.85em;
+  font-weight: 700;
+}
+
+main.content {
+  flex:1;
+  max-width:1240px;
+  padding:32px 44px;
+  margin:0 auto;
+}
+section.slide {
+  background:var(--paper);
+  border:1px solid var(--line);
+  padding:30px 36px;
+  margin:0 0 34px;
+  scroll-margin-top:16px;
+  border-radius:0;
+  box-shadow:none;
+}
+section.slide.sub-slide,
+section.slide.reference-slide,
+section.slide.final-slide { border-left:1px solid var(--line); }
+section.slide.bridge-slide {
+  background:var(--paper);
+  border:1px dashed var(--line);
+}
+section.slide-horizontal {
+  min-height:420px;
+}
+figure.sketch.sketch-compact {
+  width:42%;
+  max-width:470px;
+}
+section.formula-atlas {
+  min-height:0;
+}
+section.formula-atlas .formula-card {
+  clear:both;
+  display:grid;
+  grid-template-columns:minmax(260px, 38%) minmax(0, 1fr);
+  column-gap:1.1cm;
+  align-items:start;
+  padding:18px 0;
+  border-top:1px solid var(--line);
+}
+section.formula-atlas .formula-card.formula-card-no-image {
+  display:block;
+}
+section.formula-atlas .formula-card figure.sketch {
+  float:none;
+  clear:none;
+  width:100%;
+  max-width:none;
+  margin:0;
+}
+section.formula-atlas .formula-copy { min-width:0; }
+section.formula-atlas .formula-copy .math-block { clear:none; text-align:left; }
+section.formula-atlas .formula-copy .math-block .katex-display { text-align:left; }
+section.slide-dark {
+  background:var(--dark);
+  color:var(--cream);
+  border-color:var(--dark);
+}
+header.slide-header {
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+  margin:0 0 16px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--line);
+}
+.slide-num {
+  display:inline-block;
+  padding:2px 8px;
+  border:1px solid var(--line);
+  border-radius:0;
+  background:var(--field);
+  color:var(--mint);
+  font-size:12px;
+  line-height:1.4;
+  font-weight:700;
+  white-space:nowrap;
+}
+.slide-num.ref,
+.slide-num.sub { background:var(--field); color:var(--mint); }
+.order-num {
+  display:inline-block;
+  padding:2px 7px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--line);
+  font-size:11px;
+  line-height:1.4;
+  font-weight:700;
+  white-space:nowrap;
+}
+section.slide-dark header.slide-header { border-bottom-color:var(--line); }
+section.slide-dark h2,
+section.slide-dark .slide-num { color:var(--cream); }
+section.slide-dark .slide-num { background:var(--dark); border-color:var(--cream); }
+section.slide-dark .order-num { color:var(--cream); border-color:var(--cream); }
+header.slide-header h2 {
+  margin:0;
+  color:var(--ink);
+  font-size:24px;
+  line-height:1.3;
+  font-weight:800;
+  letter-spacing:-0.01em;
+}
+section.slide-dark header.slide-header h2 { color:var(--cream); }
+.slide-body::after { content:""; display:table; clear:both; }
+.slide-body p { margin:0 0 12px; }
+.slide-body h3 { margin:20px 0 10px; color:var(--ink); font-size:18px; line-height:1.35; font-weight:700; }
+.slide-body h4 { margin:16px 0 8px; color:var(--ink); font-size:16px; line-height:1.35; font-weight:700; }
+section.slide-dark .slide-body h3,
+section.slide-dark .slide-body h4 { color:var(--cream); }
+.slide-body ul,
+.slide-body ol { margin:0 0 12px; padding-left:24px; }
+.slide-body li { margin-bottom:4px; }
+.slide-body strong { font-weight:700; }
+.slide-body a { color:var(--mint); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px; }
+
+figure.sketch {
+  float:left;
+  width:48%;
+  max-width:560px;
+  margin:0 1.1cm 0.6cm 0;
+  border:1px solid var(--line);
+  background:var(--field);
+  padding:8px;
+}
+figure.sketch img {
+  display:block;
+  width:100%;
+  height:auto;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+}
+figure.sketch figcaption {
+  margin-top:8px;
+  color:var(--line);
+  font-size:12px;
+  line-height:1.4;
+}
+figure.sketch-full { float:none; width:100%; max-width:none; margin:0 0 18px; }
+figure.sketch-clear { clear:left; }
+/* Картинки мини-тестов: справа, примерно 1/4 обычной учебной картинки. */
+figure.mini-test-image {
+  float:right;
+  width:clamp(280px, 34%, 420px);
+  max-width:420px;
+  min-width:260px;
+  margin:0 0 0.55cm 1.1cm;
+  border:0;
+  background:transparent;
+  padding:0;
+}
+figure.mini-test-image img {
+  width:100%;
+  max-height:360px;
+  object-fit:contain;
+}
+/* Вторичная учебная картинка-исключение: справа, чтобы не перегружать слайд двумя левыми кадрами. */
+figure.sketch-secondary-right {
+  float:right;
+  width:42%;
+  max-width:470px;
+  margin:0 0 0.6cm 1.1cm;
+}
+/* Стикеры: слева, увеличены примерно в 3 раза относительно прошлого compact-режима, но остаются компактными. */
+figure.inline-sticker {
+  float:left;
+  width:clamp(170px, 18%, 230px);
+  max-width:230px;
+  min-width:170px;
+  margin:0 0.9cm 0.55cm 0;
+  border:0;
+  background:transparent;
+  padding:0;
+}
+figure.inline-sticker img {
+  width:100%;
+  max-height:190px;
+  object-fit:contain;
+}
+figure.inline-sticker.motivation-image {
+  width:clamp(340px, 36%, 460px);
+  max-width:460px;
+  min-width:320px;
+}
+figure.inline-sticker.motivation-image img {
+  max-height:390px;
+}
+figure.inline-sticker.inline-sticker-right {
+  float:right;
+  margin:0 0 0.55cm 0.9cm;
+}
+figure.inline-sticker.sticker-exception {
+  width:clamp(130px, 14%, 180px);
+  max-width:180px;
+  min-width:130px;
+}
+figure.inline-sticker.sticker-exception img {
+  max-height:150px;
+}
+figure.hole-filler-sticker {
+  float:right;
+  width:clamp(150px, 16%, 220px);
+  max-width:220px;
+  min-width:150px;
+  margin:0 0 0.55cm 0.9cm;
+  border:0;
+  background:transparent;
+  padding:0;
+}
+figure.hole-filler-sticker img {
+  width:100%;
+  max-height:185px;
+  object-fit:contain;
+}
+figure.hole-filler-sticker figcaption { display:none; }
+.note-with-sticker {
+  clear:both;
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) minmax(130px, 18%);
+  column-gap:24px;
+  align-items:center;
+  margin:14px 0;
+}
+.note-with-sticker blockquote { margin:0; }
+.note-with-sticker figure.sticker-exception {
+  float:none;
+  width:100%;
+  max-width:210px;
+  min-width:0;
+  margin:0;
+  justify-self:end;
+}
+figure.mini-test-image figcaption,
+figure.inline-sticker figcaption { display:none; }
+section.slide-dark figure.mini-test-image,
+section.slide-dark figure.inline-sticker { background:transparent; border:0; }
+section.slide-dark figure.mini-test-image img,
+section.slide-dark figure.inline-sticker img { border:0; }
+section.slide-dark figure.sketch { background:var(--dark-note); border-color:var(--cream); }
+section.slide-dark figure.sketch figcaption { color:var(--cream); }
+
+.slide-body table,
+.slide-body .math-block,
+.slide-body details,
+.slide-body .note-trap,
+.slide-body .note-rule,
+.slide-body .note-cheat { clear:both; }
+
+/* На горизонтальных слайдах формулы, details и плашки не должны сбрасываться под картинку: так убираем визуальные «дыры» справа. */
+section.slide-horizontal .slide-body .math-block,
+section.slide-horizontal .slide-body details,
+section.slide-horizontal .slide-body .note-trap,
+section.slide-horizontal .slide-body .note-rule,
+section.slide-horizontal .slide-body .note-cheat {
+  clear:none;
+}
+section.slide-horizontal .slide-body blockquote,
+section.slide-horizontal .slide-body details {
+  overflow:hidden;
+}
+section.slide-horizontal .slide-body .math-block {
+  overflow-x:auto;
+  overflow-y:hidden;
+  text-align:left;
+  margin:0.65em 0 0.9em;
+}
+section.slide-horizontal .slide-body .math-block .katex-display {
+  text-align:left;
+}
+section.slide-fill-right .slide-body table {
+  clear:none;
+  width:auto;
+  max-width:100%;
+}
+section.slide-fill-right .slide-body table th,
+section.slide-fill-right .slide-body table td {
+  padding:6px 8px;
+  font-size:12px;
+}
+[id="slide-6"] .math-block,
+[id="slide-9.1"] .math-block,
+[id="slide-13"] .math-block {
+  font-size:0.9em;
+}
+[id="slide-9.1"] .math-block { font-size:0.84em; }
+section.cheat-sheet .math-block {
+  font-size:0.88em;
+}
+section.cheat-sheet .slide-body table {
+  font-size:12.5px;
+}
+section.cheat-sheet .slide-body li .katex,
+section.cheat-sheet .slide-body p .katex {
+  font-size:1em;
+}
+
+.slide-body blockquote {
+  margin:14px 0;
+  padding:12px 18px;
+  background:var(--note-bg);
+  border:0;
+  border-left:3px solid var(--mint);
+  border-radius:0;
+  color:var(--ink);
+  font-style:normal;
+}
+.slide-body blockquote.note-trap { border-left-color:var(--terracotta); }
+.slide-body blockquote.note-rule { border-left-color:var(--mustard); }
+.slide-body blockquote.note-cheat { border-left-color:var(--mint); }
+.slide-body blockquote p:last-child { margin-bottom:0; }
+section.slide-dark .slide-body blockquote {
+  background:var(--dark-note);
+  color:var(--cream);
+}
+
+.slide-body details {
+  margin:14px 0;
+  padding:12px 18px;
+  background:var(--note-bg);
+  border:1px solid var(--line);
+  border-left:3px solid var(--mustard);
+  border-radius:0;
+  color:var(--ink);
+}
+.slide-body details summary {
+  cursor:pointer;
+  color:var(--mustard);
+  font-weight:700;
+}
+.slide-body details > *:last-child { margin-bottom:0; }
+.slide-body details p { margin-top:10px; }
+section.slide-dark .slide-body details {
+  background:var(--dark-note);
+  color:var(--cream);
+  border-color:var(--line);
+  border-left-color:var(--mustard);
+}
+section.slide-dark .slide-body details summary { color:var(--mustard); }
+
+.slide-body table {
+  width:100%;
+  margin:14px 0;
+  border-collapse:collapse;
+  font-size:13px;
+}
+.slide-body th,
+.slide-body td {
+  border:1px solid var(--line);
+  padding:8px 12px;
+  text-align:left;
+  vertical-align:top;
+}
+.slide-body th { background:var(--field); color:var(--ink); font-weight:700; }
+section.slide-dark .slide-body th,
+section.slide-dark .slide-body td { border-color:var(--line); }
+section.slide-dark .slide-body th { background:var(--dark-note); color:var(--cream); }
+.slide-body code {
+  background:var(--note-bg);
+  color:var(--ink);
+  padding:1px 6px;
+  border:1px solid var(--line);
+  border-radius:0;
+  font-family:Consolas, Monaco, monospace;
+  font-size:0.92em;
+}
+section.slide-dark .slide-body code { background:var(--dark-note); color:var(--cream); }
+.math-block {
+  text-align:center;
+  margin:0.9em 0;
+  padding:0.2em 0;
+  overflow-x:auto;
+  overflow-y:hidden;
+}
+.math-block .katex-display { margin:0; }
+.slide-body .katex { color:#2C2C2C; font-weight:700; }
+.slide-body p > .katex,
+.slide-body li > .katex { font-size:1.05em; }
+section.slide-dark .slide-body .katex { color:var(--cream); }
+
+button.back-to-toc {
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  z-index:10;
+  background:var(--dark);
+  color:var(--cream);
+  border:1px solid var(--dark);
+  border-radius:0;
+  box-shadow:none;
+  padding:10px 16px;
+  cursor:pointer;
+  font-family:'Montserrat', sans-serif;
+  font-size:14px;
+  font-weight:700;
+}
+button.back-to-toc:hover { background:var(--field); color:var(--dark); }
+
+@media (max-width:900px) {
+  .layout { flex-direction:column; }
+  nav.toc {
+    width:100%;
+    position:relative;
+    height:auto;
+    max-height:none;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+  }
+  main.content { max-width:none; padding:20px; }
+  section.slide-horizontal { min-height:0; }
+  figure.sketch, figure.sketch.sketch-compact, figure.sketch-secondary-right { float:none; width:100%; max-width:560px; margin:0 auto 18px; }
+  figure.mini-test-image { float:right; width:42%; max-width:360px; min-width:180px; margin:0 0 16px 18px; }
+  figure.inline-sticker { float:left; width:32%; max-width:210px; min-width:140px; margin:0 18px 12px 0; }
+  figure.inline-sticker.motivation-image { width:60%; max-width:360px; min-width:220px; }
+  figure.inline-sticker.inline-sticker-right { float:right; margin:0 0 12px 18px; }
+  figure.hole-filler-sticker { float:right; width:32%; max-width:200px; min-width:130px; margin:0 0 12px 18px; }
+  .note-with-sticker { display:block; }
+  .note-with-sticker figure.sticker-exception { float:none; width:45%; max-width:180px; margin:12px 0 0 auto; }
+  .slide-body table { display:block; overflow-x:auto; white-space:nowrap; max-width:100%; }
+  section.formula-atlas .formula-card { display:block; padding:16px 0; }
+  section.formula-atlas .formula-card figure.sketch { margin:0 auto 18px; max-width:560px; }
+}
+
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc">
+<h1>Чистовые слайды v5.0 — Проценты, пропорции, масштаб</h1><a class="block-header" href="#slide-0">Блок 1. Пропорция: закон абсолютного баланса</a><a class="slide-link" data-order="01" href="#slide-0">0. Титульный — Проценты, пропорции, масштаб</a><a class="slide-link" data-order="02" href="#slide-1">1. Пропорция: равенство двух отношений</a><a class="slide-link" data-order="03" href="#slide-2">2. Как решать задачу через пропорцию</a><a class="slide-link" data-order="04" href="#slide-3">3. Свойство пропорции: произведение крест-накрест</a><a class="slide-link sub-slide" data-order="05" href="#slide-3.5">3.5. Мини-тест: пропорция</a><a class="bridge-header" data-order="06" href="#bridge-after-3-5-0">1. От пропорции к зависимостям</a><a class="block-header" href="#slide-4">Блок 2. Зависимости: прямая и обратная</a><a class="slide-link" data-order="07" href="#slide-4">4. Прямая зависимость: синхронное движение</a><a class="slide-link" data-order="08" href="#slide-5">5. Обратная зависимость: противофаза</a><a class="slide-link sub-slide" data-order="09" href="#slide-5.1">5.1. Скрипт проверки черновика (Блок 2)</a><a class="slide-link sub-slide" data-order="10" href="#slide-5.5">5.5. Мини-тест: зависимости</a><a class="bridge-header" data-order="11" href="#bridge-after-5-5-0">2. От зависимостей к масштабу</a><a class="block-header" href="#slide-6">Блок 3. Масштаб: уменьшение реальности на бумаге</a><a class="slide-link" data-order="12" href="#slide-6">6. Масштаб: отношение чертежа к реальности</a><a class="slide-link" data-order="13" href="#slide-7">7. Перевод единиц: от километров к миллиметрам</a><a class="slide-link sub-slide" data-order="14" href="#slide-7.1">7.1. Скрипт самопроверки Блока 3</a><a class="slide-link sub-slide" data-order="15" href="#slide-8.5">8.5. Мини-тест: масштаб</a><a class="bridge-header" data-order="16" href="#bridge-after-8-5-0">3. От масштаба к процентам</a><a class="block-header" href="#slide-8">Блок 4. Проценты: сотые части целого</a><a class="slide-link" data-order="17" href="#slide-8">8. Что такое процент: сотая часть целого</a><a class="slide-link" data-order="18" href="#slide-9">9. Три формулы процента</a><a class="slide-link sub-slide" data-order="19" href="#slide-9.5">9.5. Как распознать ЦЕЛОЕ и ЧАСТЬ в условии задачи</a><a class="slide-link sub-slide" data-order="20" href="#slide-11.5">11.5. Мини-тест: формулы процента</a><a class="bridge-header" data-order="21" href="#bridge-after-11-5-0">4. От базовых формул к жизненным задачам</a><a class="block-header" href="#slide-9.1">Блок 5. Типы процентных задач</a><a class="slide-link sub-slide" data-order="22" href="#slide-9.1">9.1. Закон перевёртыша: \(a\%\) от \(b\) = \(b\%\) от \(a\)</a><a class="slide-link" data-order="23" href="#slide-10">10. Тип 1: «Найти процент от числа» (скидка, налог, часть)</a><a class="slide-link" data-order="24" href="#slide-11">11. Тип 2: «Найти целое по его проценту» (налог, бюджет)</a><a class="slide-link" data-order="25" href="#slide-12">12. Простой процент: фиксированная дань</a><a class="slide-link" data-order="26" href="#slide-13">13. Тип 3: «Сколько процентов составляет часть» (доля, изменение)</a><a class="slide-link sub-slide" data-order="27" href="#slide-13.1">13.1. Скрипт самопроверки Блока 5</a><a class="slide-link sub-slide" data-order="28" href="#slide-13.2">13.2. Задачи на смеси и сплавы (растворы)</a><a class="slide-link sub-slide" data-order="29" href="#slide-12.5">12.5. Мини-тест: простой процент и изменение</a><a class="bridge-header" data-order="30" href="#bridge-after-12-5-0">5. От простых процентов к сложным</a><a class="block-header" href="#slide-15">Блок 6. Сложные проценты: цепное применение</a><a class="slide-link" data-order="31" href="#slide-15">15. Задача на сложный процент</a><a class="slide-link sub-slide" data-order="32" href="#slide-15.1">15.1. Скрипт самопроверки Блока 6</a><a class="slide-link sub-slide" data-order="33" href="#slide-14.5">14.5. Мини-тест: сложный процент</a><a class="bridge-header" data-order="34" href="#bridge-after-14-5-0">6. От сложных процентов к архиву формул</a><a class="block-header" href="#slide-21">Блок 7. Сборник формул</a><a class="slide-link" data-order="35" href="#slide-21">21. Зачем тебе всё это: мотивация перед экзаменом</a><a class="slide-link" data-order="36" href="#slide-16">16. Шпаргалка пропорции</a><a class="slide-link" data-order="37" href="#slide-17">17. Шпаргалка зависимостей</a><a class="slide-link" data-order="38" href="#slide-18">18. Шпаргалка процентов</a><a class="slide-link" data-order="39" href="#slide-19">19. Шпаргалка масштаба</a><a class="slide-link sub-slide" data-order="40" href="#slide-15.6">15.6. Шпаргалка простого процента</a><a class="slide-link" data-order="41" href="#slide-20">20. Шпаргалка сложных процентов</a><a class="slide-link sub-slide" data-order="42" href="#slide-16.5">16.5. Мини-тест: шпаргалки в деле</a><a class="bridge-header" data-order="43" href="#bridge-after-16-5-0">7. Передышка перед ловушками</a><a class="block-header" href="#slide-21.5">Блок 8. Возможные ловушки из реальных задач</a><a class="slide-link sub-slide" data-order="44" href="#slide-21.5">21.5. Шпаргалка по типам задач в Блоке 8</a><a class="slide-link" data-order="45" href="#slide-22">22. Задача на сложную скидку в два этапа</a><a class="slide-link sub-slide" data-order="46" href="#slide-22.1">22.1. Задача на сложный процент (рост населения)</a><a class="slide-link sub-slide" data-order="47" href="#slide-22.2">22.2. Задача на смешивание растворов (разные концентрации)</a><a class="slide-link sub-slide" data-order="48" href="#slide-22.3">22.3. Задача на масштаб карты (большие числа)</a><a class="slide-link sub-slide" data-order="49" href="#slide-22.4">22.4. Задача на прямую и обратную зависимость (ловушка направления)</a><a class="slide-link sub-slide" data-order="50" href="#slide-22.5">22.5. Задача на процент изменения (от старого)</a><a class="slide-link sub-slide" data-order="51" href="#slide-22.6">22.6. Задача на сложный процент (банковский вклад)</a><a class="slide-link sub-slide" data-order="52" href="#slide-22.7">22.7. Стороны прямоугольников с одинаковой формой</a><a class="slide-link sub-slide" data-order="53" href="#slide-22.8">22.8. Переливание жидкости (баланс объёмов)</a><a class="slide-link sub-slide" data-order="54" href="#slide-22.9">22.9. Ученики двух школ (баланс через переменные)</a><a class="slide-link sub-slide" data-order="55" href="#slide-22.10">22.10. Финальная самопроверка</a><a class="slide-link sub-slide" data-order="56" href="#slide-22.11">22.11. Карта твоего пути: что ты прошёл</a><a class="slide-link sub-slide" data-order="57" href="#slide-22.12">22.12. Финал</a><a class="slide-link sub-slide" data-order="58" href="#slide-22.13">22.13. Глоссарий: термины из задачников РИКЗ</a>
+</nav>
+<main class="content">
+<section class="slide slide-dark" id="slide-0">
+<header class="slide-header"><span class="order-num">№01</span><span class="slide-num">Слайд 0</span><h2>Титульный — Проценты, пропорции, масштаб</h2></header>
+<div class="slide-body">
+<figure class="sketch sketch-full"><img alt="Титульник" decoding="async" height="1024" loading="eager" src="assets/titulnik-procenty.png" width="1024"/><figcaption>Титульник</figcaption></figure>
+<p><strong>Что тебя ждёт внутри урока:</strong></p>
+<ul><li><strong>8 блоков теории</strong> — от закона крест-накрест до сложных процентов;</li><li><strong>7 мостиков</strong> между блоками — короткие паузы для осознания;</li><li><strong>5 экзаменационных задач</strong> в финальной самопроверке с разбором;</li><li><strong>Шпаргалки</strong> по каждой теме — можно распечатать и взять на экзамен.</li></ul>
+<p><strong>Зачем тебе этот урок:</strong> задачи с процентами, пропорциями и масштабом стабильно дают 6–8 баллов из 100 на ЦТ. Это самые «лёгкие» деньги, если теорию знаешь.</p>
+</div>
+</section>
+<section class="slide slide-horizontal" id="slide-1">
+<header class="slide-header"><span class="order-num">№02</span><span class="slide-num">Слайд 1</span><h2>Пропорция: равенство двух отношений</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Баланс пропорции: закон абсолютного баланса и равенство дробей" decoding="async" height="1024" loading="lazy" src="assets/balans-proportsiya.png" width="1024"/><figcaption>Баланс пропорции: закон абсолютного баланса и равенство дробей</figcaption></figure>
+<p><strong>Почему это важно?</strong> Пропорция — это главный инструмент для решения задач на проценты, масштабы, зависимости, и вообще любых задач, где две величины жёстко связаны друг с другом. Без понимания пропорции ты не сможешь решить ни одну задачу, где нужно найти неизвестную часть. Это атомарная база.</p>
+<p><strong>Пропорция</strong> — это равенство двух дробей: \(\frac{a}{b} = \frac{c}{d}\). Числа по краям (\(a\) и \(d\)) называются <strong>крайними членами</strong>, числа внутри (\(b\) и \(c\)) — <strong>средними членами</strong>.</p>
+<p><strong>Основное свойство пропорции (закон крест-накрест):</strong> в любой верной пропорции \(\frac{a}{b} = \frac{c}{d}\) линии креста идут наискосок. Закон абсолютного баланса говорит: если перемножить числа наискосок по одной линии, результат будет строго равен произведению чисел наискосок по другой линии:</p>
+<div class="math-block">\[a \cdot d = b \cdot c\]</div>
+<p>Знак равенства посередине означает, что эти две линии полностью уравновешивают друг друга.</p>
+<p>Пример. Равны ли дроби \(\frac{2}{3}\) и \(\frac{4}{6}\)? Проверяем наискосок: \(2 \cdot 6 = 12\) и \(3 \cdot 4 = 12\). \(12 = 12\) ✓ — дроби равны.</p>
+<blockquote class="note-rule"><p>Лайфхак:</p><p>Закон работает в обе стороны. Если у тебя есть равенство двух дробей, ты можешь превратить его в равенство произведений наискосок. Если у тебя есть равенство произведений наискосок — ты можешь превратить его в две дроби через знак «равно». Это называется «основное свойство пропорции».</p></blockquote>
+</div>
+</section>
+<section class="slide slide-horizontal slide-fill-right" id="slide-2">
+<header class="slide-header"><span class="order-num">№03</span><span class="slide-num">Слайд 2</span><h2>Как решать задачу через пропорцию</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Алгоритм 3 шага: закон крест-накрест — запиши пропорцию, перемножь наискосок, раздели и получи ответ" decoding="async" height="1024" loading="lazy" src="assets/krest-nakrest.png" width="1024"/><figcaption>Алгоритм 3 шага: закон крест-накрест — запиши пропорцию, перемножь наискосок, раздели и получи ответ</figcaption></figure>
+<p><strong>Алгоритм «3 шага»:</strong></p>
+<p><strong>Что значит «8% соли»?</strong> Это 8% от общей массы раствора. Если раствор весит 500 г, то соли в нём \(500 \cdot 0{,}08 = 40\) г. Остальные 92% — это вода (или растворитель): \(500 \cdot 0{,}92 = 460\) г. Сумма: 40 г + 460 г = 500 г — все компоненты складываются обратно в общую массу.</p>
+<p><strong>Шаг 1. Построй пропорцию.</strong> Выпиши известные величины и поставь неизвестную букву в нужное место.</p>
+<p><strong>Шаг 2. Примени закон крест-накрест:</strong> перемножь числа наискосок и запиши их равенство в одну строчку.</p>
+<p><strong>Шаг 3. Вырази неизвестное.</strong> Числитель дели на знаменатель.</p>
+<p>Пример. Выразите \(x\) из \(\frac{x}{7} = \frac{12}{3}\).</p>
+<p>Решение: перемножаем крест-накрест: \(x \cdot 3 = 12 \cdot 7\). Делим обе части на 3: \(x = \frac{12 \cdot 7}{3} = 4 \cdot 7 = 28\).</p>
+<p><strong>Ответ:</strong> \(x = 28\).</p>
+<blockquote class="note-rule"><p> Практический приём:</p><p>Если неизвестное стоит в числителе одной из дробей, удобно сразу избавиться от знаменателя: умножь обе части пропорции на этот знаменатель. Например: \(\frac{x}{7} = \frac{12}{3} \Rightarrow x = \frac{12 \cdot 7}{3} = 28\). Так ты сразу получаешь ответ без крестовины.</p></blockquote>
+
+<p><strong>Как думать при новой задаче на пропорцию:</strong></p>
+<p>Когда видишь «найди неизвестное» или «равны ли дроби», не гадай. Иди по плану:</p>
+<ol><li><strong>Выпиши все известные величины</strong> в две строки или две колонки. Что известно? Что ищем?</li><li><strong>Построй пропорцию</strong> — поставь букву \(x\) в нужное место. Если прямая зависимость — большему соответствует большее.</li><li><strong>Примени закон крест-накрест:</strong> \(x = \frac{\text{произведение известных по одной линии наискосок}}{\text{известное число по другой линии наискосок}}\).</li><li><strong>Проверь здравый смысл</strong>: ответ должен быть больше или меньше ожидаемого по логике задачи.</li></ol>
+</div>
+</section>
+<section class="slide slide-horizontal" id="slide-3">
+<header class="slide-header"><span class="order-num">№04</span><span class="slide-num">Слайд 3</span><h2>Свойство пропорции: произведение крест-накрест</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Графическое объяснение пропорции: равенство отношений и закон крест-накрест" decoding="async" height="1024" loading="lazy" src="assets/proportion-graf.png" width="1024"/><figcaption>Графическое объяснение пропорции: равенство отношений и закон крест-накрест</figcaption></figure>
+<p><strong>Основное свойство пропорции:</strong> в верной пропорции \(\frac{a}{b} = \frac{c}{d}\) произведение крайних членов равно произведению средних членов: \(a \cdot d = b \cdot c\). Это и есть закон крест-накрест: числа наискосок друг к другу дают одинаковое произведение.</p>
+<p>Это свойство позволяет:</p>
+<ul><li>проверять, верна ли пропорция (перемножить крест-накрест);</li><li>находить неизвестный член пропорции (выразить через остальные три).</li></ul>
+<blockquote class="note-rule"><p> Жёсткое ограничение:</p><p>Свойство работает только когда все члены пропорции — числа или выражения, которые можно перемножить. Если в знаменателе окажется 0, свойство не работает (делить на ноль запрещено).</p></blockquote>
+</div>
+</section>
+<section class="slide sub-slide slide-dark slide-horizontal" id="slide-3.5">
+<header class="slide-header"><span class="order-num">№05</span><span class="slide-num sub">Слайд 3.5</span><h2>Мини-тест: пропорция</h2></header>
+<div class="slide-body"><figure class="sketch mini-test-image"><img alt="Сыграем в игру — мини-тест по пропорции" decoding="async" height="409" loading="lazy" src="assets/game-3.png" width="413"/><figcaption>Сыграем в игру — мини-тест по пропорции</figcaption></figure>
+<p><strong>Микро-тест на 2 минуты — проверь, что ты понял блок.</strong> Ответы свернуты ниже.</p>
+<p><strong>Задача 1.</strong> Дана пропорция \(\frac{5}{x} = \frac{15}{9}\). Найди x.</p>
+<details><summary>Ответ</summary><p>\(x = 3\). Решение: \(5 \cdot 9 = 15 \cdot x \Rightarrow 45 = 15x \Rightarrow x = 3\).</p></details>
+<p><strong>Задача 2.</strong> Дана пропорция \(\frac{7}{14} = \frac{x}{6}\). Найди x.</p>
+<details><summary>Ответ</summary><p>\(x = 3\). Решение: \(7 \cdot 6 = 14 \cdot x \Rightarrow 42 = 14x \Rightarrow x = 3\).</p></details>
+</div>
+</section>
+<section class="slide bridge-slide slide-horizontal" id="bridge-after-3-5-0">
+<header class="slide-header"><span class="order-num">№06</span><span class="slide-num">Мостик</span><h2>Мостик. 1. От пропорции к зависимостям</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker"><img alt="Мостик между блоками" decoding="async" height="583" loading="lazy" src="assets/stickers/mostik.png" width="764"/><figcaption>Мостик между блоками</figcaption></figure>
+<blockquote class="note-rule"><p><strong>Твой первый кирпич урока готов.</strong></p><p>Пропорция — это фундамент, на котором стоит весь урок. Ты научился видеть равенство двух дробей, проверять его наискосок, и доставать из неё неизвестное число через закон крест-накрест.</p><p><strong>Что ты теперь умеешь:</strong> записывать пропорцию из условия, проверять её наискосок, находить неизвестный член через закон крест-накрест.</p><p>Следующий блок покажет, как применять пропорцию в задачах с зависимостями. Это задачи, где две величины двигаются вместе (или наоборот — одна растёт, другая падает). Пропорция остаётся твоим главным инструментом.</p></blockquote>
+</div>
+</section>
+<section class="slide slide-horizontal" id="slide-4">
+<header class="slide-header"><span class="order-num">№07</span><span class="slide-num">Слайд 4</span><h2>Прямая зависимость: синхронное движение</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Прямая пропорциональность: величины меняются синхронно" decoding="async" height="1024" loading="lazy" src="assets/priamo-proporcionalno.png" width="1024"/><figcaption>Прямая пропорциональность: величины меняются синхронно</figcaption></figure>
+<p><strong>Что это такое.</strong> Прямая зависимость — это когда две величины двигаются в одну сторону. У этой зависимости два направления, и оба одинаково важны:</p>
+<ul><li><strong>«больше → больше»:</strong> больше товара → больше денег; больше рабочих → больше объём работы.</li><li><strong>«меньше → меньше»:</strong> меньше товара → меньше денег; меньше рабочих → меньше объём работы.</li></ul>
+<p>Это одна и та же зависимость, просто с разных стартовых точек. Если первая величина увеличилась — увеличилась и вторая. Если первая уменьшилась — уменьшилась и вторая. Никакой «особой» версии для меньших значений нет.</p>
+<p><strong>Почему это важно.</strong> В задачах часто две величины двигаются вместе: больше товара — больше денег, больше рабочих — больше объём работы. Это прямая зависимость. Если ты её распознаёшь, задача становится простой пропорцией.</p>
+<p><strong>Пример 1 (больше → больше).</strong> Цена шоколадки заморожена — 2 рубля за штуку. Больше шоколадок → больше денег за покупку. За 3 шоколадки заплатишь \(3 \cdot 2 = 6\) рублей, а за 6 шоколадок — \(6 \cdot 2 = 12\) рублей.</p>
+<p><strong>Пример 2 (меньше → меньше).</strong> Тот же магазин. Бабушка берёт всего 1 шоколадку по той же цене 2 рубля. Меньше шоколадок → меньше денег. За 1 шоколадку она заплатит \(1 \cdot 2 = 2\) рубля — меньше, чем за 3, и меньше, чем за 6.</p>
+<p><strong>Способ через пропорцию.</strong> Во сколько раз больше взял товара — во столько же раз больше получишь денег:</p>
+<div class="math-block">\[\frac{\text{товар}_1}{\text{деньги}_1} = \frac{\text{товар}_2}{\text{деньги}_2}\]</div>
+<p>Для меньших значений пропорция точно такая же — просто подставляешь меньшие числа.</p>
+
+</div>
+</section>
+<section class="slide slide-horizontal slide-fill-right" id="slide-5">
+<header class="slide-header"><span class="order-num">№08</span><span class="slide-num">Слайд 5</span><h2>Обратная зависимость: противофаза</h2></header>
+<div class="slide-body">
+<figure class="sketch"><img alt="Обратная пропорциональность: определение и схема противофазы" decoding="async" height="1024" loading="lazy" src="assets/obratnaia-proporcia.png" width="1024"/><figcaption>Обратная пропорциональность: определение и схема противофазы</figcaption></figure><p><strong>Что это такое.</strong> Обратная зависимость — это когда две величины двигаются в противоположные стороны. У этой зависимости тоже два направления, и оба важны:</p>
+<ul><li><strong>«больше → меньше»:</strong> больше маляров → меньше дней на работу; больше скорость → меньше времени в пути.</li><li><strong>«меньше → больше»:</strong> меньше маляров → больше дней на работу; меньше скорость → больше времени в пути.</li></ul>
+<p>Это одна и та же зависимость с двух сторон. Если первая величина увеличилась — вторая уменьшилась, и наоборот.</p>
+<p><strong>Живой пример из жизни.</strong> Бригада из 3 маляров красит забор за 12 дней. Этот забор — фиксированный объём работы, который не меняется. Если позвать 9 маляров вместо 3, забор будет покрашен быстрее, потому что работа делится между большим количеством рук.</p>
+<p>Запишем данные на черновик строго друг под другом в две колонки:</p>
+<p>3 маляра — 12 дней</p>
+<p>9 маляров — x дней</p>
+<p><strong>Как думать.</strong> Если маляров становится БОЛЬШЕ, дней на покраску им понадобится МЕНЬШЕ. Это обратная зависимость.</p><figure class="sketch hole-filler-sticker"><img alt="Перевёртыш — обратная зависимость" decoding="async" height="685" loading="lazy" src="assets/stickers/perevyortysh.png" width="427"/><figcaption>Перевёртыш — обратная зависимость</figcaption></figure>
+<p><strong>Алгоритм сборки.</strong> При обратной зависимости мы не имеем права составлять пропорцию в лоб. Мы обязаны перевернуть правую колонку с днями вверх ногами. Было:</p>
+<table><thead><tr><th>Колонка 1 (маляры)</th><th>Колонка 2 (дни)</th></tr></thead><tbody><tr><td>12</td><td>x</td></tr></tbody></table>
+<p>Стало (после переворота правой колонки):</p>
+<table><thead><tr><th>Колонка 1 (маляры)</th><th>Колонка 2 (дни)</th></tr></thead><tbody><tr><td>x</td><td>12</td></tr></tbody></table>
+<p>Теперь спокойно собираем пропорцию. Числитель — колонка 1, знаменатель — колонка 2:</p>
+<div class="math-block">\[\frac{3}{9} = \frac{x}{12}\]</div>
+<p>Применяем закон крест-накрест (перемножаем числа наискосок) и переходим к уравнению в одну строчку:</p>
+<div class="math-block">\[3 \cdot 12 = 9 \cdot x \Rightarrow 36 = 9x \Rightarrow x = 4 \text{ дня.}\]</div>
+<p><strong>Ответ:</strong> 4 дня.</p>
+<p><strong>Проверка здравым смыслом.</strong> Если 3 маляра работают 12 дней, а 9 маляров (в 3 раза больше) работают 4 дня (в 3 раза меньше) — баланс сошёлся. А главное, проверим «человеко-дни»: \(3 \cdot 12 = 36\) и \(9 \cdot 4 = 36\) — одинаковые объёмы работы.</p>
+</div>
+</section>
+<section class="slide sub-slide slide-horizontal" id="slide-5.1">
+<header class="slide-header"><span class="order-num">№09</span><span class="slide-num sub">Слайд 5.1</span><h2>Скрипт проверки черновика (Блок 2)</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker inline-sticker-right"><img alt="Считай — скрипт проверки" decoding="async" height="303" loading="lazy" src="assets/stickers/schitay.png" width="516"/><figcaption>Считай — скрипт проверки</figcaption></figure>
+<p>Прежде чем записать ответ, задай черновику два жёстких вопроса (Скрипт проверки черновика):</p>
+<p><strong>Тест зависимости.</strong> Проверь стрелками: если маляров стало в 3 раза больше (3 → 9), дней стало в 3 раза меньше (12 → 4)? Да, баланс соблюдён. Если сомневаешься — нарисуй стрелки: «больше \(\Rightarrow\) меньше» или «больше \(\Rightarrow\) больше».</p>
+<p><strong>Тест человеко-дней.</strong> Сверь строчки умножением: \(3 \cdot 12 = 36\) человеко-дней и \(9 \cdot 4 = 36\) человеко-дней. Произведения равны, расчёт верный. Если не совпало — ошибка в арифметике.</p>
+</div>
+</section>
+<section class="slide sub-slide slide-dark slide-horizontal" id="slide-5.5">
+<header class="slide-header"><span class="order-num">№10</span><span class="slide-num sub">Слайд 5.5</span><h2>Мини-тест: зависимости</h2></header>
+<div class="slide-body"><figure class="sketch mini-test-image"><img alt="Сыграем в игру — мини-тест по зависимостям" decoding="async" height="409" loading="lazy" src="assets/game-4.png" width="413"/><figcaption>Сыграем в игру — мини-тест по зависимостям</figcaption></figure>
+<p><strong>Микро-тест на 2 минуты — проверь, что ты понял блок.</strong> Ответы свернуты ниже.</p>
+<p><strong>Задача 1.</strong> 3 грузовика перевозят груз за 12 часов. За сколько часов 6 грузовиков перевезут тот же груз?</p>
+<details><summary>Ответ</summary><p>Обратная зависимость. Перемножаем: \(3 \cdot 12 = 36\), значит \(6 \cdot x = 36 \Rightarrow x = 6\) часов.</p></details>
+<p><strong>Задача 2.</strong> За 4 тетради заплатили 20 руб. Сколько стоят 6 тетрадей при той же цене?</p>
+<details><summary>Ответ</summary><p>Прямая зависимость. \(\frac{4}{20} = \frac{6}{x} \Rightarrow x = 30\) руб.</p></details>
+</div>
+</section>
+<section class="slide bridge-slide slide-horizontal" id="bridge-after-5-5-0">
+<header class="slide-header"><span class="order-num">№11</span><span class="slide-num">Мостик</span><h2>Мостик. 2. От зависимостей к масштабу</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker"><img alt="Мостик между блоками" decoding="async" height="583" loading="lazy" src="assets/stickers/mostik.png" width="764"/><figcaption>Мостик между блоками</figcaption></figure>
+<blockquote class="note-cheat"><p>Ты освоил прямую и обратную зависимость через пропорцию.</p><p><strong>Паспорт темы «Зависимости»:</strong> прямая «больше → больше», обратная «больше → меньше», метод перевёрнутой пропорции для обратной. Эти три кита остаются с тобой до конца урока.</p><p>Следующий блок — про географические задачи. Когда на бумаге нужно показать огромное расстояние в километрах, чертёж уменьшают в определённое число раз. Это называется масштаб.</p></blockquote>
+</div>
+</section>
+<section class="slide slide-fill-right slide-horizontal" id="slide-6">
+<header class="slide-header"><span class="order-num">№12</span><span class="slide-num">Слайд 6</span><h2>Масштаб: отношение чертежа к реальности</h2></header>
+<div class="slide-body"><figure class="sketch sketch-compact"><img alt="Закон масштаба: отношение расстояния на карте к реальному расстоянию на местности" decoding="async" height="1024" loading="lazy" src="assets/atlas.png" width="1024"/><figcaption>Закон масштаба: отношение расстояния на карте к реальному расстоянию на местности</figcaption></figure>
+<p><strong>Почему это важно?</strong> На картах и чертежах мы уменьшаем реальные расстояния в тысячи и миллионы раз, чтобы они поместились на лист бумаги. Знание масштаба позволяет по размеру на бумаге вычислить реальное расстояние, и наоборот.</p>
+<p><strong>Масштаб</strong> — это отношение размера на чертеже к реальному размеру:</p>
+<div class="math-block">\[ \text{Масштаб} = \frac{\text{размер на чертеже}}{\text{реальный размер}} \]</div>
+<p>Масштаб всегда записывается как \(1 : X\), где \(X\) — во сколько раз реальный размер больше размера на бумаге. Например, \(1 : 100\) означает, что <strong>1 единица на бумаге = \(X\) единиц в реальности</strong> (то есть 1 см на бумаге = 100 см в реальности, или 1 метр).</p>
+
+</div>
+</section>
+<section class="slide slide-horizontal" id="slide-7">
+<header class="slide-header"><span class="order-num">№13</span><span class="slide-num">Слайд 7</span><h2>Перевод единиц: от километров к миллиметрам</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Закон 6 нулей при переходе км → м → мм" decoding="async" height="1024" loading="lazy" src="assets/metricheskiy-most.png" width="1024"/><figcaption>Закон 6 нулей при переходе км → м → мм</figcaption></figure>
+<p>Главная трудность — чертеж и реальность даны в разных единицах: миллиметры на бумаге, километры в реальности. Чтобы составить пропорцию, нужно привести всё к одной единице. Самый безопасный выбор — <strong>миллиметры</strong>.</p>
+<p><strong>Почему при переходе от километров к миллиметрам добавляется именно 6 нулей?</strong> Разложим этот перевод по шагам:</p>
+<ul><li>В 1 километре содержится ровно 1000 метров (это первые 3 нуля).</li><li>В каждом метре содержится ровно 1000 миллиметров (это ещё 3 нуля).</li><li>Итог: \(3 + 3 = 6\) нулей. Это двойной перевод единиц измерения на черновике.</li></ul>
+<p><strong>Исключение — прямой перескак через метры.</strong> Если в задаче просят перевести сразу сантиметры в километры (минуя метры) или метры в миллиметры (минуя сантиметры), работает прямое правило: <strong>1 км = 100 000 см = 5 нулей</strong>, <strong>1 мм = 100 мкм = 5 нулей</strong>. Это исключение из правила «3 нуля на ступень», потому что мы перескакиваем одну ступень. Прямой перевод всегда <strong>5 нулей</strong> (×10⁵), а двойной перевод через две ступени — <strong>6 нулей</strong> (×10⁶).</p>
+<p><strong>Таблица перевода в миллиметры:</strong></p>
+<ul><li>Километры (км) \(\to\) миллиметры: \(\times 1\,000\,000\) (6 нулей)</li><li>Метры (м) \(\to\) миллиметры: \(\times 1\,000\) (3 нуля)</li><li>Сантиметры (см) \(\to\) миллиметры: \(\times 10\) (1 ноль)</li></ul>
+<p><strong>Обратный перевод (из миллиметров):</strong></p>
+<ul><li>Сантиметры: \(\div 10\) (1 ноль)</li><li>Метры: \(\div 1\,000\) (3 нуля)</li><li>Километры: \(\div 1\,000\,000\) (6 нулей)</li></ul>
+
+<p>Пример. Реальное расстояние 640 км, на чертеже 16 мм. Переводим км в мм: \(640 \cdot 1\,000\,000 = 640\,000\,000\) мм. Составляем пропорцию: \(\frac{16}{640\,000\,000}\). Сокращаем на 16: \(\frac{1}{40\,000\,000}\).</p><figure class="sketch hole-filler-sticker"><img alt="Считай — переводы единиц" decoding="async" height="303" loading="lazy" src="assets/stickers/schitay.png" width="516"/><figcaption>Считай — переводы единиц</figcaption></figure>
+<p><strong>Масштаб:</strong> \(1 : 40\,000\,000\).</p>
+<blockquote class="note-cheat"><p>Лайфхак:</p><p>Когда видишь огромное число с нулями, не паникуй. Закрой пальцем все нули в знаменателе и сократи «живые» цифры. В нашем примере живые цифры — 16 наверху и 64 внизу. \(64 \div 16 = 4\). Возвращай нули на место — к четвёрке допиши 7 нулей (один от 640 и шесть от перевода).</p></blockquote>
+</div>
+</section>
+<section class="slide sub-slide slide-horizontal" id="slide-7.1">
+<header class="slide-header"><span class="order-num">№14</span><span class="slide-num sub">Слайд 7.1</span><h2>Скрипт самопроверки Блока 3</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker inline-sticker-right"><img alt="Клан в деле — самопроверка" decoding="async" height="612" loading="lazy" src="assets/stickers/klan-v-dele.png" width="597"/><figcaption>Клан в деле — самопроверка</figcaption></figure>
+<p>Прежде чем записать ответ в задаче на масштаб, <strong>прочитай условие дважды</strong>, <strong>запиши данные на черновик</strong>, <strong>присвой переменные</strong> — и только потом считай. Этот порядок защищает тебя от ошибок.</p>
+<p><strong>Шаг 1. Прочитай условие.</strong> Выпиши: что дано на бумаге? что в реальности? какие единицы в обоих случаях?</p>
+<p><strong>Шаг 2. Запиши на черновик:</strong></p>
+<table><thead><tr><th>На бумаге</th><th>16 мм</th></tr></thead><tbody><tr><td>В реальности</td><td>640 км</td></tr><tr><td>Масштаб</td><td>1 : ?</td></tr></tbody></table>
+<p><strong>Шаг 3. Присвой переменные:</strong> \(a = 16\) (мм на бумаге), \(b = 640\) км (в реальности), \(X = ?\) (что ищем).</p>
+<p><strong>Шаг 4. Приведи к одной единице.</strong> Самый безопасный выбор — миллиметры: \(640 \text{ км} = 640 \cdot 1\,000\,000 \text{ мм} = 640\,000\,000 \text{ мм}\).</p>
+<p><strong>Шаг 5. Составь пропорцию:</strong> \(\frac{a}{b} = \frac{16}{640\,000\,000} = \frac{1}{X}\).</p>
+<p><strong>Шаг 6. Сократи дробь.</strong> 16 и 640 000 000 делятся на 16: получаем \(\frac{1}{40\,000\,000}\).</p>
+<p><strong>Ответ:</strong> масштаб \(1 : 40\,000\,000\) — это значит 1 см на карте = 400 км в реальности (40 000 000 см = 400 000 м = 400 км).</p>
+<p><strong>Вопрос 1.</strong> Все ли единицы приведены к одному виду перед составлением пропорции? Если на чертеже мм, а в задаче км — нужно перевести.</p>
+<p><strong>Вопрос 2.</strong> Масштаб получился в виде \(\frac{1}{X}\)? Если получилось наоборот \(\frac{X}{1}\) — переверни дробь.</p>
+<p><strong>Как думать при новой задаче на масштаб:</strong></p>
+<ol><li><strong>Запиши обе величины с указанием единиц</strong> (что на бумаге, что в реальности).</li><li><strong>Переведи в одну единицу</strong> (миллиметры — самый безопасный выбор).</li><li><strong>Составь пропорцию</strong> \(\frac{\text{чертеж}}{\text{реальность}}\).</li><li><strong>Сократи дробь</strong> до вида \(\frac{1}{X}\). Если нужна реальная длина — умножь число на бумаге на \(X\).</li></ol>
+</div>
+</section>
+<section class="slide sub-slide slide-dark slide-horizontal" id="slide-8.5">
+<header class="slide-header"><span class="order-num">№15</span><span class="slide-num sub">Слайд 8.5</span><h2>Мини-тест: масштаб</h2></header>
+<div class="slide-body"><figure class="sketch mini-test-image"><img alt="Сыграем в игру — мини-тест по масштабу" decoding="async" height="492" loading="lazy" src="assets/game-5.png" width="497"/><figcaption>Сыграем в игру — мини-тест по масштабу</figcaption></figure>
+<p><strong>Микро-тест на 2 минуты — проверь, что ты понял блок.</strong> Ответы свернуты ниже.</p>
+<p><strong>Задача 1.</strong> Масштаб карты 1:10000. 5 см на карте — сколько метров в реальности?</p>
+<details><summary>Ответ</summary><p>5 см = 5 · 10000 = 50000 см = 500 метров.</p></details>
+<p><strong>Задача 2.</strong> Реальное расстояние 3 км. Масштаб 1:100000. Сколько см на карте?</p>
+<details><summary>Ответ</summary><p>3 км = 300000 см. \(\frac{1}{100000} = \frac{x}{300000} \Rightarrow x = 3\) см.</p></details>
+</div>
+</section>
+<section class="slide bridge-slide slide-horizontal" id="bridge-after-8-5-0">
+<header class="slide-header"><span class="order-num">№16</span><span class="slide-num">Мостик</span><h2>Мостик. 3. От масштаба к процентам</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker"><img alt="Мостик между блоками" decoding="async" height="583" loading="lazy" src="assets/stickers/mostik.png" width="764"/><figcaption>Мостик между блоками</figcaption></figure>
+<blockquote class="note-rule"><p><strong>Вопрос для размышления.</strong> Что общего у масштаба карты и процента? Подумай 10 секунд, прежде чем читать дальше.</p><p>Ответ: оба показывают отношение к ЦЕЛОМУ. Масштаб 1:100 значит «1 относится к 100». Процент 15% значит «15 относится к 100». В обоих случаях в знаменателе стоит число, от которого мы считаем долю.</p><p><strong>Паспорт темы «Масштаб»:</strong> отношение 1:X (1 единица на бумаге = X единиц в реальности), перевод км↔м↔мм через 6 нулей (двойной перевод единиц), метод сокращения «живых цифр» через деление числителя и знаменателя на общий множитель. Эти три инструмента остаются с тобой до конца урока.</p><p>Следующий блок — про проценты. Процент — это специальная запись дроби, у которой знаменатель всегда 100. Любая процентная задача сводится к пропорции.</p></blockquote>
+</div>
+</section>
+<section class="slide slide-horizontal" id="slide-8">
+<header class="slide-header"><span class="order-num">№17</span><span class="slide-num">Слайд 8</span><h2>Что такое процент: сотая часть целого</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Процент как сотая часть целого" decoding="async" height="1024" loading="lazy" src="assets/procent-.png" width="1024"/><figcaption>Процент как сотая часть целого</figcaption></figure>
+<p><strong>Почему это важно?</strong> Слово «процент» встречается в каждой второй жизненной ситуации: скидки в магазине, налоги, банковские ставки, статистика, экзаменационные баллы. Без понимания процента ты не сможешь ни считать сдачу, ни понимать новости, ни решать задачи на ЦТ.</p>
+<p><strong>Процент (символ \(\%\))</strong> — это сотая часть числа. Запись «\(p\%\)» означает «\(p\) сотых частей числа», то есть дробь \(\frac{p}{100}\).</p>
+<p>Чтобы это было легко представить, используй аналогию с наполненным стаканом воды:</p>
+<ul><li>Полный стакан — это твоё целое, и мы официально принимаем его за \(100\%\).</li><li>Половина стакана — это \(50\%\).</li><li>Пустой стакан — это \(0\%\).</li><li>Два полных стакана — это \(200\%\).</li></ul>
+<p>Один процент (\(1\%\)) — это ровно одна сотая часть (одна капля) от объёма этого стакана. Знаменатель такой дроби всегда равен 100, а числитель говорит, сколько процентов сейчас налито.</p>
+<p>Пример. \(1\%\) — это \(\frac{1}{100}\) числа, то есть одна сотая часть. У числа 200 это \(200 \cdot \frac{1}{100} = 2\). У числа 50 это \(50 \cdot \frac{1}{100} = 0{,}5\).</p>
+<p><strong>Связь с десятичными дробями:</strong> \(p\% = \frac{p}{100}\). Например, \(25\% = \frac{25}{100} = 0{,}25\), \(50\% = \frac{50}{100} = 0{,}5\), \(100\% = 1\), \(200\% = 2\).</p>
+<p><strong>Связь с обыкновенными дробями:</strong> \(p\% = \frac{p}{100}\) — это уже готовая дробь со знаменателем 100. Её можно сократить: \(25\% = \frac{25}{100} = \frac{1}{4}\), \(50\% = \frac{1}{2}\), \(75\% = \frac{3}{4}\).</p>
+<p><strong>Главное свойство:</strong> целое число принимается за \(100\%\). Это значит, что когда мы говорим «найти \(p\%\) от числа \(A\)», мы находим \(\frac{p}{100}\) от \(A\), то есть \(A \cdot \frac{p}{100}\).</p>
+</div>
+</section>
+<section class="slide slide-horizontal formula-atlas" id="slide-9">
+<header class="slide-header"><span class="order-num">№18</span><span class="slide-num">Слайд 9</span><h2>Три формулы процента</h2></header>
+<div class="slide-body"><p>Все процентные задачи строятся на трёх формулах. Каждая отвечает на свой вопрос.</p><div class="formula-card formula-card-no-image"><div class="formula-copy"><p><strong>Формула 1 (часть от целого).</strong> Ищем ЧАСТЬ, дано ЦЕЛОЕ и процент.</p><div class="math-block">\[ \text{Часть} = A \cdot \frac{p}{100} \]</div><p>Где \(A\) — целое (\(100\%\)), \(p\) — процент.</p><p><strong>Жизненный сценарий:</strong> магазин даёт скидку 15% на товар за 200 руб. Сколько стоит товар со скидкой?</p><p><strong>Решение:</strong> \(\text{Часть} = 200 \cdot \frac{15}{100} = 30\) руб — это скидка. Цена со скидкой: \(200 - 30 = 170\) руб.</p></div></div><div class="formula-card"><figure class="sketch"><img alt="Нахождение целого по части: банковский баланс — 13% от зарплаты = 1300 руб, значит целое = 10 000 руб" decoding="async" height="1024" loading="lazy" src="assets/chislo-ot-tselogo.png" width="1024"/><figcaption>Нахождение целого по части: банковский баланс — 13% от зарплаты = 1300 руб, значит целое = 10 000 руб</figcaption></figure><div class="formula-copy"><p><strong>Формула 2 (целое по части).</strong> Ищем ЦЕЛОЕ, дано ЧАСТЬ и её процент от целого.</p><div class="math-block">\[ A = \frac{B \cdot 100}{p}, \quad p \neq 0 \]</div><p>Где \(B\) — часть, \(p\) — её процент от целого.</p><p><strong>Жизненный сценарий:</strong> налог 13% от зарплаты составил 1300 руб. Какова зарплата?</p><p><strong>Решение:</strong> \(A = \frac{1300 \cdot 100}{13} = 10\,000\) руб.</p></div></div><div class="formula-card"><figure class="sketch"><img alt="Процент по части: чемодан 100 руб = 100% целое, часть 20 руб = 20%" decoding="async" height="1024" loading="lazy" src="assets/chast-ot-chisla.png" width="1024"/><figcaption>Процент по части: чемодан 100 руб = 100% целое, часть 20 руб = 20%</figcaption></figure><div class="formula-copy"><p><strong>Формула 3 (процент по части и целому).</strong> Ищем ПРОЦЕНТ, дано ЧАСТЬ и ЦЕЛОЕ.</p><div class="math-block">\[ p = \frac{B \cdot 100}{A}, \quad A \neq 0 \]</div><p>Где \(B\) — часть, \(A\) — целое.</p><p><strong>Жизненный сценарий:</strong> в магазин привезли 200 яблок, из них 30 красных. Сколько процентов красных?</p><p><strong>Решение:</strong> \(p = \frac{30 \cdot 100}{200} = 15\%\).</p></div></div><blockquote class="note-rule"><p>Закон-триггер: три формулы процентов — это перестановка одной и той же пропорции. Если помнишь Формулу 1, остальные получаются из неё алгебраически (умножением или делением обеих частей).</p></blockquote></div>
+</section>
+<section class="slide sub-slide slide-horizontal" id="slide-9.5">
+<header class="slide-header"><span class="order-num">№19</span><span class="slide-num sub">Слайд 9.5</span><h2>Как распознать ЦЕЛОЕ и ЧАСТЬ в условии задачи</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Найти целое по проценту: как распознать целое и часть" decoding="async" height="1024" loading="lazy" src="assets/naity_celoe_procent.png" width="1024"/><figcaption>Найти целое по проценту: как распознать целое и часть</figcaption></figure>
+<p>Прежде чем применять формулы — разберись, что в задаче ЦЕЛОЕ, а что ЧАСТЬ. Это ключ к правильному решению.</p>
+<p>В любой процентной задаче два главных персонажа. <strong>ЦЕЛОЕ</strong> — это то, <strong>что</strong> мы считаем за 100%: целое всегда известно в задаче «найти процент от числа» и обычно дано в условии в виде конкретной суммы. <strong>ЧАСТЬ</strong> — это то, что мы ищем или что нам дано как процент от целого.</p>
+</div>
+</section>
+<section class="slide sub-slide slide-dark slide-horizontal" id="slide-11.5">
+<header class="slide-header"><span class="order-num">№20</span><span class="slide-num sub">Слайд 11.5</span><h2>Мини-тест: формулы процента</h2></header>
+<div class="slide-body"><figure class="sketch mini-test-image"><img alt="Сыграем в игру — мини-тест по формулам процента" decoding="async" height="492" loading="lazy" src="assets/game-9.png" width="497"/><figcaption>Сыграем в игру — мини-тест по формулам процента</figcaption></figure>
+<p><strong>Микро-тест на 2 минуты — проверь, что ты понял блок.</strong> Ответы свернуты ниже.</p>
+<p><strong>Задача 1.</strong> Найди 15% от 200.</p>
+<details><summary>Ответ</summary><p>\(200 \cdot \frac{15}{100} = 30\).</p></details>
+<p><strong>Задача 2.</strong> 30 — это 15% от какого числа? Найди целое.</p>
+<details><summary>Ответ</summary><p>Вся зарплата: \(\frac{30 \cdot 100}{15} = 200\).</p></details>
+</div>
+</section>
+<section class="slide bridge-slide slide-horizontal" id="bridge-after-11-5-0">
+<header class="slide-header"><span class="order-num">№21</span><span class="slide-num">Мостик</span><h2>Мостик. 4. От базовых формул к жизненным задачам</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker inline-sticker-right"><img alt="Мостик между блоками" decoding="async" height="583" loading="lazy" src="assets/stickers/mostik.png" width="764"/><figcaption>Мостик между блоками</figcaption></figure>
+<blockquote class="note-cheat"><p>Ты только что собрал главный рабочий инструмент урока — три формулы процента.</p><p><strong>Главное открытие:</strong> эти три формулы — не три разных правила. Это одна и та же пропорция, записанная тремя способами (перестановкой членов). Помнишь формулу 1 — остальные получатся из неё алгебраически.</p><p>Следующий блок покажет, как применять эти формулы в трёх типовых жизненных сценариях: скидки, налоги и сложные проценты.</p></blockquote>
+</div>
+</section>
+<section class="slide sub-slide slide-horizontal slide-fill-right" id="slide-9.1">
+<header class="slide-header"><span class="order-num">№22</span><span class="slide-num sub">Слайд 9.1</span><h2>Закон перевёртыша: \(a\%\) от \(b\) = \(b\%\) от \(a\)</h2></header>
+<div class="slide-body"><figure class="sketch sketch-compact"><img alt="Закон перевёртыша: 52% от 20 = 20% от 52 = 10,4 (симметрия процентов)" decoding="async" height="1024" loading="lazy" src="assets/perevertysh.png" width="1024"/><figcaption>Закон перевёртыша: 52% от 20 = 20% от 52 = 10,4 (симметрия процентов)</figcaption></figure>
+<p><strong>Открытие.</strong> Умножение — коммутативная операция: \(a \cdot b = b \cdot a\). Поэтому для процентов работает симметричный закон:</p>
+<div class="math-block">\[ a\% \text{ от } b = \frac{a}{100} \cdot b = \frac{b}{100} \cdot a = b\% \text{ от } a \]</div>
+<p><strong>Пример.</strong> Что больше: \(52\%\) от 20 или \(20\%\) от 52? Считаем:</p>
+<ul><li>\(52\%\) от \(20\) = \(20 \cdot 0{,}52 = 10{,}4\).</li><li>\(20\%\) от \(52\) = \(52 \cdot 0{,}20 = 10{,}4\).</li></ul>
+<p>Результат одинаковый: \(10{,}4\) в обоих случаях.</p>
+
+<p><strong>Практический совет: ищи то, что удобнее считать.</strong> Если в задаче нужно найти, например, \(15\%\) от \(200\), но это неудобно, можно поменять местами и считать \(200\%\) от \(15\) = \(15 \cdot 2 = 30\) — тот же ответ. Это трюк для устного счёта.</p>
+<blockquote class="note-rule"><p>Закон-триггер: в процентах работает коммутативность. Если задача «X% от Y» кажется сложной — попробуй «Y% от X». Может оказаться проще.</p></blockquote>
+<blockquote class="note-cheat"><p><strong>Совет ученикам.</strong> Если дан большой процент от маленького числа (например, \(98\%\) от 5), попробуй перевернуть: \(5\%\) от 98 = \(98 \cdot 0{,}05 = 4{,}9\) — то же самое, но считать удобнее.</p></blockquote>
+</div>
+</section>
+<section class="slide slide-horizontal" id="slide-10">
+<header class="slide-header"><span class="order-num">№23</span><span class="slide-num">Слайд 10</span><h2>Тип 1: «Найти процент от числа» (скидка, налог, часть)</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Последовательные скидки: умножение коэффициентов 0,85 × 0,90 = 0,765 = 23,5%, но не 25%" decoding="async" height="1024" loading="lazy" src="assets/skidki-posledovatelnye.png" width="1024"/><figcaption>Последовательные скидки: умножение коэффициентов 0,85 × 0,90 = 0,765 = 23,5%, но не 25%</figcaption></figure>
+<p><strong>Сценарий:</strong> магазин даёт скидку \(p\%\) на товар стоимостью \(A\) рублей. Сколько стоит товар со скидкой?</p>
+<p><strong>Алгоритм:</strong></p>
+<ol><li>Найди размер скидки: \(\text{Скидка} = A \cdot \frac{p}{100}\).</li><li>Вычти скидку из цены: \(\text{Цена со скидкой} = A - \text{Скидка} = A \cdot (1 - \frac{p}{100})\).</li></ol>
+<p>Пример. Шоколадка стоит 50 руб (за одну штуку), скидка \(20\%\). Скидка = \(50 \cdot 0{,}2 = 10\) руб. Цена со скидкой = \(50 - 10 = 40\) руб. Или сразу: \(50 \cdot 0{,}8 = 40\).</p>
+<p><strong> Разбор «двойной скидки» пошагово:</strong></p>
+<p><strong>Почему при последовательных скидках в \(20\%\) и \(10\%\) общая скидка равна \(28\%\), а не \(30\%\)?</strong> Давай разберём шаги устно:</p>
+<ul><li>Начальная цена товара — \(100\%\). После первой скидки в \(20\%\) цена упала до \(80\%\) от начальной.</li><li>Вторая скидка в \(10\%\) берётся уже от этой новой, уменьшенной цены. Сколько составят \(10\%\) от \(80\%\)? Это \(8\%\).</li><li>Значит, вторая скидка снижает цену ещё на \(8\%\) от первоначальной стоимости.</li><li>Общее снижение цены: \(20\% + 8\% = 28\%\). Оставшаяся стоимость товара — \(72\%\) (или \(0{,}8 \cdot 0{,}9 = 0{,}72\)).</li></ul>
+<p>Товар стоил 50 руб. Сначала скидка \(20\%\), потом ещё скидка \(10\%\) от новой цены. Сколько стоит товар?</p>
+<p><strong>Шаг 1.</strong> Первая скидка: \(50 \cdot 0{,}8 = 40\) руб. <strong>Шаг 2.</strong> Вторая скидка от НОВОЙ цены: \(40 \cdot 0{,}9 = 36\) руб. <strong>Итог:</strong> 36 руб.</p>
+<p>Реальная общая скидка: \(\frac{50 - 36}{50} = \frac{14}{50} = 28\%\), а не \(30\%\)!</p>
+<blockquote class="note-trap"><p>Возможная ловушка:</p><p>Скидку \(20\%\) НЕЛЬЗЯ складывать с \(10\%\) и получать \(30\%\). Это ошибка «двойной скидки»: реальная скидка — это не сумма процентов, а умножение долей. Каждая скидка применяется к оставшейся цене, а не к начальной.</p></blockquote>
+
+</div>
+</section>
+<section class="slide slide-horizontal" id="slide-11">
+<header class="slide-header"><span class="order-num">№24</span><span class="slide-num">Слайд 11</span><h2>Тип 2: «Найти целое по его проценту» (налог, бюджет)</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Нахождение целого: банковский баланс — 13% от зарплаты = 1300 руб, значит целое = 10 000 руб, закон обратной пропорции" decoding="async" height="1024" loading="lazy" src="assets/chislo-ot-tselogo.png" width="1024"/><figcaption>Нахождение целого: банковский баланс — 13% от зарплаты = 1300 руб, значит целое = 10 000 руб, закон обратной пропорции</figcaption></figure>
+<p><strong>Сценарий:</strong> налог \(p\%\) от стоимости товара составил \(B\) рублей. Какова полная стоимость товара?</p>
+<p><strong>Алгоритм:</strong> \(A = \frac{B \cdot 100}{p}, \quad p \neq 0\).</p>
+<p>Пример. Налог \(13\%\) от зарплаты составил 1300 руб. Зарплата = \(\frac{1300 \cdot 100}{13} = 10\,000\) руб.</p>
+
+<blockquote class="note-cheat"><p>Лайфхак:</p><p>Если процент маленький (например, \(5\%\)), удобно мыслить так: \(5\%\) — это \(\frac{1}{20}\). Значит, целое в 20 раз больше части.</p></blockquote>
+</div>
+</section>
+<section class="slide slide-horizontal slide-fill-right" id="slide-12">
+<header class="slide-header"><span class="order-num">№25</span><span class="slide-num">Слайд 12</span><h2>Простой процент: фиксированная дань</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Простой процент: 5000 руб под 15% годовых, каждый месяц +750 руб, итого за 12 мес = 14000 руб" decoding="async" height="1024" loading="lazy" src="assets/prostoy-procent.png" width="1024"/><figcaption>Простой процент: 5000 руб под 15% годовых, каждый месяц +750 руб, итого за 12 мес = 14000 руб</figcaption></figure>
+<p><strong>Простой процент</strong> — это когда одна и та же процентная ставка применяется к одной и той же исходной сумме каждый период. Например, банк платит \(15\%\) годовых на начальный вклад \(5000\) руб и НЕ добавляет проценты к сумме.</p>
+
+<p><strong>Формула простого процента</strong> (\(n\) периодов подряд):</p>
+<div class="math-block">\[ S = A + A \cdot \frac{p}{100} \cdot n = A \cdot \left(1 + \frac{p \cdot n}{100}\right), \quad A \neq 0 \]</div>
+<p><strong>Переменные в формуле:</strong></p>
+<table><thead><tr><th>Буква</th><th>Что обозначает</th><th>Пример</th></tr></thead><tbody><tr><td>\(A\)</td><td>начальная сумма (то, что лежит в банке в начале)</td><td>\(A = 5000\) руб</td></tr><tr><td>\(S\)</td><td>итоговая сумма (то, что получится в конце)</td><td>\(S = 14\,000\) руб</td></tr><tr><td>\(p\)</td><td>процент за один период (годовой банковский процент)</td><td>\(p = 15\)</td></tr><tr><td>\(n\)</td><td>число периодов (сколько месяцев/лет лежит)</td><td>\(n = 12\)</td></tr></tbody></table><figure class="sketch hole-filler-sticker"><img alt="Запомни — простой процент держит старую базу" decoding="async" height="511" loading="lazy" src="assets/stickers/zapomni.png" width="586"/><figcaption>Запомни — простой процент держит старую базу</figcaption></figure>
+<p><strong>Пример.</strong> Начальный вклад A = 5000 руб под p = 15% годовых, держим n = 12 лет. Каждый год банк начисляет 15% на НАЧАЛЬНУЮ сумму (простой процент — проценты не прибавляются к сумме, а просто копятся отдельно): <strong>Шаг 1. Подставь данные в скобку:</strong></p>
+<div class="math-block">\[ S = 5000 \cdot \left(1 + \frac{15 \cdot 12}{100}\right) \]</div>
+<p><strong>Шаг 2. Посчитай числитель дроби в скобках:</strong> \(15 \cdot 12 = 180\).</p>
+<div class="math-block">\[ S = 5000 \cdot \left(1 + \frac{180}{100}\right) \]</div>
+<p><strong>Шаг 3. Раздели:</strong> \(180 \div 100 = 1{,}8\).</p>
+<div class="math-block">\[ S = 5000 \cdot (1 + 1{,}8) \]</div>
+<p><strong>Шаг 4. Сложи в скобках:</strong> \(1 + 1{,}8 = 2{,}8\).</p>
+<div class="math-block">\[ S = 5000 \cdot 2{,}8 \]</div>
+<p><strong>Шаг 5. Умножь:</strong> \(5000 \cdot 2{,}8 = 14\,000\).</p>
+<div class="math-block">\[ S = 14\,000 \text{ руб.} \]</div>
+<p><strong>Проверка:</strong> каждый год банк начисляет 750 руб (это 15% от 5000). За 12 лет это \(750 \cdot 12 = 9000\) руб процентов. Итого: \(5000 + 9000 = 14\,000\) руб. Совпало.</p>
+<blockquote class="note-rule"><p>Закон-триггер: простой процент — это та же Формула 1, применённая n раз подряд к одной и той же начальной сумме A. База не меняется — это отличает простой процент от сложного (где база растёт). Если помнишь Формулу 1, остальные получаются из неё алгебраически (умножением или делением обеих частей).</p></blockquote>
+</div>
+</section>
+<section class="slide slide-horizontal slide-fill-right" id="slide-13">
+<header class="slide-header"><span class="order-num">№26</span><span class="slide-num">Слайд 13</span><h2>Тип 3: «Сколько процентов составляет часть» (доля, изменение)</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Изменение цены считается от старой базы" decoding="async" height="1024" loading="lazy" src="assets/izmenenie-cen.png" width="1024"/><figcaption>Изменение цены считается от старой базы</figcaption></figure>
+<p><strong>Сценарий из жизни.</strong> В магазине «Пятёрочка» в июне было 240 покупателей в день, а в июле стало 288. На сколько процентов вырос поток покупателей?</p>
+<p><strong>Алгоритм решения (3 шага).</strong></p>
+<p><strong>Шаг 1. Найди чистый размер изменения.</strong> Из нового значения вычти старое:</p>
+<div class="math-block">\[288 - 240 = 48 \text{ покупателей (на столько вырос поток).}\]</div>
+<p>Если значение упало (например, было 100, стало 80) — точно так же: из нового вычти старое, получишь отрицательное число. Потом просто фиксируешь направление словом в ответе («вырос на 20%», «упал на 20%»), а минус из вычислений убираешь.</p>
+<p><strong>Правило работы со знаком.</strong> Для задач типа 13 (одношаговое изменение) — минус убираем из ответа, направление фиксируем словом. Для задач на сложный процент (Слайд 14, формула степени) — минус не появляется вообще, потому что процент всегда добавляется к сумме. Подробнее о знаках в общей формуле — в Формуле 4 шпаргалки (Слайд 18).</p>
+<p><strong>Шаг 2. Запиши формулу процента изменения.</strong> Мы делим размер изменения на <strong>начальное значение (базу)</strong> — это то число, от которого мы считаем процент (то, что было ДО изменения):</p>
+<div class="math-block">\[p = \frac{\text{Размер изменения} \cdot 100}{\text{Начальное значение (База)}}\]</div>
+<p><strong>Шаг 3. Подставь живые числа из задачи:</strong></p>
+<div class="math-block">\[p = \frac{48 \cdot 100}{240} = \frac{4800}{240} = 20\%\]</div>
+<p><strong>Ответ:</strong> поток покупателей вырос на 20%.</p>
+<div class="note-with-sticker"><blockquote class="note-trap"><p>Возможная ловушка:</p><p>Процент изменения всегда считается относительно начального значения (базы), а не нового итога. В нашем примере база — это 240 (июнь), а не 288 (июль). Если ошибочно делить на новое (288), получишь \(48 \cdot 100 / 288 ≈ 16{,}7\%\) — это неверно.</p><p>То же самое для падения: было 100, стало 80. База — 100, размер изменения — \(100 - 80 = 20\). Процент: \(20 \cdot 100 / 100 = 20\%\). Если ошибочно делить на новое (80), получишь \(25\%\) — это математически неверно.</p></blockquote><figure class="sketch inline-sticker sticker-exception"><img alt="Ловушка — процент изменения считается от старой базы" decoding="async" height="603" loading="lazy" src="assets/stickers/lovyushka-1.png" width="639"/><figcaption>Ловушка — процент изменения считается от старой базы</figcaption></figure></div>
+<p><strong>Формула 4 (изменение в процентах):</strong></p>
+<div class="math-block">\[ p = \frac{(B - A) \cdot 100}{A}, \quad A \neq 0 \]</div>
+<p>Где \(A\) — старое значение (база), \(B\) — новое значение. <strong>Знак результата зависит от направления изменения:</strong> если \(B &gt; A\) (рост), то \(p &gt; 0\); если \(B &lt; A\) (падение), то \(p &lt; 0\). В устном ответе мы говорим «вырос на \(|p|\%\)» или «упал на \(|p|\%\)», отбрасывая знак. Подробнее о работе со знаком — ниже в Правиле работы со знаком.</p>
+<p><strong>Закон сброса базы.</strong> Каждый раз, когда в задаче происходит новое изменение (например, двойная скидка или рост населения за несколько лет), <strong>новое полученное число становится новой базой (100%) для следующего шага</strong>. Старая база забывается. Если цена была 100, потом выросла на 25% (стало 125), а потом упала на 20%, то для второго шага база — это уже 125, а не 100.</p>
+</div>
+</section>
+<section class="slide sub-slide slide-horizontal" id="slide-13.1">
+<header class="slide-header"><span class="order-num">№27</span><span class="slide-num sub">Слайд 13.1</span><h2>Скрипт самопроверки Блока 5</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker"><img alt="Клан в деле — самопроверка" decoding="async" height="612" loading="lazy" src="assets/stickers/klan-v-dele.png" width="597"/><figcaption>Клан в деле — самопроверка</figcaption></figure>
+<p><strong>Вопрос 1.</strong> Ты правильно определил тип задачи (часть / целое / процент)? Если перепутал — формула не сработает.</p>
+<p><strong>Вопрос 2.</strong> Процент изменения считал от начального значения (базы), а не от нового итога?</p>
+</div>
+</section>
+<section class="slide sub-slide slide-horizontal" id="slide-13.2">
+<header class="slide-header"><span class="order-num">№28</span><span class="slide-num sub">Слайд 13.2</span><h2>Задачи на смеси и сплавы (растворы)</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Смеси и сплавы: закон суммы долей — два раствора 10% и 20% сливаются, формула m₁ + m₂ = const" decoding="async" height="1024" loading="lazy" src="assets/smesi-splavy.png" width="1024"/><figcaption>Смеси и сплавы: закон суммы долей — два раствора 10% и 20% сливаются, формула m₁ + m₂ = const</figcaption></figure>
+<p><strong>Типичная задача.</strong> В 500 г раствора соли содержится 40 г соли. Какова концентрация соли в процентах?</p>
+<p><strong>Что значит «концентрация 8%»?</strong> Это значит, что <strong>8% соли</strong> в общей массе раствора. То есть на каждые 100 г раствора приходится 8 г соли. У нас 500 г раствора → соли в нём \(500 \cdot 0{,}08 = 40\) г (это ЧАСТЬ), а 500 г раствора — это ЦЕЛОЕ (= 100%).</p>
+<p><strong>Алгоритм «3 шага»:</strong></p>
+<ol><li>Найди часть: масса соли = 40 г.</li><li>Найди целое: масса раствора = 500 г.</li><li>Примени формулу процента по части: \(p = \frac{40 \cdot 100}{500} = 8\%\).</li></ol>
+<p><strong>Ответ:</strong> \(8\%\).</p>
+
+<p><strong>Обратная задача на смешивание.</strong> Смешали 200 г \(10\%\)-го раствора и 300 г \(20\%\)-го раствора. Какова концентрация нового раствора?</p>
+<p><strong>Алгоритм:</strong></p>
+<ol><li>Найди массу соли в первом растворе: \(200 \cdot 0{,}1 = 20\) г.</li><li>Найди массу соли во втором растворе: \(300 \cdot 0{,}2 = 60\) г.</li><li>Общая масса соли: \(20 + 60 = 80\) г.</li><li>Общая масса раствора: \(200 + 300 = 500\) г.</li><li>Концентрация: \(\frac{80 \cdot 100}{500} = 16\%\).</li></ol>
+<p><strong>Ответ:</strong> \(16\%\).</p>
+<p><strong>Закон суммы долей:</strong> абсолютно все компоненты, находящиеся внутри одного сосуда (соль, сахар, кислота, вода), в сумме всегда составляют ровно \(100\%\) от общей массы этого раствора. Если тебе известна доля одного вещества, доля всех остальных вычисляется простым вычитанием из полных \(100\%\).</p>
+<div class="note-with-sticker"><blockquote class="note-trap"><p>Возможная ловушка:</p><p>Не путай «процент соли» с «процентом воды». В растворе соли \(8\%\) означает \(8\%\) массы — это соль. Остальные \(92\%\) — вода. Если в задаче спрашивают «процент воды», ответ будет \(92\%\), а не \(8\%\).</p></blockquote><figure class="sketch inline-sticker sticker-exception"><img alt="Ловушка — не путай соль и воду" decoding="async" height="678" loading="lazy" src="assets/stickers/lovyushka-2.png" width="571"/><figcaption>Ловушка — не путай соль и воду</figcaption></figure></div>
+</div>
+</section>
+<section class="slide sub-slide slide-dark slide-horizontal" id="slide-12.5">
+<header class="slide-header"><span class="order-num">№29</span><span class="slide-num sub">Слайд 12.5</span><h2>Мини-тест: простой процент и изменение</h2></header>
+<div class="slide-body"><figure class="sketch mini-test-image"><img alt="Сыграем в игру — мини-тест по простому проценту" decoding="async" height="492" loading="lazy" src="assets/game-6.png" width="497"/><figcaption>Сыграем в игру — мини-тест по простому проценту</figcaption></figure>
+<p><strong>Микро-тест на 2 минуты — проверь, что ты понял блок.</strong> Ответы свернуты ниже.</p>
+<p><strong>Задача 1.</strong> Цена была 100 руб, стала 80. На сколько процентов упала?</p>
+<details><summary>Ответ</summary><p>\(\frac{100 - 80}{100} \cdot 100 = 20\%\).</p></details>
+<p><strong>Задача 2.</strong> Вклад 1000 руб под 10% годовых (простой процент). Сколько через 3 года?</p>
+<details><summary>Ответ</summary><p>Каждый год +100 руб. За 3 года: \(1000 + 100 \cdot 3 = 1300\) руб.</p></details>
+</div>
+</section>
+<section class="slide bridge-slide slide-horizontal slide-fill-right" id="bridge-after-12-5-0">
+<header class="slide-header"><span class="order-num">№30</span><span class="slide-num">Мостик</span><h2>Мостик. 5. От простых процентов к сложным</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Сравнение простого и сложного процента" decoding="async" height="1024" loading="lazy" src="assets/stavki-sravnenie.png" width="1024"/><figcaption>Сравнение простого и сложного процента</figcaption></figure>
+<blockquote class="note-cheat"><p><strong>Разминочная задача на 2 минуты.</strong> Положил 1000 руб в банк под 10% годовых. Банк НЕ прибавляет проценты к сумме, а просто накапливает их отдельно. Сколько денег будет на счёте через 3 года?</p><p>Проверь себя (решение ниже, не подглядывай раньше времени).</p><p><strong>Решение:</strong> каждый год банк начисляет \(1000 \cdot 0{,}1 = 100\) руб. За 3 года: \(100 \cdot 3 = 300\) руб. Итого: \(1000 + 300 = 1300\) руб. Это простой процент.</p><p><strong>Что ты только что решил:</strong> это задача на простой процент — то, что ты уже умеешь. Следующий блок — про сложный процент, где банк каждый год прибавляет начисленные проценты к основной сумме. Здесь 1300 рублей — нижняя граница; в реальности получится больше.</p></blockquote>
+</div>
+</section>
+<section class="slide slide-horizontal" id="slide-15">
+<header class="slide-header"><span class="order-num">№31</span><span class="slide-num">Слайд 15</span><h2>Задача на сложный процент</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Сложный процент: цепочка роста 1000 → 1331" decoding="async" height="1024" loading="lazy" src="assets/slozhnyy-procent-cepochka.png" width="1024"/><figcaption>Сложный процент: цепочка роста 1000 → 1331</figcaption></figure>
+<p><strong>Условие.</strong> В банк положили 1000 руб под \(10\%\) годовых. Сколько денег будет на счёте через 3 года (проценты начисляются каждый год и добавляются к сумме)?</p>
+<p><strong>Интуиция «почему степень».</strong> Каждый год происходит одно и то же: берём текущую сумму и умножаем на \(k = 1{,}1\). Через 3 года это умножение применяется 3 раза подряд. Три одинаковых умножения подряд — это и есть \(k^3\). Если бы процент применялся 5 лет — было бы \(k^5\), если 10 лет — \(k^{10}\).</p>
+<p><strong>Решение по шагам:</strong></p>
+<p><strong>Год 1:</strong> \(1000 \cdot 1{,}1 = 1100\).</p>
+<p><strong>Год 2:</strong> \(1100 \cdot 1{,}1 = 1210\).</p>
+<p><strong>Год 3:</strong> \(1210 \cdot 1{,}1 = 1331\).</p>
+<p><strong>По формуле (одно действие вместо трёх):</strong> \(S_3 = 1000 \cdot (1{,}1)^3 = 1000 \cdot 1{,}331 = 1331\).</p>
+<p><strong>Ответ:</strong> 1331 руб.</p>
+<blockquote class="note-cheat"><p>Лайфхак:</p><p>Если в задаче не сказано «сложный процент» или «капитализация», считай простой процент. Сложный процент — это инвестиции, вклады, инфляция. Простой — скидки, налоги, премии.</p></blockquote>
+</div>
+</section>
+<section class="slide sub-slide slide-horizontal" id="slide-15.1">
+<header class="slide-header"><span class="order-num">№32</span><span class="slide-num sub">Слайд 15.1</span><h2>Скрипт самопроверки Блока 6</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker inline-sticker-right"><img alt="Клан в деле — самопроверка" decoding="async" height="612" loading="lazy" src="assets/stickers/klan-v-dele.png" width="597"/><figcaption>Клан в деле — самопроверка</figcaption></figure>
+<p><strong>Вопрос 1.</strong> В условии явно сказано «сложный процент», «капитализация», «каждый год добавляется к сумме»? Если нет — считай простой.</p>
+<p><strong>Вопрос 2.</strong> Правильно ли возвёл \((1 + \frac{p}{100})\) в степень \(n\)? Если \(n = 3\) и \(p = 10\), должно быть \((1{,}1)^3 = 1{,}331\).</p>
+<p><strong>Как думать при новой задаче на сложный процент:</strong></p>
+<ol><li><strong>Найди ключевые слова:</strong> «каждый год», «капитализация», «с учётом процентов прошлых», «через \(n\) лет под \(p\%\) годовых».</li><li><strong>Подставь в формулу:</strong> \(S_n = A \cdot (1 + \frac{p}{100})^n\).</li><li><strong>Вычисли</strong> по шагам (если \(n \leq 3\)) или используй калькулятор для степени.</li><li><strong>Проверь:</strong> итог должен быть больше исходного (при положительном проценте).</li></ol>
+</div>
+</section>
+<section class="slide sub-slide slide-dark slide-horizontal" id="slide-14.5">
+<header class="slide-header"><span class="order-num">№33</span><span class="slide-num sub">Слайд 14.5</span><h2>Мини-тест: сложный процент</h2></header>
+<div class="slide-body"><figure class="sketch mini-test-image"><img alt="Сыграем в игру — мини-тест по сложному проценту" decoding="async" height="492" loading="lazy" src="assets/game-10.png" width="497"/><figcaption>Сыграем в игру — мини-тест по сложному проценту</figcaption></figure>
+<p><strong>Микро-тест на 2 минуты — проверь, что ты понял блок.</strong> Ответы свернуты ниже.</p>
+<p><strong>Задача 1.</strong> Вклад 1000 руб под 10% с капитализацией. Сколько через 2 года?</p>
+<details><summary>Ответ</summary><p>Год 1: 1100. Год 2: \(1100 \cdot 1{,}1 = 1210\) руб.</p></details>
+<p><strong>Задача 2.</strong> Цена выросла на 25%, потом упала на 20% от НОВОЙ цены. Как изменилась итоговая (в %)?</p>
+<details><summary>Ответ</summary><p>\(1{,}25 \cdot 0{,}8 = 1{,}0\). Итог равен началу, изменение 0%.</p></details>
+</div>
+</section>
+<section class="slide bridge-slide slide-horizontal" id="bridge-after-14-5-0">
+<header class="slide-header"><span class="order-num">№34</span><span class="slide-num">Мостик</span><h2>Мостик. 6. От сложных процентов к архиву формул</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker"><img alt="Мостик между блоками" decoding="async" height="583" loading="lazy" src="assets/stickers/mostik.png" width="764"/><figcaption>Мостик между блоками</figcaption></figure>
+<blockquote class="note-rule"><p>Поздравляю: ты прошёл все методы работы с процентами, пропорциями и масштабом.</p><p><strong>Инвентаризация перед архивом:</strong> у тебя в голове теперь живут 4 крупных инструмента — пропорция с законом наискосок, прямая и обратная зависимость, три формулы процента, формула сложного процента со степенью. Каждый из них решает свой класс задач.</p><p>Следующий блок — Сборник формул. Его можно распечатать и держать под рукой на экзамене, чтобы быстро вспомнить, какую формулу к какой задаче применять.</p></blockquote>
+</div>
+</section>
+<section class="slide slide-horizontal cheat-sheet" id="slide-21">
+<header class="slide-header"><span class="order-num">№35</span><span class="slide-num">Слайд 21</span><h2>Зачем тебе всё это: мотивация перед экзаменом</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker inline-sticker-right motivation-image"><img alt="Реши или тебе хана — мотивация" decoding="async" height="492" loading="lazy" src="assets/hana-1.png" width="497"/><figcaption>Реши или тебе хана — мотивация</figcaption></figure>
+<p>Ты прошёл всю теорию урока: пропорции, зависимости, масштаб, три формулы процента, простой и сложный процент. Теперь у тебя в голове живут 4 крупных инструмента:</p>
+<ul><li><strong>Пропорция</strong> с законом наискосок (крест-накрест).</li><li><strong>Прямая и обратная зависимость</strong> — распознавание через стрелки «больше → больше/меньше».</li><li><strong>Три формулы процента</strong> — это одна и та же пропорция \(\frac{B}{A} = \frac{p}{100}\), записанная тремя способами.</li><li><strong>Сложный процент</strong> со степенью \(k^n\) — цепочка из \(n\) одинаковых умножений.</li></ul>
+<p>Эти шпаргалки — твой «карманный справочник», который можно распечатать и держать под рукой на экзамене. Используй их, чтобы быстро вспомнить формулу, а не учить заново.</p>
+<p>Проценты, пропорции и масштабы — это 6–8 баллов из 100 на ЦТ. Самые «лёгкие» деньги, если теорию знаешь. Считать скидки в магазине без калькулятора. Проверять банковскую ставку по вкладу. Разбираться в инфляции и росте населения. Это не школьная формальность — это реальный рабочий инструмент на всю жизнь.</p>
+</div>
+</section>
+<section class="slide slide-horizontal cheat-sheet" id="slide-16">
+<header class="slide-header"><span class="order-num">№36</span><span class="slide-num">Слайд 16</span><h2>Шпаргалка пропорции</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker"><img alt="Запомни — шпаргалка пропорции" decoding="async" height="511" loading="lazy" src="assets/stickers/zapomni.png" width="586"/><figcaption>Запомни — шпаргалка пропорции</figcaption></figure>
+<div class="math-block">\[ \frac{a}{b} = \frac{c}{d} \iff a \cdot d = b \cdot c \]</div>
+<table><thead><tr><th>Буква</th><th>Что обозначает</th></tr></thead><tbody><tr><td>\(a, d\)</td><td>крайние члены (числа по краям)</td></tr><tr><td>\(b, c\)</td><td>средние члены (числа внутри)</td></tr><tr><td>\(a, c\)</td><td>числители дробей</td></tr><tr><td>\(b, d\)</td><td>знаменатели дробей</td></tr></tbody></table>
+<p><strong>Закон крест-накрест:</strong> произведение чисел наискосок равно. Перемножаем крайние, перемножаем средние — результат одинаковый.</p>
+<p><strong>Мини-пример:</strong> \(\frac{2}{3} = \frac{4}{6}\), проверка: \(2 \cdot 6 = 12 = 3 \cdot 4\).</p>
+</div>
+</section>
+<section class="slide slide-horizontal cheat-sheet" id="slide-17">
+<header class="slide-header"><span class="order-num">№37</span><span class="slide-num">Слайд 17</span><h2>Шпаргалка зависимостей</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker inline-sticker-right"><img alt="Внимательно — зависимости" decoding="async" height="732" loading="lazy" src="assets/stickers/vnimatelno.png" width="545"/><figcaption>Внимательно — зависимости</figcaption></figure>
+<p><strong>Прямая зависимость</strong> (обе величины в одну сторону: «больше → больше» ИЛИ «меньше → меньше»):</p>
+<div class="math-block">\[ \frac{A_1}{B_1} = \frac{A_2}{B_2} \]</div>
+<table><thead><tr><th>Буква</th><th>Что обозначает</th><th>Пример</th></tr></thead><tbody><tr><td>\(A_1, A_2\)</td><td>первая величина (два значения)</td><td>3 шоколадки, 6 шоколадок</td></tr><tr><td>\(B_1, B_2\)</td><td>вторая величина (два значения)</td><td>6 руб, 12 руб</td></tr></tbody></table>
+<p><strong>Обратная зависимость</strong> (величины в противоположные стороны: «больше → меньше» ИЛИ «меньше → больше»):</p>
+<div class="math-block">\[ A_1 \cdot B_1 = A_2 \cdot B_2 \]</div>
+<table><thead><tr><th>Буква</th><th>Что обозначает</th><th>Пример</th></tr></thead><tbody><tr><td>\(A_1, A_2\)</td><td>первая величина</td><td>3 маляра, 9 маляров</td></tr><tr><td>\(B_1, B_2\)</td><td>вторая величина</td><td>12 дней, x дней</td></tr></tbody></table>
+<p><strong>Дискриминатор.</strong> Если первый параметр вырастет — второй вырастет (прямая) или упадёт (обратная)?</p>
+</div>
+</section>
+<section class="slide slide-horizontal cheat-sheet" id="slide-18">
+<header class="slide-header"><span class="order-num">№38</span><span class="slide-num">Слайд 18</span><h2>Шпаргалка процентов</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker"><img alt="Чит-код — проценты" decoding="async" height="723" loading="lazy" src="assets/stickers/chit-kod.png" width="739"/><figcaption>Чит-код — проценты</figcaption></figure>
+<p><strong>Все 4 формулы процентов — это одна пропорция</strong> \(\frac{B}{A} = \frac{p}{100}\), записанная разными способами. Если помнишь Формулу 1, остальные получаются из неё алгебраически.</p>
+<div class="math-block">\[ \text{Формула 1 (часть от целого):} \quad \text{Часть} = A \cdot \frac{p}{100} \]</div>
+<div class="math-block">\[ \text{Формула 2 (целое по части):} \quad A = \frac{B \cdot 100}{p} \]</div>
+<div class="math-block">\[ \text{Формула 3 (процент по части):} \quad p = \frac{B \cdot 100}{A} \]</div>
+<div class="math-block">\[ \text{Формула 4 (изменение в \%):} \quad p = \frac{(B - A) \cdot 100}{A} \]</div>
+<table><thead><tr><th>Буква</th><th>Что обозначает</th></tr></thead><tbody><tr><td>\(A\)</td><td>целое (= 100%) — то, от чего считаем процент</td></tr><tr><td>\(B\)</td><td>часть (= p% от целого)</td></tr><tr><td>\(p\)</td><td>процент (число без знака %)</td></tr></tbody></table>
+<p><strong>Дискриминатор «когда какую формулу»:</strong></p>
+<ul><li>«15% от 200» — дано целое, ищем часть → <strong>Формула 1</strong>.</li><li>«30 — это 15% от какого-то числа» — дана часть и %, ищем целое → <strong>Формула 2</strong>.</li><li>«30 от 200 — это сколько процентов» — дана часть и целое, ищем % → <strong>Формула 3</strong>.</li><li>«Цена была 100, стала 120» — дано старое и новое, ищем % изменения → <strong>Формула 4</strong>.</li></ul>
+</div>
+</section>
+<section class="slide slide-horizontal cheat-sheet" id="slide-19">
+<header class="slide-header"><span class="order-num">№39</span><span class="slide-num">Слайд 19</span><h2>Шпаргалка масштаба</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker inline-sticker-right"><img alt="Внимательно — масштаб" decoding="async" height="732" loading="lazy" src="assets/stickers/vnimatelno.png" width="545"/><figcaption>Внимательно — масштаб</figcaption></figure>
+<p><strong>Масштаб</strong> = отношение размера на бумаге к реальному размеру:</p>
+<div class="math-block">\[ \text{Масштаб} = \frac{\text{бумага}}{\text{реальность}} = \frac{1}{X} \]</div>
+<table><thead><tr><th>Буква</th><th>Что обозначает</th></tr></thead><tbody><tr><td>\(1\)</td><td>размер на бумаге (всегда 1)</td></tr><tr><td>\(X\)</td><td>реальный размер, соответствующий этой 1</td></tr></tbody></table>
+<p><strong>Закон перевода единиц:</strong></p>
+<ul><li>Перевод через одну ступень (см → м, м → км) — <strong>3 нуля</strong> (×1000).</li><li>Перевод через две ступени подряд (см → м → км, ИЛИ м → км → тысячи км) — <strong>6 нулей</strong> (×1 000 000).</li><li><strong>Прямой перескак через метры</strong> (см → км) — <strong>5 нулей</strong> (×100 000). Исключение из правила «3 нуля на ступень».</li></ul>
+<p><strong>Дискриминатор.</strong> Задача на масштаб = перевод единиц + деление числителя и знаменателя на общий делитель.</p>
+</div>
+</section>
+<section class="slide sub-slide slide-horizontal cheat-sheet" id="slide-15.6">
+<header class="slide-header"><span class="order-num">№40</span><span class="slide-num sub">Слайд 15.6</span><h2>Шпаргалка простого процента</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker"><img alt="Подсказка — простой процент" decoding="async" height="605" loading="lazy" src="assets/stickers/podskazka.png" width="610"/><figcaption>Подсказка — простой процент</figcaption></figure>
+<p><strong>Простой процент</strong> — начисление процента на начальную сумму каждый период (без капитализации):</p>
+<div class="math-block">\[ S = A \cdot \left(1 + \frac{p \cdot n}{100}\right) \]</div>
+<table><thead><tr><th>Буква</th><th>Что обозначает</th><th>Пример</th></tr></thead><tbody><tr><td>\(A\)</td><td>начальная сумма</td><td>5000 руб</td></tr><tr><td>\(S\)</td><td>итоговая сумма через n периодов</td><td>14000 руб</td></tr><tr><td>\(p\)</td><td>процент за один период</td><td>15</td></tr><tr><td>\(n\)</td><td>число полных периодов</td><td>12 лет</td></tr></tbody></table>
+<p><strong>Дискриминатор «когда используется / когда НЕ используется»:</strong></p>
+<ul><li><strong>Используется:</strong> скидки, налоги, простые проценты по вкладам без капитализации, премии.</li><li><strong>НЕ используется:</strong> банковские вклады с капитализацией, инфляция, рост населения — там <strong>сложный</strong> процент (Слайд 20).</li></ul>
+</div>
+</section>
+<section class="slide slide-horizontal cheat-sheet" id="slide-20">
+<header class="slide-header"><span class="order-num">№41</span><span class="slide-num">Слайд 20</span><h2>Шпаргалка сложных процентов</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker inline-sticker-right"><img alt="Запомни — сложные проценты" decoding="async" height="511" loading="lazy" src="assets/stickers/zapomni.png" width="586"/><figcaption>Запомни — сложные проценты</figcaption></figure>
+<p><strong>Сложный процент (капитализация)</strong> — начисление процента на процент:</p>
+<div class="math-block">\[ S_n = A \cdot \left(1 + \frac{p}{100}\right)^n \]</div>
+<table><thead><tr><th>Буква</th><th>Что обозначает</th><th>Пример</th></tr></thead><tbody><tr><td>\(A\)</td><td>начальная сумма</td><td>1000 руб</td></tr><tr><td>\(S_n\)</td><td>итоговая сумма через n периодов</td><td>1331 руб (за 3 года под 10%)</td></tr><tr><td>\(p\)</td><td>процент за один период</td><td>10</td></tr><tr><td>\(n\)</td><td>число полных периодов</td><td>3 года</td></tr><tr><td>\(k = 1 + \frac{p}{100}\)</td><td>множитель роста за период</td><td>1,1 при p = 10%</td></tr></tbody></table>
+<p><strong>Связь с Формулой 1.</strong> Сложный процент — это та же Формула 1 (часть от целого), применённая n раз подряд к растущей сумме.</p>
+<p><strong>Дискриминатор «когда используется / когда НЕ используется»:</strong></p>
+<ul><li><strong>Используется:</strong> банковские вклады с капитализацией, инфляция, рост населения, изменение курсов валют.</li><li><strong>НЕ используется:</strong> скидки, налоги, разовые премии — там <strong>простой</strong> процент (Слайд 15.6).</li></ul>
+</div>
+</section>
+<section class="slide sub-slide slide-dark slide-horizontal" id="slide-16.5">
+<header class="slide-header"><span class="order-num">№42</span><span class="slide-num sub">Слайд 16.5</span><h2>Мини-тест: шпаргалки в деле</h2></header>
+<div class="slide-body"><figure class="sketch mini-test-image"><img alt="Сыграем в игру — мини-тест по шпаргалкам" decoding="async" height="492" loading="lazy" src="assets/game-11.png" width="497"/><figcaption>Сыграем в игру — мини-тест по шпаргалкам</figcaption></figure>
+<p><strong>Микро-тест на 2 минуты — проверь, что ты понял блок.</strong> Ответы свернуты ниже.</p>
+<p><strong>Задача 1.</strong> \(\frac{x}{5} = \frac{12}{15}\). Найди x.</p>
+<details><summary>Ответ</summary><p>\(15x = 60 \Rightarrow x = 4\).</p></details>
+<p><strong>Задача 2.</strong> 20% от x равно 50. Найди x.</p>
+<details><summary>Ответ</summary><p>\(0{,}2 \cdot x = 50 \Rightarrow x = 250\).</p></details>
+</div>
+</section>
+<section class="slide bridge-slide slide-horizontal" id="bridge-after-16-5-0">
+<header class="slide-header"><span class="order-num">№43</span><span class="slide-num">Мостик</span><h2>Мостик. 7. Передышка перед ловушками</h2></header>
+<div class="slide-body">
+<figure class="sketch inline-sticker"><img alt="Новый проект — серия ловушек" decoding="async" height="534" loading="lazy" src="assets/stickers/novyy-proekt.png" width="647"/><figcaption>Новый проект — серия ловушек</figcaption></figure><blockquote class="note-trap"><p><strong>Задача в стиле ЦТ.</strong> «Цена товара сначала увеличилась на 20%, а потом уменьшилась на 20% от новой цены. Сравните итоговую цену с начальной.»</p><p>Попробуй решить это в уме за 30 секунд: больше, меньше или равна начальной?</p><p>Ответ: меньше. Потому что \(1{,}2 \cdot 0{,}8 = 0{,}96\), а это меньше 1. Это закон сброса базы (Слайд 13) в действии: после первого изменения база меняется, и второе «20%» берётся уже от увеличенной цены.</p><p>Дальше — десять задач на таких же формулировках. Каждая ловушка — это проверка того, что ты уже умеешь. Если что-то забыл — вернись к шпаргалкам в Слайдах 16–21. Если в задаче не получается с первого раза — это нормально. Прочитай условие дважды, нарисуй целое как фигуру, отметь часть. Потом выбирай формулу.</p></blockquote>
+</div>
+</section>
+<section class="slide sub-slide slide-horizontal" id="slide-21.5">
+<header class="slide-header"><span class="order-num">№44</span><span class="slide-num sub">Слайд 21.5</span><h2>Шпаргалка по типам задач в Блоке 8</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker inline-sticker-right"><img alt="Чит-код — типы задач" decoding="async" height="723" loading="lazy" src="assets/stickers/chit-kod.png" width="739"/><figcaption>Чит-код — типы задач</figcaption></figure>
+<table><thead><tr><th>Тип задачи</th><th>Какая формула</th><th>Слайд-шпаргалка</th></tr></thead><tbody><tr><td>Последовательные скидки</td><td>умножение коэффициентов \(0{,}85 \cdot 0{,}9\)</td><td>Слайд 10, 16</td></tr><tr><td>Рост/падение населения</td><td>умножение коэффициентов \(1{,}04 \cdot 1{,}06\)</td><td>Слайд 10, 14</td></tr><tr><td>Смеси и сплавы</td><td>сумма масс чистого вещества / сумма масс растворов</td><td>Слайд 13.2, 19</td></tr><tr><td>Масштаб карты</td><td>перевод см↔км (5 нулей в одном направлении, 5 — в другом)</td><td>Слайд 6, 7, 19</td></tr><tr><td>Прямая/обратная зависимость</td><td>пропорция (для прямой) или произведение в строчку (для обратной)</td><td>Слайд 4, 5, 17</td></tr><tr><td>Изменение цены в %</td><td>(новая − старая) / старая × 100</td><td>Слайд 13, 19</td></tr><tr><td>Банковский вклад с капитализацией</td><td>формула сложного процента \(S_n = A \cdot (1+p/100)^n\)</td><td>Слайд 14, 20</td></tr><tr><td>Пропорциональные размеры (участки)</td><td>равенство отношений сторон</td><td>Слайд 1, 16</td></tr><tr><td>Переливание жидкости</td><td>баланс объёмов после переливания</td><td>Слайд 4, 5, 9</td></tr><tr><td>Ученики двух школ</td><td>средневзвешенное двух процентов</td><td>Слайд 9, 9.5</td></tr></tbody></table>
+<p><strong>Как пользоваться шпаргалкой:</strong> прочитай условие задачи, найди в таблице похожий тип, открой соответствующий слайд-шпаргалку, примени формулу.</p>
+</div>
+</section>
+<section class="slide reference-slide slide-horizontal" id="slide-22">
+<header class="slide-header"><span class="order-num">№45</span><span class="slide-num ref">Слайд 22</span><h2>Задача на сложную скидку в два этапа</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Двойная скидка применяется последовательно" decoding="async" height="1024" loading="lazy" src="assets/dvoinaia-skidka.png" width="1024"/><figcaption>Двойная скидка применяется последовательно</figcaption></figure>
+<p><strong>Условие.</strong> Товар стоил 8000 руб. Магазин сначала снизил цену на \(15\%\), потом ещё на \(10\%\) от новой цены. Какова итоговая цена?</p>
+<p><strong>Что прячется в формулировке:</strong> две последовательные скидки — это не \(15 + 10 = 25\%\), а умножение коэффициентов.</p>
+<p><strong>Решение по шагам:</strong></p>
+<ol><li>После первой скидки: \(8000 \cdot 0{,}85 = 6800\) руб.</li><li>После второй скидки: \(6800 \cdot 0{,}9 = 6120\) руб.</li></ol>
+<p><strong>Итоговая цена:</strong> 6120 руб.</p>
+<p><strong>Проверка через формулу сложного процента:</strong> \(8000 \cdot 0{,}85 \cdot 0{,}9 = 8000 \cdot 0{,}765 = 6120\) ✓.</p>
+<p><strong>Проверка здравым смыслом:</strong> цена упала, итог меньше начального (6120 &lt; 8000 ✓). Скидка реальная 28%, а не 25% — это сходится.</p>
+<blockquote class="note-trap"><p> Возможная ловушка: <strong>ученик складывает</strong> проценты скидок (\(15 + 10 = 25\%\)) и получает \(8000 \cdot 0{,}75 = 6000\) — неверно. Скидки применяются последовательно, не суммируются.</p></blockquote>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-horizontal" id="slide-22.1">
+<header class="slide-header"><span class="order-num">№46</span><span class="slide-num ref">Слайд 22.1</span><h2>Задача на сложный процент (рост населения)</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Население города составляло 50000 человек. За первый год оно выросло на \(4\%\), за второй — ещё на \(6\%\). Каким стало население?</p>
+<p><strong>Что прячется:</strong> два последовательных процентных изменения — это умножение коэффициентов, а не сложение процентов.</p>
+<p><strong>Решение:</strong></p>
+<ol><li>После первого года: \(50000 \cdot 1{,}04 = 52000\).</li><li>После второго года: \(52000 \cdot 1{,}06 = 55120\).</li></ol>
+<p><strong>Ответ:</strong> 55120 человек.</p>
+<p><strong>Проверка здравым смыслом:</strong> население выросло (55120 &gt; 50000 ✓). Реальный рост \(10{,}24\%\), что больше чем «\(4+6=10\%\)» — это сходится (умножение даёт больше чем сложение).</p>
+<figure class="sketch inline-sticker"><img alt="Не разочаровывай — проценты не складываются" decoding="async" height="687" loading="lazy" src="assets/stickers/ne-razocharovyvay.png" width="510"/><figcaption>Не разочаровывай — проценты не складываются</figcaption></figure><blockquote class="note-trap"><p> Возможная ловушка: <strong>ученик считает</strong> «общий процент» как \(4 + 6 = 10\%\) и получает \(55000\) — неверно. Реальный рост: \(1{,}04 \cdot 1{,}06 = 1{,}1024\), то есть \(10{,}24\%\), а не \(10\%\).</p></blockquote>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-horizontal" id="slide-22.2">
+<header class="slide-header"><span class="order-num">№47</span><span class="slide-num ref">Слайд 22.2</span><h2>Задача на смешивание растворов (разные концентрации)</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Имеется 300 г \(15\%\)-го раствора соли и 500 г \(25\%\)-го раствора. Их смешали. Какова концентрация нового раствора?</p>
+<p><strong>Что прячется:</strong> концентрация смеси — это сумма масс чистого вещества, делённая на сумму масс растворов. Здесь работает закон суммы долей (Слайд 13.2).</p>
+<figure class="sketch inline-sticker inline-sticker-right"><img alt="Как насчёт уравнения?" decoding="async" height="644" loading="lazy" src="assets/stickers/kak-naschet-uravneniya.png" width="513"/><figcaption>Как насчёт уравнения?</figcaption></figure><p><strong>Решение:</strong></p>
+<ol><li>Соль в первом растворе: \(300 \cdot 0{,}15 = 45\) г.</li><li>Соль во втором растворе: \(500 \cdot 0{,}25 = 125\) г.</li><li>Общая соль: \(45 + 125 = 170\) г.</li><li>Общий раствор: \(300 + 500 = 800\) г.</li><li>Концентрация: \(\frac{170 \cdot 100}{800} = 21{,}25\%\).</li></ol>
+<p><strong>Ответ:</strong> \(21{,}25\%\).</p>
+<p><strong>Проверка здравым смыслом:</strong> концентрация смеси \(21{,}25\%\) лежит между концентрациями исходных растворов (\(15\%\) и \(25\%\)) — это правильно, смесь должна быть между крайностями.</p>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-horizontal" id="slide-22.3">
+<header class="slide-header"><span class="order-num">№48</span><span class="slide-num ref">Слайд 22.3</span><h2>Задача на масштаб карты (большие числа)</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Расстояние между городами на карте с масштабом \(1 : 500\,000\) равно 8 см. Каково реальное расстояние в км?</p>
+<p><strong>Что прячется:</strong> масштаб 1:X означает, что 1 см на карте = X см в реальности. Чтобы получить километры, нужно перевести сантиметры (5 нулей). Здесь перевод не через правило «3 нуля на ступень» (см → м → км), а напрямую: \(1 \text{ км} = 100\,000 \text{ см} = 10^5 \text{ см}\). Это исключение из правила «3 нулей», потому что мы перескакиваем через метры.</p>
+<p><strong>Решение:</strong></p>
+<ol><li>1 см на карте = 500 000 см в реальности.</li><li>8 см = \(8 \cdot 500\,000 = 4\,000\,000\) см.</li><li>Перевод в км: \(4\,000\,000 \div 100\,000 = 40\) км.</li></ol>
+<p><strong>Ответ:</strong> 40 км.</p>
+<p><strong>Проверка здравым смыслом:</strong> на карте 8 см — это небольшое расстояние. 40 км между городами — разумно (не деревня, не мегаполис). Если бы получилось 4 км или 4000 км — было бы подозрительно.</p>
+<figure class="sketch inline-sticker"><img alt="Внимательно — единицы масштаба" decoding="async" height="732" loading="lazy" src="assets/stickers/vnimatelno.png" width="545"/><figcaption>Внимательно — единицы масштаба</figcaption></figure><blockquote class="note-trap"><p> Возможная ловушка: <strong>ученик забывает</strong> перевести сантиметры в километры и пишет 4 000 000 см, не понимая, насколько это много. Помни: в 1 км = 100 000 см (не 1000!).</p></blockquote>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-horizontal" id="slide-22.4">
+<header class="slide-header"><span class="order-num">№49</span><span class="slide-num ref">Слайд 22.4</span><h2>Задача на прямую и обратную зависимость (ловушка направления)</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Разбор ошибки: анализ маляров — правильно 5→12, 3→20 (человеко-дни 60), ловушка 36 дней (нарушена обратная пропорциональность)" decoding="async" height="1024" loading="lazy" src="assets/oshibki-analiz.png" width="1024"/><figcaption>Разбор ошибки: анализ маляров — правильно 5→12, 3→20 (человеко-дни 60), ловушка 36 дней (нарушена обратная пропорциональность)</figcaption></figure>
+<p><strong>Условие.</strong> 5 маляров красят забор за 12 дней. За сколько дней покрасят тот же забор 3 маляра?</p>
+<p><strong>Что прячется:</strong> это ОБРАТНАЯ зависимость (объём работы заморожен). Больше рабочих → меньше дней.</p>
+<p><strong>Что значит «перевёрнутая»?</strong> Если 5 маляров → 12 дней, то 3 маляра → ? дней. При обратной зависимости больше рабочих соответствует меньшему количеству дней. Поэтому пропорция переворачивается: первая дробь становится \(\frac{5}{3}\) (больше/меньше), а вторая \(\frac{x}{12}\) (неизвестное/больше).</p>
+<p>Составляем перевёрнутую пропорцию: \(\frac{5}{3} = \frac{x}{12}\). Отсюда по закону крест-накрест (перемножаем числа наискосок) переходим к уравнению в одну строчку:</p>
+<div class="math-block">\[5 \cdot 12 = 3 \cdot x \Rightarrow 60 = 3x \Rightarrow x = 20 \text{ дней.}\]</div>
+<p><strong>Ответ:</strong> 20 дней.</p>
+
+<blockquote class="note-trap"><p> Возможная ловушка: <strong>ученик думает</strong> «меньше рабочих → больше дней, значит отвечу что-то больше 12». Но если бы ошибся типом зависимости и поставил прямую пропорцию \(\frac{5}{12} = \frac{3}{x}\) → \(x = 7{,}2\) дня — это абсурд: меньше рабочих сделали работу БЫСТРЕЕ (за 7,2 дня), чем больше рабочих (12 дней). Всегда проверяй тип зависимости по смыслу задачи.</p></blockquote>
+<p><strong>Проверка здравым смыслом:</strong> 3 маляра медленнее, чем 5, поэтому 20 дней &gt; 12 дней ✓. Если бы ответ был 8 дней — здравый смысл нарушен.</p>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-horizontal" id="slide-22.5">
+<header class="slide-header"><span class="order-num">№50</span><span class="slide-num ref">Слайд 22.5</span><h2>Задача на процент изменения (от старого)</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Цена товара выросла с 400 до 500 руб. На сколько процентов она выросла?</p>
+<p><strong>Что прячется:</strong> когда ты считаешь, на сколько процентов выросла или упала величина, процент изменения вычисляется как разность, делённая на СТАРОЕ значение. Старое — это то, что было ДО изменения; именно оно принимается за \(100\%\). Это типовая экзаменационная ловушка: составители рассчитывают, что ты разделишь на новое значение и получишь неправильный ответ.</p>
+<p><strong>Решение:</strong> изменение = \(500 - 400 = 100\). Процент = \(\frac{100 \cdot 100}{400} = 25\%\).</p>
+<p><strong>Ответ:</strong> \(25\%\).</p>
+<p><strong>Проверка здравым смыслом:</strong> \(25\%\) от 400 = 100, плюс 400 = 500 ✓. Если бы считал от 500, получил бы 20% — это типичная экзаменационная ошибка.</p>
+<figure class="sketch inline-sticker inline-sticker-right"><img alt="Внимательно — старая база" decoding="async" height="732" loading="lazy" src="assets/stickers/vnimatelno.png" width="545"/><figcaption>Внимательно — старая база</figcaption></figure><blockquote class="note-trap"><p> Возможная ловушка: <strong>ученик делит</strong> на НОВУЮ цену: \(\frac{100 \cdot 100}{500} = 20\%\) — неверно. Процент изменения ВСЕГДА от старого значения.</p></blockquote>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-horizontal" id="slide-22.6">
+<header class="slide-header"><span class="order-num">№51</span><span class="slide-num ref">Слайд 22.6</span><h2>Задача на сложный процент (банковский вклад)</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Ты положил в банк 50000 руб под \(8\%\) годовых с ежегодной капитализацией. Сколько денег будет через 3 года?</p>
+<p><strong>Справка.</strong> \(8\%\) годовых — типовая ставка по вкладу в белорусском банке на 3 года (в BYN). Такие условия предлагают, например, программы «Сберегательный» и «Линия роста» в Беларусбанке. <em>(Условные данные для примера — реальные ставки зависят от банка и срока.)</em></p>
+<p><strong>Решение по шагам (без калькулятора):</strong></p>
+<p>Формула сложных процентов (Слайд 14):</p>
+<div class="math-block">\[ S_3 = 50000 \cdot \left(1 + \frac{8}{100}\right)^3 = 50000 \cdot (1{,}08)^3 \]</div>
+<p><strong>Почему именно 1,08?</strong> Каждый год мы оставляем 100% старой суммы и прибавляем 8% новых процентов. Итого получаем \(100\% + 8\% = 108\%\). В десятичной дроби это 1,08. Этот множитель применяется каждый год.</p>
+<p>Чтобы не возиться с десятичными дробями, распишем степень как три последовательных умножения. <strong>Одно и то же действие повторяется три раза, только сумма каждый раз новая:</strong></p>
+<p><strong>Год 1:</strong> \(50\,000 \cdot 1{,}08 = 54\,000\) руб.</p>
+<p><strong>Год 2:</strong> \(54\,000 \cdot 1{,}08 = 58\,320\) руб.</p>
+<p><strong>Год 3:</strong> \(58\,320 \cdot 1{,}08 = 62\,985{,}6\) руб.</p>
+<p><strong>Проверка:</strong> при желании это же можно записать короче через десятичный множитель \(k = 1{,}08\) и степень: \(S_3 = 50\,000 \cdot 1{,}08^3 = 62\,985{,}6\) руб. Результат тот же.</p>
+<blockquote class="note-rule"><p>Закон-триггер: одно и то же умножение на 1,08 повторяется каждый год — сумма каждый раз становится новой базой для следующего умножения. Именно поэтому формула называется «сложный процент» (compound interest).</p></blockquote>
+<p><strong>Ответ:</strong> \(62\,985{,}60\) руб.</p>
+<p><strong>Проверка здравым смыслом:</strong> итог больше начального (62985,60 &gt; 50000 ✓). Реальная доходность за 3 года: \(\frac{62985,60 - 50000}{50000} = \frac{12985,60}{50000} \approx 26\%\), что больше простого «8% × 3 = 24%» — это правильно, капитализация даёт больше.</p>
+<figure class="sketch inline-sticker"><img alt="Не разочаровывай — простой или сложный процент" decoding="async" height="687" loading="lazy" src="assets/stickers/ne-razocharovyvay.png" width="510"/><figcaption>Не разочаровывай — простой или сложный процент</figcaption></figure><blockquote class="note-trap"><p> Возможная ловушка: <strong>ученик путает</strong> простой и сложный процент. Простой: \(50000 + 50000 \cdot 0{,}08 \cdot 3 = 62000\). Сложный (с капитализацией): 62985,60 — больше. Разница существенна на длинных сроках.</p></blockquote>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-horizontal" id="slide-22.7">
+<header class="slide-header"><span class="order-num">№52</span><span class="slide-num ref">Слайд 22.7</span><h2>Стороны прямоугольников с одинаковой формой</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Стороны прямоугольников с одинаковой формой: закон сохранения формы при изменении размера" decoding="async" height="1024" loading="lazy" src="assets/maschtab-proporcii.png" width="1024"/><figcaption>Стороны прямоугольников с одинаковой формой: закон сохранения формы при изменении размера</figcaption></figure>
+<p><strong>Условие.</strong> Участок Иванова — прямоугольник со сторонами 72 м и 96 м. Участок Петрова — тоже прямоугольник, его ширина на 15 м меньше ширины участка Иванова. Найди длину участка Петрова, если форма обоих участков одинаковая (то есть отношение сторон «ширина к длине» у них равное). <strong>Что прячется в формулировке:</strong> два прямоугольника имеют одинаковую ФОРМУ — это значит, что отношение сторон у них одно и то же. В задачнике это называется <strong>пропорциональностью сторон</strong>. <strong>Решение по шагам:</strong></p>
+<p><strong>Шаг 1. Запиши отношение сторон первого участка.</strong> По условию порядок: ширина к длине. Дробь: \(\frac{72}{96}\).</p>
+<p><strong>Как нашли делитель 24?</strong> Делим 72 на 2 → 36; делим 96 на 2 → 48. Ещё раз на 2 → 18 и 24. Ещё раз на 3 → 6 и 8. Ещё раз на 2 → 3 и 4. Итого делитель = 2·2·2·3 = <strong>24</strong> (общий делитель чисел 72 и 96). Числа 3 и 4 уже взаимно простые (нет общего делителя), делить дальше некуда. Этот же делитель 24 сокращает дробь: \(72 \div 24 = 3\), \(96 \div 24 = 4\). Форма участка Иванова — 3 к 4.</p>
+<p>Это значит, что на каждые 3 метра ширины приходится ровно 4 метра длины. Этот «ключ формы» — главное, что нужно запомнить из условия участка Иванова.</p>
+<p><strong>Шаг 2. Найди ширину второго участка.</strong> По условию она на 15 м меньше ширины Иванова: \(72 - 15 = 57\) м. Длину участка Петрова обозначим как \(x\).</p>
+<p>Отношение его сторон в том же порядке: \(\frac{57}{x}\). Мы пока не знаем длину, поэтому оставляем её как \(x\) — это та самая «неизвестная часть», которую нам и нужно найти.</p>
+<p><strong>Шаг 3. Составь пропорцию.</strong> Так как форма у участков абсолютно одинаковая, приравниваем эти дроби:</p>
+<div class="math-block">\[\frac{3}{4} = \frac{57}{x}\]</div>
+<p>Записываем ровно так: левая дробь — форма Иванова (известная после сокращения), правая дробь — форма Петрова (с неизвестной длиной).</p>
+<p><strong>Шаг 4. Примени закон крест-накрест.</strong> Перемножаем числа наискосок: \(3 \cdot x = 4 \cdot 57\).</p>
+<p>Отсюда \(3x = 228\), и делим обе части на 3: \(x = \frac{228}{3} = 76\) м.</p>
+<p><strong>Проверка здравым смыслом.</strong> Участок Петрова пропорционально меньше участка Иванова по всем фронтам. Ширина меньше (57 &lt; 72) — значит, и длина обязана стать меньше (76 &lt; 96). Баланс формы сохранён: участок Петрова выглядит как уменьшенная копия участка Иванова.</p>
+<p><strong>Ответ:</strong> 76 м.</p>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-horizontal" id="slide-22.8">
+<header class="slide-header"><span class="order-num">№53</span><span class="slide-num ref">Слайд 22.8</span><h2>Переливание жидкости (баланс объёмов)</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Баланс объёмов при переливании процентов" decoding="async" height="1024" loading="lazy" src="assets/pereivanie-procenty.png" width="1024"/><figcaption>Баланс объёмов при переливании процентов</figcaption></figure>
+<p><strong>Условие.</strong> В двух сосудах содержится 36 л жидкости. Если 10% жидкости из первого сосуда перелить во второй, то в обоих сосудах окажется одинаковое количество жидкости. Сколько литров жидкости было во втором сосуде первоначально?</p>
+<p><strong>Что прячется:</strong> при переливании 10% из первого во второй — количество во втором увеличивается ровно на ту же величину, на которую уменьшается первое. Если после этого они сравнялись, значит, изначально во втором было на 20% меньше, чем в первом.</p>
+
+<p><strong>Решение по шагам:</strong></p>
+<ol><li>Назначь переменную. Вопрос просит найти, сколько было во втором сосуде. Пусть во втором сосуде было \(x\) литров, тогда в первом было \((36 - x)\) литров.</li><li>Переливание. 10% от первого сосуда — это \(0{,}1 \cdot (36 - x) = 3{,}6 - 0{,}1x\).</li><li>Баланс после переливания. В первом осталось: \((36 - x) - (3{,}6 - 0{,}1x) = 32{,}4 - 0{,}9x\). Во втором стало: \(x + (3{,}6 - 0{,}1x) = 0{,}9x + 3{,}6\).</li><li>Уравнение. Объёмы сравнялись: \(32{,}4 - 0{,}9x = 0{,}9x + 3{,}6 \Rightarrow 1{,}8x = 28{,}8 \Rightarrow x = \frac{28{,}8}{1{,}8} = 16\) литров.</li></ol>
+<p><strong>Ответ:</strong> 16 л.</p>
+<p>На финише мы сразу получили чистый ответ на вопрос задачи, защитив себя от потери разрядов.</p>
+<p><strong>Проверка здравым смыслом:</strong> сумма \(20 + 16 = 36\) ✓ (всего 36 л по условию). После переливания: первый = \(20 - 2 = 18\) л, второй = \(16 + 2 = 18\) л ✓ (равны).</p>
+<blockquote class="note-trap"><p>Возможная ловушка: <strong>ученик забывает</strong>, что 10% переливается из ПЕРВОГО во ВТОРОЙ, и составляет уравнение «наоборот»: переливает из второго в первый. Получает ответ 20 л (как объём первого), а не 16 л (объём второго). Всегда проверяй направление переливания по условию.</p></blockquote>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-horizontal" id="slide-22.9">
+<header class="slide-header"><span class="order-num">№54</span><span class="slide-num ref">Слайд 22.9</span><h2>Ученики двух школ (баланс через переменные)</h2></header>
+<div class="slide-body"><figure class="sketch"><img alt="Баланс учеников в двух школах через систему уравнений" decoding="async" height="1024" loading="lazy" src="assets/kvartiry-alfa-omega.png" width="1024"/><figcaption>Баланс учеников в двух школах через систему уравнений</figcaption></figure>
+<p><strong>Условие.</strong> В школе «Альфа» 13% от общего числа учеников составляют отличники, а в школе «Омега» 61% от общего числа учеников — отличники. 16% всех учеников в двух школах вместе — отличники. Во сколько раз больше общее количество учеников в школе «Альфа», чем в школе «Омега»?</p>
+<p><strong>Что прячется:</strong> в задаче 3 неизвестных (число учеников в «Альфе», в «Омега», и число отличников в каждом). Связаны 2 условиями: процент отличников в каждом доме + процент отличников в среднем. Нужно выразить всё через одну переменную.</p>
+
+<p><strong>Решение по шагам (метод переменных):</strong></p>
+<ol><li>Пусть в «Альфе» \(A\) учеников, в «Омега» — \(B\) учеников. Всего: \(A + B\).</li><li>Отличников в «Альфе»: \(0{,}13A\).</li><li>Отличников в «Омега»: \(0{,}61B\).</li><li>Всего отличников: \(0{,}13A + 0{,}61B\).</li><li>По условию: \(\frac{0{,}13A + 0{,}61B}{A + B} = 0{,}16\).</li><li>Умножим обе части на \((A + B)\): \(0{,}13A + 0{,}61B = 0{,}16A + 0{,}16B\).</li><li><strong>Перенесём все члены с \(A\) влево, с \(B\) — вправо.</strong> Вычтем \(0{,}16A\) из обеих частей: \(0{,}13A - 0{,}16A + 0{,}61B = 0{,}16B\). Получим \(-0{,}03A + 0{,}61B = 0{,}16B\). Вычтем \(0{,}61B\): \(-0{,}03A = -0{,}45B\). Умножим обе части на \(-1\): \(0{,}03 \cdot A = 0{,}45 \cdot B\). Избавимся от запятых — умножим обе части на 100:</li></ol>
+<div class="math-block">\[3 \cdot A = 45 \cdot B\]</div>
+<ol><li>Нам нужно найти, во сколько раз Альфа больше Омеги, то есть отношение \(\frac{A}{B}\). Разделим обе части уравнения на число 3:</li></ol>
+<div class="math-block">\[A = 15 \cdot B\]</div>
+<p>Теперь разделим обе части на \(B\):</p>
+<div class="math-block">\[\frac{A}{B} = 15\]</div>
+<p><strong>Ответ:</strong> в «Альфе» в 15 раз больше учеников, чем в «Омега».</p>
+<p><strong>Интуиция через «средневзвешенное значение».</strong> 16% — это средневзвешенное двух процентов (13% и 61%). Так как 16% ближе к 13%, то «Альфа» (с меньшим процентом отличников) должен занимать большую долю в общем количестве. А значит, в «Альфе» учеников значительно больше.</p>
+<p><strong>Проверка здравым смыслом:</strong> 16% ближе к 13%, чем к 61%. Это значит, что «Альфа» (с 13%) должен занимать бо́льшую долю в общем количестве учеников, и его доля отличников должна «перетягивать» средневзвешенное к 13%. Ответ «в 15 раз больше» — это сильное перетягивание, что логично для разрыва между 13% и 61%.</p>
+<blockquote class="note-trap"><p> Возможная ловушка: <strong>ученик переворачивает</strong> ответ и пишет «в 15 раз меньше». Также частая ошибка: делить \(B\) на \(A\) вместо \(A\) на \(B\). Всегда проверяй, что ищем: «во сколько раз «Альфа» больше «Омеги»» означает \(\frac{A}{B}\), а не \(\frac{B}{A}\).</p></blockquote>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-horizontal" id="slide-22.10">
+<header class="slide-header"><span class="order-num">№55</span><span class="slide-num ref">Слайд 22.10</span><h2>Финальная самопроверка</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker inline-sticker-right"><img alt="Клан в деле — самопроверка" decoding="async" height="612" loading="lazy" src="assets/stickers/klan-v-dele.png" width="597"/><figcaption>Клан в деле — самопроверка</figcaption></figure>
+<p>Реши 5 задач после прохождения всего урока. Это покажет, насколько ты готов к ЦТ по теме «Проценты, пропорции, масштаб». Задачи взяты из банка математики с тестирований РИКЗ.</p>
+<p><strong>Задача 1 (ловушка на сложные проценты).</strong> Цена товара сначала выросла на 25%, а потом снизилась на 20% от НОВОЙ цены. Как изменилась итоговая цена относительно начальной (в процентах)?</p>
+<p><strong>Задача 2 (среднее арифметическое через пропорцию).</strong> Среднее арифметическое пяти чисел равно 12. К этим числам прибавили ещё одно число, и среднее стало 14. Чему равно это новое число?</p>
+<p><strong>Задача 3 (масштаб и единицы).</strong> На карте с масштабом \(1 : 100\,000\) прямоугольный участок имеет размеры \(4\) см \(\times\) \(6\) см. Какую площадь (в гектарах) имеет этот участок в реальности?</p>
+<p><strong>Задача 4 (процент от процента в банке).</strong> Банк начисляет \(10\%\) годовых. Какую сумму получит вкладчик через 2 года, если положил 50 000 руб и проценты начисляются по схеме сложного процента?</p>
+<p><strong>Задача 5 (обратная зависимость).</strong> Автомобиль едет со скоростью 60 км/ч и тратит на дорогу до Минска ровно 3 часа . С какой скоростью ему нужно ехать обратно, чтобы преодолеть это же расстояние за 2 часа?</p>
+<p><strong>Разбор ответов (сверься после решения):</strong></p>
+<p><strong>Задача 1 — ответ 0%.</strong> Цена: \(100 \to 100 \cdot 1{,}25 = 125 \to 125 \cdot 0{,}8 = 100\). Итог равен началу: \(1{,}25 \cdot 0{,}8 = 1{,}0\), изменение \(= 0\%\). Ловушка: нельзя складывать проценты (\(25 - 20 = 5\%\)), нужно умножать коэффициенты.</p>
+<p><strong>Задача 2 — ответ 24.</strong> Сумма пяти чисел: \(5 \cdot 12 = 60\). Новая сумма: \(6 \cdot 14 = 84\). Прибавленное число: \(84 - 60 = 24\).</p>
+<p><strong>Задача 3 — ответ 2 400 га (= 24 км²).</strong> Размер участка: \(4 \cdot 100\,000 = 400\,000\) см = \(4\,000\) м по одной стороне, и \(6 \cdot 100\,000 = 600\,000\) см = \(6\,000\) м по другой. Площадь: \(4\,000 \cdot 6\,000 = 24\,000\,000\) м² = \(2\,400\) га = \(24\) км².</p>
+<p><strong>Задача 4 — ответ 60 500 руб.</strong> По формуле сложного процента: \(S_2 = 50\,000 \cdot 1{,}1^2 = 50\,000 \cdot 1{,}21 = 60\,500\) руб.</p>
+<p><strong>Задача 5 — ответ 90 км/ч.</strong> Расстояние: \(60 \cdot 3 = 180\) км. Обратно за 2 часа: \(180 / 2 = 90\) км/ч. Это обратная зависимость: чем больше скорость, тем меньше время.</p>
+<p><strong>Как интерпретировать результат после урока:</strong></p>
+<ul><li><strong>5 из 5</strong> — тебе можно переходить сразу к ловушкам Блока 8 и шпаргалкам. Теория в голове.</li><li><strong>3–4 из 5</strong> — повтори Слайды 16–21 (шпаргалки) и попробуй ловушки из Блока 8.</li><li><strong>0–2 из 5</strong> — это нормально. Ты только что прошёл большой объём теории. Рекомендую вернуться к Блокам 1–3, освежить базу (пропорция, зависимости), потом попробовать эту самопроверку снова через 2–3 дня.</li></ul>
+<p>Не важно, сколько ты решил — урок построен так, чтобы ты понял всё. Если что-то непонятно — вернись и прочитай ещё раз.</p>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-horizontal" id="slide-22.11">
+<header class="slide-header"><span class="order-num">№56</span><span class="slide-num ref">Слайд 22.11</span><h2>Карта твоего пути: что ты прошёл</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker"><img alt="Ты сможешь — карта пути" decoding="async" height="616" loading="lazy" src="assets/stickers/ty-smozhesh.png" width="566"/><figcaption>Ты сможешь — карта пути</figcaption></figure>
+<p>Урок состоит из восьми блоков теории. Каждый блок решает свою задачу, и каждый следующий блок опирается на инструменты предыдущего.</p>
+<p><strong>Блок 1. Пропорция.</strong> Главный инструмент урока — закон крест-накрест. Ты научишься видеть равенство двух дробей и находить неизвестное.</p>
+<p><strong>Блок 2. Зависимости.</strong> Прямая «больше → больше» и обратная «больше → меньше» — два главных сценария задач.</p>
+<p><strong>Блок 3. Масштаб.</strong> Отношение 1:X между чертёжом и реальностью, перевод км ↔ м ↔ мм через шесть нулей.</p>
+<p><strong>Блок 4. Проценты.</strong> Определение процента, три формулы (часть от целого, целое по части, процент по части), распознавание целого и части в условии.</p>
+<p><strong>Блок 5. Типы задач.</strong> Скидки, налоги, простой процент, изменение цены, смеси и сплавы — на каждый тип своя формула.</p>
+<p><strong>Блок 6. Сложные проценты.</strong> Когда процент применяется несколько раз подряд: банковский вклад с капитализацией, инфляция, ежегодный рост.</p>
+<p><strong>Блок 7. Сборник формул.</strong> Шесть шпаргалок: пропорция, зависимости, проценты, масштаб, сложный процент — распечатай и держи под рукой.</p>
+<p><strong>Блок 8. Возможные ловушки.</strong> Десять задач на реальных экзаменационных формулировках. Если ты решил их без ошибок — ты готов к ЦТ.</p>
+<p><strong>Логика движения:</strong> пропорция → зависимости → масштаб → проценты → сложные проценты → ловушки. Каждый следующий блок строится на инструментах предыдущего, ничего не изучается изолированно.</p>
+<p><strong>Между блоками — мостики.</strong> Это короткие паузы: «Ты прошёл блок N, теперь передохнёшь и пойдёшь в блок N+1». В каждом мостике есть паспорт темы (что ты только что освоил) и анонс следующего блока.</p>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-dark" id="slide-22.12">
+<header class="slide-header"><span class="order-num">№57</span><span class="slide-num ref">Слайд 22.12</span><h2>Финал</h2></header>
+<div class="slide-body">
+<figure class="sketch sketch-full"><img alt="Финальный слайд — Проценты, пропорции, масштаб" decoding="async" height="1024" loading="lazy" src="assets/finalnyy-slayd.png" width="1024"/><figcaption>Финальный слайд — Проценты, пропорции, масштаб</figcaption></figure>
+</div>
+</section>
+<section class="slide sub-slide reference-slide slide-horizontal" id="slide-22.13">
+<header class="slide-header"><span class="order-num">№58</span><span class="slide-num ref">Слайд 22.13</span><h2>Глоссарий: термины из задачников РИКЗ</h2></header>
+<div class="slide-body"><figure class="sketch inline-sticker inline-sticker-right"><img alt="Запомни — глоссарий" decoding="async" height="511" loading="lazy" src="assets/stickers/zapomni.png" width="586"/><figcaption>Запомни — глоссарий</figcaption></figure>
+<p>В этом уроке используются термины, которые встречаются в реальных заданиях ЦТ и РИКЗ. Если ты встречаешь незнакомое слово — открой этот глоссарий.</p>
+<table><thead><tr><th>Термин</th><th>Что значит</th><th>Где встречается</th><th>Пример из задачи</th></tr></thead><tbody><tr><td><strong>Пропорция</strong></td><td>равенство двух дробей</td><td>весь урок</td><td>\(\frac{a}{b} = \frac{c}{d}\)</td></tr><tr><td><strong>Крайние члены</strong> пропорции</td><td>числа \(a\) и \(d\) (по краям дроби)</td><td>Блок 1</td><td>в \(\frac{2}{3} = \frac{4}{6}\) крайние — 2 и 6</td></tr><tr><td><strong>Средние члены</strong> пропорции</td><td>числа \(b\) и \(c\) (внутри дроби)</td><td>Блок 1</td><td>в \(\frac{2}{3} = \frac{4}{6}\) средние — 3 и 4</td></tr><tr><td><strong>Крест-накрест</strong> (закон)</td><td>произведение чисел наискосок равно</td><td>Блок 1, Блок 8</td><td>\(a \cdot d = b \cdot c\)</td></tr><tr><td><strong>Прямая зависимость</strong></td><td>две величины растут/падают синхронно</td><td>Блок 2</td><td>больше товара → больше денег</td></tr><tr><td><strong>Обратная зависимость</strong></td><td>одна растёт, другая падает</td><td>Блок 2, Блок 8</td><td>больше рабочих → меньше дней</td></tr><tr><td><strong>Масштаб</strong></td><td>отношение размера на бумаге к реальному</td><td>Блок 3</td><td>\(1 : 100\) (1 см = 100 см)</td></tr><tr><td><strong>Процент</strong></td><td>сотая часть числа (\(p\% = \frac{p}{100}\))</td><td>Блок 4</td><td>\(15\%\) = \(\frac{15}{100}\) = 0,15</td></tr><tr><td><strong>Целое</strong></td><td>то, что принимается за 100%</td><td>Блок 4, Блок 5</td><td>в задаче «15% от 200» целое = 200</td></tr><tr><td><strong>Часть</strong></td><td>то, что мы ищем (или дано как \(p\%\) от целого)</td><td>Блок 4, Блок 5</td><td>в задаче «15% от 200» часть = 30</td></tr><tr><td><strong>Скидка</strong></td><td>снижение цены на \(p\%\)</td><td>Блок 5</td><td>скидка 15% на товар за 200 руб</td></tr><tr><td><strong>Простой процент</strong></td><td>процент применяется один раз к исходной сумме</td><td>Блок 5</td><td>подоходный налог каждый месяц от зарплаты</td></tr><tr><td><strong>Сложный процент (капитализация)</strong></td><td>процент применяется к НОВОЙ сумме каждый период</td><td>Блок 6, Блок 8</td><td>банковский вклад с ежегодной капитализацией</td></tr><tr><td><strong>Капитализация</strong></td><td>то же, что сложный процент (проценты прибавляются к сумме)</td><td>Блок 6</td><td>«вклад с капитализацией» = «сложный процент»</td></tr><tr><td><strong>Множитель роста</strong> \(k\)</td><td>на него умножается сумма каждый период: \(k = 1 + \frac{p}{100}\)</td><td>Блок 6</td><td>при 10% годовых \(k = 1{,}1\)</td></tr><tr><td><strong>Средневзвешенное значение</strong></td><td>среднее с разными весами</td><td>Блок 8</td><td>среднее 13% и 61% с весами = 16%</td></tr><tr><td><strong>Баланс объёмов</strong></td><td>при переливании сумма объёмов постоянна</td><td>Блок 8</td><td>20 л + 16 л = 36 л</td></tr><tr><td><strong>Перевёрнутая пропорция</strong></td><td>обратная зависимость, когда произведение величин постоянно</td><td>Блок 2, Блок 5</td><td>3 рабочих × 12 дней = 9 рабочих × x дней ⇒ x = 4</td></tr></tbody></table>
+<p><strong>Слова-подсказки в условии задачи (как распознать тип задачи):</strong></p>
+<table><thead><tr><th>Слово в условии</th><th>Что это значит</th><th>Какую формулу применять</th></tr></thead><tbody><tr><td>«на сколько процентов выросла/упала»</td><td>процент изменения</td><td>\(\frac{(B - A)}{A} \cdot 100\)</td></tr><tr><td>«от какого числа»</td><td>ищем целое</td><td>\(A = \frac{B \cdot 100}{p}\)</td></tr><tr><td>«составляет X%»</td><td>ищем часть</td><td>\(\text{Часть} = A \cdot \frac{p}{100}\)</td></tr><tr><td>«от» (после числа)</td><td>целое стоит после</td><td>\(A\) = целое</td></tr><tr><td>«каждый год/месяц с капитализацией»</td><td>сложный процент</td><td>\(S_n = A \cdot (1 + \frac{p}{100})^n\)</td></tr><tr><td>«рабочие/трубы одинаковой производительности»</td><td>обратная зависимость</td><td>произведение в строчку</td></tr><tr><td>«масштаб 1:X»</td><td>X — реальных единиц на 1 бумажную</td><td>\(\frac{\text{бумага}}{\text{реальность}} = \frac{1}{X}\)</td></tr></tbody></table>
+</div>
+</section>
+</main>
+</div>
+<button class="back-to-toc">Наверх</button>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/cancel.min.js"></script>
+<script>
+
+function renderMath() {
+  if (typeof renderMathInElement === "undefined") return;
+  renderMathInElement(document.body, {
+    delimiters: [{left: "\\(", right: "\\)", display: false}, {left: "\\[", right: "\\]", display: true}],
+    throwOnError: false
+  });
+}
+window.addEventListener("load", renderMath);
+if (document.readyState === "complete") renderMath();
+
+(function () {
+  var toc = document.querySelector('nav.toc');
+  var back = document.querySelector('button.back-to-toc');
+  if (back) {
+    back.addEventListener('click', function () {
+      if (toc) toc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a[href^="#"]'));
+  var linksByHash = new Map();
+  links.forEach(function (link) {
+    var hash = link.getAttribute('href');
+    if (!linksByHash.has(hash)) linksByHash.set(hash, []);
+    linksByHash.get(hash).push(link);
+  });
+
+  function setActive(hash) {
+    links.forEach(function (link) { link.classList.remove('is-active'); });
+    (linksByHash.get(hash) || []).forEach(function (link) { link.classList.add('is-active'); });
+  }
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main.content section[id]'));
+  if ('IntersectionObserver' in window && sections.length) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) setActive('#' + entry.target.id);
+      });
+    }, { root: null, rootMargin: '-22% 0px -68% 0px', threshold: 0 });
+    sections.forEach(function (section) { observer.observe(section); });
+  }
+
+  window.addEventListener('hashchange', function () {
+    if (window.location.hash) setActive(window.location.hash);
+  });
+  if (window.location.hash) setActive(window.location.hash);
+})();
+
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3eb22d89d9fd7f7',t:'MTc5MDAxNTM3NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
