@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Метод лесенки — разложение чертой</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<style>
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #1a202c;
+  background: linear-gradient(180deg, #f7fafc 0%, #edf2f7 100%);
+  margin: 0;
+  padding: 32px 20px;
+}
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 40px 48px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+h1 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  color: #1a202c;
+}
+.subtitle {
+  color: #4a5568;
+  margin: 0 0 32px 0;
+  font-size: 15px;
+  border-bottom: 2px solid #ebf8ff;
+  padding-bottom: 20px;
+}
+h2 {
+  color: #2b6cb0;
+  margin: 36px 0 16px 0;
+  font-size: 22px;
+  border-left: 4px solid #2b6cb0;
+  padding-left: 14px;
+}
+h3 {
+  color: #2d3748;
+  margin: 24px 0 12px 0;
+  font-size: 18px;
+}
+.ladder-card {
+  background: #fffff0;
+  border: 2px solid #d69e2e;
+  border-radius: 12px;
+  padding: 20px 28px;
+  margin: 18px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.ladder-card .formula {
+  font-size: 22px;
+}
+.result {
+  background: #f0fff4;
+  border-left: 4px solid #38a169;
+  padding: 10px 18px;
+  border-radius: 4px;
+  margin: 10px 0;
+  font-size: 18px;
+}
+.step-list {
+  background: #ebf8ff;
+  padding: 18px 28px;
+  border-radius: 8px;
+  border-left: 4px solid #2b6cb0;
+  margin: 16px 0;
+}
+.step-list ol { margin: 8px 0; padding-left: 24px; }
+.step-list li { margin-bottom: 6px; }
+.callout {
+  background: #fff5f5;
+  border: 1px solid #feb2b2;
+  border-left: 4px solid #c53030;
+  padding: 14px 20px;
+  border-radius: 4px;
+  margin: 18px 0;
+}
+.callout::before {
+  content: "⚠️ ";
+  font-weight: bold;
+}
+.tip {
+  background: #fefcbf;
+  border-left: 4px solid #d69e2e;
+  padding: 12px 18px;
+  border-radius: 4px;
+  margin: 14px 0;
+}
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 18px 0;
+}
+@media (max-width: 700px) {
+  .container { padding: 24px 20px; }
+  .two-columns { grid-template-columns: 1fr; }
+}
+.math-block { text-align: center; margin: 1em 0; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🪜 Метод лесенки: разложение числа чертой</h1>
+<p class="subtitle">Классический школьный способ раскладывать числа на простые множители. Идеален для поиска НОД и НОК.</p>
+
+<h2>📐 Что это такое</h2>
+<p>Число записывается <strong>слева от вертикальной черты</strong>, а его наименьший простой делитель — <strong>справа</strong>. Результат деления уходит вниз под тем же числом, и так шаг за шагом, пока слева не останется единица. Все числа справа от черты (сверху вниз) — это и есть разложение на простые множители.</p>
+
+<h3>Алгоритм по шагам:</h3>
+<div class="step-list">
+<ol>
+<li>Запиши число слева, проведи от него вертикальную черту.</li>
+<li>Подбери наименьший простой делитель (2 — если чётное, потом 3, 5, 7, 11...). Запиши его справа от черты.</li>
+<li>Раздели число на этот делитель, результат запиши под числом (слева).</li>
+<li>Повторяй шаги 2-3, пока слева не останется <strong>1</strong>.</li>
+<li>Все числа справа от черты, прочитанные <strong>сверху вниз</strong>, — это разложение на простые множители.</li>
+</ol>
+</div>
+
+<h2>🪜 Пример 1. Раскладываем 36</h2>
+<div class="ladder-card">
+<div class="formula">
+\[
+\begin{array}{r|l}
+36 & 2 \\
+18 & 2 \\
+9  & 3 \\
+3  & 3 \\
+1  &
+\end{array}
+\]
+</div>
+</div>
+<div class="result">✅ Читаем справа сверху вниз: <strong>\(36 = 2 \cdot 2 \cdot 3 \cdot 3\)</strong></div>
+
+<h2>🪜 Пример 2. Раскладываем 24</h2>
+<div class="ladder-card">
+<div class="formula">
+\[
+\begin{array}{r|l}
+24 & 2 \\
+12 & 2 \\
+6  & 2 \\
+3  & 3 \\
+1  &
+\end{array}
+\]
+</div>
+</div>
+<div class="result">✅ <strong>\(24 = 2 \cdot 2 \cdot 2 \cdot 3\)</strong></div>
+
+<h2>🪜 Пример 3. Нечётное 91 — Правило Трёх Попыток в деле</h2>
+<p>91 нечётное → на 2 не делится. Сумма цифр \(9+1=10\) → на 3 не делится. На конце не 0 и не 5 → на 5 не делится. По Правилу Трёх Попыток проверяем 7.</p>
+<div class="ladder-card">
+<div class="formula">
+\[
+\begin{array}{r|l}
+91  & 7 \\
+13  & 13 \\
+1   &
+\end{array}
+\]
+</div>
+</div>
+<div class="result">✅ <strong>\(91 = 7 \cdot 13\)</strong></div>
+
+<h2>🎯 Как лесенка помогает искать НОД</h2>
+<p>Раскладываешь оба числа чертой в <strong>два столбика рядом</strong>, потом выписываешь только те множители, которые есть в обоих разложениях одновременно, и перемножаешь их.</p>
+
+<h3>Пример: ищем НОД(24, 36)</h3>
+<div class="two-columns">
+<div class="ladder-card">
+<strong>24:</strong>
+\[
+\begin{array}{r|l}
+24 & 2 \\
+12 & 2 \\
+6  & 2 \\
+3  & 3 \\
+1  &
+\end{array}
+\]
+</div>
+<div class="ladder-card">
+<strong>36:</strong>
+\[
+\begin{array}{r|l}
+36 & 2 \\
+18 & 2 \\
+9  & 3 \\
+3  & 3 \\
+1  &
+\end{array}
+\]
+</div>
+</div>
+<p>Совпадают в обоих столбиках одновременно: <strong>две двойки</strong> и <strong>одна тройка</strong>.</p>
+<div class="result">✅ НОД = \(2 \cdot 2 \cdot 3 = \mathbf{12}\)</div>
+
+<h2>💡 Лайфхак: что делать, если застрял</h2>
+<div class="tip">
+Если текущее число не делится ни на 2, ни на 3, ни на 5 — применяй <strong>Правило Трёх Попыток</strong>: проверяй 7, 13 и 17. Большинство школьных ловушек колются именно об них.
+</div>
+
+<div class="callout">
+Не забывай: лесенка — самый безопасный метод. Ты не держишь всё разложение в уме, а идёшь маленькими шагами. Если ошибся на одном шаге — пересчитай только его, не всю колонку.
+</div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>
+renderMathInElement(document.body, {
+  delimiters: [{left: "\\(", right: "\\)", display: false}, {left: "\\[", right: "\\]", display: true}],
+  throwOnError: false
+});
+</script>
+</body>
+</html>

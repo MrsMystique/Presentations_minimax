@@ -1,0 +1,7 @@
+﻿a length: 12
+a content: "test (5) end"
+
+b length: 14
+b content: "test \\(5\\) end"
+
+c (double backslash): "no \\(5\\) end" len=12

@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Чистовые слайды v16 — читалка</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<style>
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; font-size:16px; line-height:1.6; color:#1a202c; background:#f7fafc; }
+.layout { display:flex; min-height:100vh; }
+nav.toc { width:320px; flex-shrink:0; background:#fff; border-right:1px solid #e2e8f0; padding:24px 16px; position:sticky; top:0; height:100vh; overflow-y:auto; }
+nav.toc h1 { font-size:17px; margin:0 0 12px 0; color:#2d3748; }
+nav.toc .block-header { display:block; margin-top:14px; margin-bottom:4px; font-weight:700; font-size:13px; color:#4a5568; text-transform:uppercase; letter-spacing:0.04em; text-decoration:none; }
+nav.toc .slide-link { display:block; padding:4px 8px; font-size:13px; color:#2b6cb0; text-decoration:none; border-radius:4px; }
+nav.toc .slide-link:hover { background:#ebf8ff; }
+nav.toc .slide-link.sub-slide { padding-left: 20px; color: #4a5568; font-size: 12px; }
+nav.toc .bridge-header { display:block; margin-top:14px; margin-bottom:4px; font-weight:700; font-size:13px; color:#805ad5; text-transform:uppercase; }
+main.content { flex:1; max-width:880px; padding:40px 48px; margin:0 auto; }
+section.slide { background:#fff; border-radius:12px; box-shadow:0 1px 3px rgba(0,0,0,0.06); padding:28px 32px; margin-bottom:28px; scroll-margin-top:20px; }
+section.slide.final-slide { border-left:4px solid #38a169; }
+section.slide.reference-slide { border-left:4px solid #d69e2e; background:#fffff0; }
+section.slide.sub-slide { border-left:3px dashed #cbd5e0; }
+header.slide-header { display:flex; align-items:baseline; gap:12px; margin-bottom:16px; border-bottom:1px solid #edf2f7; padding-bottom:12px; }
+.slide-num { background:#ebf8ff; color:#2b6cb0; padding:2px 10px; border-radius:999px; font-size:12px; font-weight:600; white-space:nowrap; }
+.slide-num.ref { background:#fefcbf; color:#975a16; }
+.slide-num.sub { background:#edf2f7; color:#4a5568; }
+header.slide-header h2 { font-size:22px; margin:0; color:#1a202c; line-height:1.3; }
+.slide-body p { margin:0 0 12px 0; }
+.slide-body h3 { font-size:18px; margin:20px 0 10px 0; color:#2d3748; }
+.slide-body h4 { font-size:16px; margin:16px 0 8px 0; color:#4a5568; }
+.slide-body ul, .slide-body ol { margin:0 0 12px 0; padding-left:24px; }
+.slide-body li { margin-bottom:4px; }
+.slide-body blockquote { margin:12px 0; padding:10px 16px; background:#fffbea; border-left:4px solid #ecc94b; color:#744210; border-radius:4px; }
+.slide-body blockquote p:last-child { margin-bottom:0; }
+.slide-body table { border-collapse:collapse; margin:14px 0; font-size:13px; width:100%; }
+.slide-body th, .slide-body td { border:1px solid #e2e8f0; padding:8px 12px; text-align:left; vertical-align:top; }
+.slide-body th { background:#f7fafc; font-weight:600; color:#2d3748; }
+.slide-body code { background:#edf2f7; padding:1px 6px; border-radius:3px; font-family:'JetBrains Mono',Consolas,Monaco,monospace; font-size:0.92em; }
+.math-block { text-align:center; margin:0.9em 0; padding:0.2em 0; overflow-x:auto; overflow-y:hidden; }
+.math-block .katex-display { margin:0; }
+button.back-to-toc { position:fixed; bottom:24px; right:24px; background:#2b6cb0; color:white; border:none; padding:10px 16px; border-radius:999px; cursor:pointer; font-size:14px; box-shadow:0 4px 12px rgba(43,108,176,0.4); z-index:10; }
+button.back-to-toc:hover { background:#2c5282; }
+@media (max-width:900px) { .layout { flex-direction:column; } nav.toc { width:100%; height:auto; position:relative; } main.content { padding:20px; } }
+
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc">
+<h1>Чистовые слайды v16</h1><a class="block-header">Блок 1. Классы и разряды</a><a class="slide-link" href="#slide-1">1. Зачем вообще разбивать число на блоки</a><a class="slide-link" href="#slide-2">2. Структура числа</a><a class="slide-link" href="#slide-3">3. Алгоритм: как найти нужную цифру</a><a class="slide-link" href="#slide-4">4. Практика: единицы класса тысяч</a><a class="slide-link" href="#slide-5">5. Подвох №1 — «цифра есть, но не там»</a><a class="slide-link" href="#slide-6">6. Подвох №2 — «разряд отсутствует»</a><a class="slide-link" href="#slide-7">7. Большие числа: миллионы и миллиарды</a><a class="slide-link" href="#slide-8">8. Самостоятельная практика: большие числа</a><a class="block-header">Блок 2. Фундамент дробей + типы + перевод</a><a class="slide-link" href="#slide-9">9. Зачем нужна дробь: сколько кусочков есть в реальности</a><a class="slide-link sub-slide" href="#slide-9.1">9.1. Почему знаменатель меняется: пример с минутами и секундами</a><a class="slide-link" href="#slide-10">10. Дробь — это деление (фундамент)</a><a class="slide-link" href="#slide-11">11. Составные дроби</a><a class="slide-link" href="#slide-12">12. Пример: буква вместо внутренней дроби</a><a class="slide-link" href="#slide-13">13. Правильная и неправильная дроби</a><a class="slide-link" href="#slide-14">14. Сравнение дробей разных типов без общего знаменателя</a><a class="slide-link" href="#slide-15">15. Перевод смешанного числа в неправильную дробь</a><a class="slide-link" href="#slide-16">16. Обратный перевод: из неправильной дроби в смешанное</a><a class="slide-link" href="#slide-17">17. Отрицательные смешанные числа: минус относится ко всему</a><a class="slide-link" href="#slide-18">18. Дробь как часть: сколько кусочков мы взяли</a><a class="slide-link" href="#slide-19">19. Дробь и знак «−»: модуль и направление</a><a class="block-header">Блок 3. Периодические дроби</a><a class="slide-link" href="#slide-20">20. Что такое период и зачем он нужен</a><a class="slide-link" href="#slide-21">21. Чистая периодическая → обыкновенная</a><a class="slide-link" href="#slide-22">22. Смешанная периодическая → обыкновенная</a><a class="slide-link" href="#slide-23">23. Чек-лист и обратная проверка</a><a class="block-header">Блок 4. Конечные и бесконечные десятичные дроби</a><a class="slide-link" href="#slide-24">24. Почему знаменатель решает всё</a><a class="slide-link" href="#slide-25">25. Алгоритм проверки на конечность</a><a class="slide-link" href="#slide-26">26. Практика: какие дроби конечные</a><a class="slide-link" href="#slide-27">27. Типовая ошибка: пропуск сокращения</a><a class="slide-link" href="#slide-28">28. Перевод конечной десятичной в обыкновенную и обратно</a><a class="bridge-header">От дробей к буквенным выражениям</a><a class="slide-link" href="#slide-41">41. Мостик: что мы уже знаем и куда идём</a><a class="block-header">Блок 6. Дополнение из задач</a><a class="slide-link" href="#slide-42">42. Стандартный вид числа: зачем он нужен</a><a class="slide-link" href="#slide-43">43. Полная задача на стандартный вид числа</a><a class="slide-link" href="#slide-44">44. Эквивалентные дроби: прямой тест на основное свойство</a><a class="slide-link" href="#slide-45">45. Полная задача на эквивалентные дроби</a><a class="slide-link" href="#slide-46">46. Задачи на НОД: деление поровну</a><a class="slide-link" href="#slide-47">47. Полная задача на НОД из задачника РИКЗ</a><a class="slide-link" href="#slide-48">48. Полная задача Q8: сумма неправильных дробей с числителем 4</a><a class="slide-link" href="#slide-49">49. Полная задача Q14: остаток от деления как процент от неполного частного</a><a class="slide-link" href="#slide-50">50. Полная задача Q10: сумма натуральных \(n\), для которых \(\text{НОК}(n, 117) = 117\)</a><a class="slide-link" href="#slide-51">51. Итог Блока 6: что покрыто</a><a class="block-header">Блок 7. Раскрытие скобок + распределительный закон</a><a class="slide-link" href="#slide-52">52. Зачем раскрывать скобки</a><a class="slide-link" href="#slide-53">53. Распределительный закон (формулировка)</a><a class="slide-link" href="#slide-54">54. Алгоритм раскрытия скобок (с плюсом перед скобкой)</a><a class="slide-link" href="#slide-55">55. Раскрытие скобок с минусом перед скобкой (типичная ошибка)</a><a class="slide-link" href="#slide-56">56. Раскрытие скобок с числовым множителем</a><a class="slide-link" href="#slide-57">57. Приведение подобных слагаемых</a><a class="slide-link" href="#slide-58">58. Типовая ошибка: минус только у первого слагаемого</a><a class="slide-link" href="#slide-59">59. Полная задача на раскрытие скобок и приведение подобных</a><a class="block-header">Блок 8. Разность квадратов</a><a class="slide-link" href="#slide-60">60. Формула разности квадратов</a><a class="slide-link" href="#slide-61">61. Когда применять формулу</a><a class="slide-link" href="#slide-62">62. Алгоритм применения</a><a class="slide-link" href="#slide-63">63. Полная задача на разность квадратов</a><a class="slide-link" href="#slide-64">64. Типовая ошибка: перепутать основания с коэффициентами</a><a class="block-header">Блок 9. Квадрат суммы и квадрат разности</a><a class="slide-link" href="#slide-65">65. Общее и различное у квадрата суммы и квадрата разности</a><a class="slide-link" href="#slide-66">66. Две формулы — два разных знака</a><a class="slide-link" href="#slide-67">67. Как узнать, какую формулу применять</a><a class="slide-link" href="#slide-68">68. Свернуть в квадрат (обратная операция)</a><a class="slide-link" href="#slide-69">69. Раскрыть квадрат (прямая операция)</a><a class="slide-link" href="#slide-70">70. Когда основание — сложное выражение</a><a class="slide-link" href="#slide-71">71. Отрицательные основания</a><a class="slide-link" href="#slide-72">72. Типовая ошибка: забыть удвоенное произведение</a><a class="bridge-header">Перемежение</a><a class="slide-link" href="#slide-73">73. Повторение дробей, периодических, знаменателя = 2·5</a><a class="block-header">Блок 10. Вынесение знака и группировка</a><a class="slide-link" href="#slide-74">74. Зеркальное отражение знаков: \((B - A) = -(A - B)\)</a><a class="slide-link" href="#slide-75">75. Вынесение общего множителя</a><a class="slide-link" href="#slide-76">76. Группировка: как найти общий множитель</a><a class="slide-link" href="#slide-77">77. Группировка с переворотом знака</a><a class="slide-link" href="#slide-78">78. «Невидимая единица» перед скобкой</a><a class="slide-link" href="#slide-79">79. Типовая ошибка: потеря «невидимой единицы»</a><a class="slide-link" href="#slide-80">80. Универсальная проверка: подстановка чисел</a><a class="slide-link" href="#slide-81">81. Полная задача на группировку с переворотом знака</a><a class="block-header">Блок 11. Стандартный вид числа (полный блок)</a><a class="slide-link" href="#slide-82">82. Зачем нужен стандартный вид</a><a class="slide-link" href="#slide-83">83. Умножение степеней с одинаковым основанием</a><a class="slide-link" href="#slide-84">84. Закон сохранения значения при сдвиге запятой</a><a class="slide-link" href="#slide-85">85. Алгоритм умножения чисел в стандартном виде</a><a class="slide-link" href="#slide-86">86. Практика: базовый шаблон</a><a class="slide-link" href="#slide-87">87. Практика: с высокой степенью</a><a class="slide-link" href="#slide-88">88. Типовая ошибка: выбрать ответ с неверной степенью</a><a class="slide-link" href="#slide-89">89. Шпаргалка: компас для движения запятой</a><a class="block-header">Блок 12. Чётность и разрядность</a><a class="slide-link" href="#slide-90">90. Чётное и нечётное: зачем это нужно</a><a class="slide-link" href="#slide-91">91. Законы умножения чётных и нечётных чисел</a><a class="slide-link" href="#slide-92">92. Алгоритм анализа чётности произведения</a><a class="slide-link" href="#slide-93">93. Практика: анализ чётности</a><a class="slide-link" href="#slide-94">94. Целые однозначные числа и координатная прямая</a><a class="slide-link" href="#slide-95">95. Шпаргалка: чётность и координатная прямая</a><a class="block-header">Блок 13. Дроби, у которых числитель или знаменатель сам является дробью</a><a class="slide-link" href="#slide-96">96. Что это за конструкция</a><a class="slide-link" href="#slide-97">97. Главная дробная черта</a><a class="slide-link" href="#slide-98">98. Правило переноса знаменателя вниз</a><a class="slide-link" href="#slide-99">99. Правило переноса знаменателя вверх</a><a class="slide-link" href="#slide-100">100. Типовая ошибка: одинаковая длина всех черт</a><a class="block-header">Блок 14. Сложение и вычитание смешанных чисел</a><a class="slide-link" href="#slide-101">101. Зачем нужен общий знаменатель</a><a class="slide-link" href="#slide-102">102. Алгоритм сложения/вычитания смешанных чисел</a><a class="slide-link" href="#slide-103">103. Практика: путь 1 (классический раздельный счёт)</a><a class="slide-link" href="#slide-104">104. Практика: путь 2 (перевод в неправильные дроби)</a><a class="slide-link" href="#slide-105">105. Типовая ошибка: вычитание смешанного из целого</a><a class="block-header">Блок 15. Умножение и деление дробей</a><a class="slide-link" href="#slide-106">106. Умножение дробей: закон</a><a class="slide-link" href="#slide-107">107. Деление дробей: закон</a><a class="slide-link" href="#slide-108">108. Алгоритм умножения и деления</a><a class="slide-link" href="#slide-109">109. Практика: умножение смешанных чисел</a><a class="slide-link" href="#slide-110">110. Текстовые задачи: «часть от целого» и «целое по его части»</a><a class="slide-link" href="#slide-111">111. Практика: часть от целого</a><a class="slide-link" href="#slide-112">112. Практика: целое по его части</a><a class="slide-link" href="#slide-113">113. Типовая ошибка: перепутать умножение и деление</a><a class="block-header">Блок 16. Округление чисел</a><a class="slide-link" href="#slide-114">114. Названия разрядов после запятой</a><a class="slide-link" href="#slide-115">115. Примеры разрядов в десятичной дроби</a><a class="slide-link" href="#slide-116">116. Правила округления</a><a class="slide-link" href="#slide-117">117. Алгоритм округления</a><a class="slide-link" href="#slide-118">118. Типовая ошибка: округление целой части без сохранения масштаба</a><a class="block-header">Блок 17. Распределительное свойство (продвинутый уровень)</a><a class="slide-link" href="#slide-119">119. Когда распределение экономит силы</a><a class="slide-link" href="#slide-120">120. Два закона, которые нужны для распределения</a><a class="slide-link" href="#slide-121">121. Полная задача на распределительное свойство</a><a class="slide-link" href="#slide-122">122. Когда распределение **не** помогает</a><a class="block-header">Блок 18. Сокращение алгебраических дробей</a><a class="slide-link" href="#slide-123">123. Что такое алгебраическая дробь</a><a class="slide-link" href="#slide-124">124. Перебор делителей для трёхчлена (без дискриминанта)</a><a class="slide-link" href="#slide-125">125. Два инструмента разложения на множители</a><a class="slide-link" href="#slide-126">126. Алгоритм сокращения алгебраической дроби</a><a class="slide-link" href="#slide-127">127. Полная задача на сокращение алгебраической дроби</a><a class="slide-link" href="#slide-128">128. Типовая ошибка: сокращение при наличии плюсов и минусов</a><a class="block-header">Блок 19. Финальная смешанная практика</a><a class="slide-link" href="#slide-129">129. Задача 1: разряды + десятичная дробь</a><a class="slide-link" href="#slide-130">130. Задача 2: ФСУ + дробь</a><a class="slide-link" href="#slide-131">131. Задача 3: стандартный вид + целое по части</a><a class="slide-link" href="#slide-132">132. Задача 4: отрицательная дробь + сравнение</a><a class="slide-link" href="#slide-133">133. Задача 5: группировка + переворот знаков</a><a class="slide-link" href="#slide-134">134. Задача 6: смешанное число + деление дробей</a><a class="slide-link" href="#slide-135">135. Задача на внимательность: «часть от целого» vs «целое по части»</a><a class="block-header">Блок 20. Сборник формул (финальная шпаргалка)</a><a class="slide-link" href="#slide-136">136. Все ключевые формулы партии в одной карточке</a>
+</nav>
+<main class="content">
+<section class="slide" id="slide-1">
+<header class="slide-header"><span class="slide-num">Слайд 1</span><h2>Зачем вообще разбивать число на блоки</h2></header>
+<div class="slide-body">
+<p>Когда числа были маленькими, блоки были не нужны. Но как только человек начал торговать большими партиями и считать деньги в казне, появилась практическая проблема: число \(321987654321\) невозможно прочитать «на глаз», если смотреть на него как на двенадцать отдельных цифр. Глаз теряет позицию, и ты путаешь, где сотни, а где десятки тысяч.</p>
+<p>Решение оказалось простым и универсальным: цифры <strong>группируют по три, считая справа</strong>. Каждый такой блок получил название «класс». Названия идут по нарастающей: единицы → тысячи → миллионы → миллиарды → триллионы.</p>
+<p>Сама запись числа уже подсказывает тебе эту разбивку пробелами — это не дизайнерская вольность, а математическая разметка.</p>
+</div>
+</section>
+<section class="slide" id="slide-2">
+<header class="slide-header"><span class="slide-num">Слайд 2</span><h2>Структура числа</h2></header>
+<div class="slide-body">
+<p>Возьмём число \(321\,987\,654\,321\) и разложим его по классам:</p>
+<table><thead><tr><th>Класс миллиардов</th><th>Класс миллионов</th><th>Класс тысяч</th><th>Класс единиц</th></tr></thead><tbody><tr><td>\(321\)</td><td>\(987\)</td><td>\(654\)</td><td>\(321\)</td></tr></tbody></table>
+<p>Внутри каждого класса разряды всегда идут в одном и том же порядке (считаем справа налево внутри блока):</p>
+<table><thead><tr><th>Позиция в блоке</th><th>Разряд</th></tr></thead><tbody><tr><td>1-я справа</td><td>единицы</td></tr><tr><td>2-я справа</td><td>десятки</td></tr><tr><td>3-я справа</td><td>сотни</td></tr></tbody></table>
+<p>Если в самом левом (старшем) классе числа стоят всего одна или две цифры, мысленно допиши перед ними нули, чтобы блок стал трёхзначным. Например, число \(25\,137\) превращается в \(025\,137\). Теперь класс тысяч — это блок \(025\): в нём \(0\) сотен, \(2\) десятка и \(5\) единиц. <strong>Ноль слева не меняет значение числа, но сохраняет структуру разрядов</strong>. Если в любом другом классе не хватает цифр, на пустых местах пишут \(0\) — это полноправная цифра, а не «пропуск».</p>
+<blockquote><p><strong>Для отрицательных:</strong> знак «−» пишется отдельно слева от блоков, сами блоки считаются от самого правого. Минус разрядом не считается.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-3">
+<header class="slide-header"><span class="slide-num">Слайд 3</span><h2>Алгоритм: как найти нужную цифру</h2></header>
+<div class="slide-body">
+<p>Когда задача говорит «найди цифру в разряде \(Y\) класса \(Z\)», действуй по шагам:</p>
+<p><strong>Шаг 1.</strong> Определи класс \(Z\):</p>
+<ul><li>\(Z = \text{единицы}\) → блок сразу после пробела (или самый правый, если пробела нет).</li><li>\(Z = \text{тысячи}\) → блок сразу до пробела.</li><li>\(Z = \text{миллионы}\) → третий блок справа.</li><li>\(Z = \text{миллиарды}\) → четвёртый блок справа.</li></ul>
+<p><strong>Шаг 2.</strong> Внутри блока определи разряд \(Y\):</p>
+<ul><li>\(Y = \text{единицы}\) → 1-я цифра справа.</li><li>\(Y = \text{десятки}\) → 2-я цифра справа.</li><li>\(Y = \text{сотни}\) → 3-я цифра справа.</li></ul>
+<p><strong>Шаг 3.</strong> Прочитай цифру на этой позиции.</p>
+<blockquote><p><strong>Приём на черновике:</strong> перед тем как смотреть на числа, выпиши позицию словами: «единицы тысяч = 1-я цифра до пробела». Этот один шаг убирает 9 из 10 ошибок.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-4">
+<header class="slide-header"><span class="slide-num">Слайд 4</span><h2>Практика: единицы класса тысяч</h2></header>
+<div class="slide-body">
+<p><strong>Условие (из задачника РИКЗ).</strong> Среди чисел \(25\,137\); \(47\,351\); \(63\,715\); \(61\,573\); \(58\,924\) выбери то, в котором цифра 5 записана в разряде единиц класса тысяч.</p>
+<table><thead><tr><th>Число</th><th>Цифра до пробела</th><th>Подходит?</th></tr></thead><tbody><tr><td>\(25\,137\)</td><td>\(5\)</td><td>✅ да</td></tr><tr><td>\(47\,351\)</td><td>\(7\)</td><td>❌</td></tr><tr><td>\(63\,715\)</td><td>\(3\)</td><td>❌</td></tr><tr><td>\(61\,573\)</td><td>\(1\)</td><td>❌</td></tr><tr><td>\(58\,924\)</td><td>\(8\)</td><td>❌ (пятёрка есть, но это десятки тысяч)</td></tr></tbody></table>
+<p><strong>Ответ:</strong> \(25\,137\).</p>
+</div>
+</section>
+<section class="slide" id="slide-5">
+<header class="slide-header"><span class="slide-num">Слайд 5</span><h2>Подвох №1 — «цифра есть, но не там»</h2></header>
+<div class="slide-body">
+<p>Почти в каждом тесте есть число, в котором нужная цифра присутствует, но стоит в другом разряде. Если искать глазами «где есть пятёрка», ты выберешь неверный ответ.</p>
+<blockquote><p><strong>Подвох.</strong> В числе \(58\,924\) цифра \(5\) стоит на первой позиции слева — это <strong>десятки тысяч</strong>. Глаз видит пятёрку и радуется, но ты искал <strong>единицы тысяч</strong> (это первая цифра блока тысяч, то есть третья цифра самого числа). Здесь \(5\) — десятки тысяч, и она <strong>не подходит</strong>.</p></blockquote>
+<p><strong>Защитный рефлекс.</strong> Переведи слова задачи в точную позицию на бумаге <strong>до</strong> того, как смотришь на числа. После этого ищи нужную цифру строго в указанной позиции, игнорируя остальные.</p>
+</div>
+</section>
+<section class="slide" id="slide-6">
+<header class="slide-header"><span class="slide-num">Слайд 6</span><h2>Подвох №2 — «разряд отсутствует»</h2></header>
+<div class="slide-body">
+<p>Если в условии требуют найти число, где какой-то разряд отсутствует, значит на этом месте стоит \(0\). Это полноправная цифра, а не «пустое место».</p>
+<blockquote><p><strong>Подвох.</strong> В числе \(4{,}503\) на месте сотых стоит цифра \(0\). Это <strong>не пропуск и не пустое место</strong> — это полноправная цифра, означающая, что сотых частей в числе ровно ноль. Если задача требует «цифру в разряде сотых» — ответ \(0\), а не «цифры нет».</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-7">
+<header class="slide-header"><span class="slide-num">Слайд 7</span><h2>Большие числа: миллионы и миллиарды</h2></header>
+<div class="slide-body">
+<p>Разложение числа \(321\,987\,654\,321\) по классам:</p>
+<table><thead><tr><th>Класс миллиардов</th><th>Класс миллионов</th><th>Класс тысяч</th><th>Класс единиц</th></tr></thead><tbody><tr><td>\(321\)</td><td>\(987\)</td><td>\(654\)</td><td>\(321\)</td></tr></tbody></table>
+<p>Читаем блоками справа налево: \(1\)-й блок — класс единиц, \(2\)-й — тысяч, \(3\)-й — миллионов, \(4\)-й — миллиардов.</p>
+<p><strong>Демо-задача.</strong> Найди «единицы класса миллионов» в числе \(321\,987\,654\,321\).</p>
+<table><thead><tr><th>Шаг</th><th>Действие</th><th>Результат</th></tr></thead><tbody><tr><td>Класс</td><td>\(3\)-й блок справа</td><td>\(987\)</td></tr><tr><td>Разряд</td><td>\(1\)-я цифра справа внутри блока</td><td>последняя цифра \(987\)</td></tr><tr><td>Цифра</td><td>читаем</td><td>\(\mathbf{7}\)</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-8">
+<header class="slide-header"><span class="slide-num">Слайд 8</span><h2>Самостоятельная практика: большие числа</h2></header>
+<div class="slide-body">
+<p><strong>Условие (из задачника РИКЗ).</strong> В числе \(47\,215\,638\,904\) найди:</p>
+<ul><li>а) десятки класса миллиардов;</li><li>б) сотни класса миллионов;</li><li>в) единицы класса тысяч.</li></ul>
+<table><thead><tr><th></th><th>Класс</th><th>Разряд (считаем справа)</th><th>Цифра</th></tr></thead><tbody><tr><td>а)</td><td>\(47\) (миллиардов)</td><td>2-я (десятки)</td><td>\(\mathbf{7}\)</td></tr><tr><td>б)</td><td>\(215\) (миллионов)</td><td>3-я (сотни)</td><td>\(\mathbf{2}\)</td></tr><tr><td>в)</td><td>\(638\) (тысяч)</td><td>1-я (единицы)</td><td>\(\mathbf{8}\)</td></tr></tbody></table>
+<p><strong>Ответ:</strong> а) \(7\); б) \(2\); в) \(8\).</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-9">
+<header class="slide-header"><span class="slide-num">Слайд 9</span><h2>Зачем нужна дробь: сколько кусочков есть в реальности</h2></header>
+<div class="slide-body">
+<p>Когда ты делишь одно целое на другое, результат не всегда равен целому числу. \(3 : 4\) не равно никакому натуральному числу. Чтобы записать такой результат, человек придумал специальную форму: \(\dfrac{3}{4}\).</p>
+<p><strong>Дробь — это просто способ показать, сколько кусочков целого у нас сейчас есть.</strong></p>
+<ul><li><strong>Знаменатель</strong> (нижнее число) — показывает, на сколько одинаковых кусочков в принципе делится одно идеальное целое. Это общее количество кусков, которое вообще существует в этом целом.</li><li><strong>Числитель</strong> (верхнее число) — показывает, сколько таких кусочков сейчас реально есть в наличии (взяли, съели или отмерили).</li></ul>
+<p><strong>Пример.</strong> Пиццу разрезали на \(12\) кусков. Съели \(4\) куска. Всего кусков было \(12\) (знаменатель), съели \(4\) (числитель). Получилась дробь \(\dfrac{4}{12}\).</p>
+</div>
+</section>
+<section class="slide sub-slide" id="slide-9.1">
+<header class="slide-header"><span class="slide-num sub">Слайд 9.1</span><h2>Почему знаменатель меняется: пример с минутами и секундами</h2></header>
+<div class="slide-body">
+<p>Знаменатель не придуман раз и навсегда. Он полностью зависит от того, какими именно кусочками мы решили измерить наше целое. Одно и то же целое можно измерить совершенно разными кусками.</p>
+<p><strong>Возьмём за целое один час:</strong></p>
+<ul><li>Если мы считаем время в минутах, то один час состоит ровно из \(60\) кусочков-минут. Знаменатель времени в минутах всегда равен \(60\). На часах \(52\) минуты? Это значит, что прошло \(52\) кусочка из \(60\) возможных. Запись: \(\dfrac{52}{60}\).</li><li>Если мы переходим на секунды, то кусочки становятся меньше. В одном часе таких маленьких кусков помещается уже \(3600\). Знаменатель времени в секундах автоматически меняется на \(3600\).</li></ul>
+<p><strong>Возьмём за целое один метр:</strong></p>
+<ul><li>Если измеряем крупными кусками (дециметрами) — в метре их \(10\), знаменатель \(10\).</li><li>Если измеряем кусками поменьше (сантиметрами) — в метре их \(100\), знаменатель \(100\).</li></ul>
+<blockquote><p><strong>Вывод.</strong> Знаменатель — это общее число кусочков в целом при выбранном способе измерения. Числитель просто считает, сколько этих кусочков у нас есть прямо сейчас.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-10">
+<header class="slide-header"><span class="slide-num">Слайд 10</span><h2>Дробь — это деление (фундамент)</h2></header>
+<div class="slide-body">
+<p><strong>Главное, что нужно запомнить:</strong> запись дроби \(\dfrac{a}{b}\) — это просто другая форма записи обычного знака деления. В русской традиции её иногда читают как «\(a\) от \(b\)», но математически это <strong>то же самое</strong>, что \(a : b\):</p>
+<div class="math-block">\[ \dfrac{3}{4} = 3 : 4. \]</div>
+<p><strong>Что это значит на практике:</strong></p>
+<table><thead><tr><th>Запись</th><th>Что это</th><th>Как прочитать через кусочки</th></tr></thead><tbody><tr><td>\(\dfrac{3}{4}\)</td><td>«3 делённое на 4»</td><td>Есть 3 кусочка из 4, составляющих целое</td></tr><tr><td>\(\dfrac{5}{2}\)</td><td>«5 делённое на 2»</td><td>Есть 5 кусочков, где каждые 2 кусочка собираются в одно целое (это больше, чем одно целое: \(2{,}5\))</td></tr><tr><td>\(\dfrac{7}{7}\)</td><td>«7 делённое на 7»</td><td>Есть все 7 кусочков из 7 возможных = 1 целое</td></tr></tbody></table>
+<blockquote><p><strong>Следствие.</strong> Знаменатель <strong>никогда</strong> не может быть равен нулю. Делить на ноль нельзя — это закон арифметики. Если знаменатель равен нулю, это означает, что целое состоит из нуля кусочков, то есть его вообще не существует. А взять часть от того, чего нет, невозможно.  <strong>Почему «от», а не «из».</strong> В быту говорят «3 из 4 яблок» — это про <strong>изъятие</strong> (вычитание): из 4 яблок забрали 3, осталось 1. В дроби другой смысл: «3 от 4» — это деление целого. «Из» — про вычитание, «от» — про деление на части.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-11">
+<header class="slide-header"><span class="slide-num">Слайд 11</span><h2>Составные дроби</h2></header>
+<div class="slide-body">
+<p>Иногда в задаче появляется дробь, у которой в числителе или в знаменателе стоит ещё одна дробь. Например:</p>
+<div class="math-block">\[ \dfrac{\dfrac{a}{b} + c}{d}, \qquad \dfrac{k}{\dfrac{m}{n}}. \]</div>
+<p>В математике такая конструкция называется <strong>составная дробь</strong> (compound fraction).</p>
+<p>Главная проблема: при виде такой записи сложно понять, что на что нужно делить, и можно случайно сократить не те числа.</p>
+<p><strong>Приём «буква вместо внутренней дроби».</strong> Если какая-то часть выражения выглядит слишком громоздко (например, дробь внутри числителя), замени её одной буквой. Поработай с простым выражением, а потом верни букву обратно.</p>
+<p><strong>Когда применять:</strong></p>
+<ul><li>внутри числителя стоит сложная дробь;</li><li>внутри знаменателя стоит сложная дробь;</li><li>любое выражение, которое мешает увидеть общую картину.</li></ul>
+<p><strong>Когда НЕ применять:</strong></p>
+<ul><li>внутри стоит всего одно число или короткое выражение — замена не нужна;</li><li>задача требует раскрытия именно через формулы сокращённого умножения (ФСУ) — там буква будет мешать.</li></ul>
+</div>
+</section>
+<section class="slide" id="slide-12">
+<header class="slide-header"><span class="slide-num">Слайд 12</span><h2>Пример: буква вместо внутренней дроби</h2></header>
+<div class="slide-body">
+<p><strong>Задание.</strong> Упрости \(\dfrac{\dfrac{2}{3} + 1}{5}\).</p>
+<p><strong>Шаг 1.</strong> Замечаем сложную часть в числителе: \(\dfrac{2}{3} + 1\). Заменим её буквой \(t\):</p>
+<div class="math-block">\[ t = \dfrac{2}{3} + 1. \]</div>
+<p><strong>Шаг 2.</strong> Исходное выражение стало намного проще:</p>
+<div class="math-block">\[ \dfrac{t}{5}. \]</div>
+<p><strong>Шаг 3.</strong> Работаем с упрощённой записью. По Слайду \(10\) мы знаем, что дробная черта выражения \(\dfrac{t}{5}\) — это просто деление \(t : 5\). Запишем это в строчку, чтобы превратить дробную запись в обычное деление.</p>
+<p><strong>Шаг 4.</strong> Посчитаем значение буквы \(t\) отдельно:</p>
+<div class="math-block">\[ t = \dfrac{2}{3} + 1 = \dfrac{2}{3} + \dfrac{3}{3} = \dfrac{5}{3}. \]</div>
+<p><strong>Шаг 5.</strong> Подставим полученную дробь вместо \(t\) в наше строчное выражение из Шага 3. Применяем стандартное правило деления (деление на дробь заменяется умножением на обратную — числитель и знаменатель меняются местами):</p>
+<div class="math-block">\[ t : 5 = \dfrac{5}{3} \div 5 = \dfrac{5}{3} \cdot \dfrac{1}{5} = \dfrac{5 \cdot 1}{3 \cdot 5} = \dfrac{5}{15} = \dfrac{1}{3}. \]</div>
+<p><strong>Ответ:</strong> \(\dfrac{1}{3}\).</p>
+<blockquote><p><strong>Самопроверка.</strong> Если на каком-то шаге ты запутался — вернись к букве \(t\) и пройди шаги заново. Буква \(t\) работает как контрольная точка, которая спасает от ошибок.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-13">
+<header class="slide-header"><span class="slide-num">Слайд 13</span><h2>Правильная и неправильная дроби</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Тип</th><th>Условие</th><th>Где живёт на числовой прямой</th></tr></thead><tbody><tr><td><strong>Правильная</strong></td><td>числитель \(&lt;\) знаменатель</td><td>Расстояние от нуля меньше \(1\): живёт строго в промежутке между \(-1\) и \(1\)</td></tr><tr><td><strong>Неправильная</strong></td><td>числитель \(\ge\) знаменатель</td><td>Расстояние от нуля \(\ge 1\) в любую сторону: живёт на отметке \(1\) (\(-1\)) или ещё дальше от нуля</td></tr></tbody></table>
+<p>Граница \(\dfrac{n}{n} = 1\) — это <strong>неправильная</strong> дробь (по условию «\(\ge\)»). Запомни: дробь \(\dfrac{11}{11}\) — неправильная, потому что её расстояние от нуля равно ровно единице, а не меньше единицы.</p>
+<p>Примеры:</p>
+<ul><li>правильные: \(\dfrac{1}{6}\), \(\dfrac{3}{4}\), \(\dfrac{12}{18}\);</li><li>неправильные: \(\dfrac{5}{4}\), \(\dfrac{43}{3}\), \(\dfrac{11}{11}\).</li></ul>
+<blockquote><p><strong>Для отрицательных.</strong> Тип всегда определяется строго по модулю (расстоянию от нуля). \(\lvert -\dfrac{5}{4} \rvert = \dfrac{5}{4} \ge 1\) → дробь <strong>неправильная</strong>, хотя само число лежит на прямой левее \(-1\). \(\lvert -\dfrac{1}{6} \rvert = \dfrac{1}{6} &lt; 1\) → дробь <strong>правильная</strong>. Знак «−» указывает только на направление влево от нуля, количество кусочков в целом он не меняет.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-14">
+<header class="slide-header"><span class="slide-num">Слайд 14</span><h2>Сравнение дробей разных типов без общего знаменателя</h2></header>
+<div class="slide-body">
+<p>Если дроби <strong>разных типов</strong>, общий знаменатель искать не нужно.</p>
+<p><strong>3 шага:</strong></p>
+<ol><li>Сравни числитель и знаменатель \(1\)-й дроби → определи её тип.</li><li>То же для \(2\)-й.</li><li>Типы разные → знак готов: <strong>любая правильная меньше любой неправильной</strong>.</li></ol>
+<p><strong>Пример.</strong> Сравнить \(\dfrac{125}{130}\) и \(\dfrac{3}{2}\):</p>
+<ul><li>\(125 &lt; 130\) → правильная дробь (меньше \(1\));</li><li>\(3 &gt; 2\) → неправильная дробь (больше \(1\));</li><li>вывод: \(\dfrac{125}{130} &lt; \dfrac{3}{2}\).</li></ul>
+<p><strong>Когда не работает:</strong> обе дроби одного типа (например, две правильные \(\dfrac{3}{4}\) и \(\dfrac{5}{6}\)) — общий знаменатель обязателен (см. блок 5b).</p>
+</div>
+</section>
+<section class="slide" id="slide-15">
+<header class="slide-header"><span class="slide-num">Слайд 15</span><h2>Перевод смешанного числа в неправильную дробь</h2></header>
+<div class="slide-body">
+<p>Запись \(2\dfrac{1}{3}\) означает \(2 + \dfrac{1}{3}\). Разложим перевод в обыкновенную дробь по шагам, чтобы логика действий была полностью открытой:</p>
+<div class="math-block">\[ 2\dfrac{1}{3} = 2 + \dfrac{1}{3} = \dfrac{2 \cdot 3}{3} + \dfrac{1}{3} = \dfrac{6 + 1}{3} = \dfrac{7}{3}. \]</div>
+<p><strong>Пошаговое объяснение алгоритма:</strong></p>
+<ol><li>Смешанное число — это просто сумма целой части и дробной части: \(2 + \dfrac{1}{3}\).</li><li>Наш знаменатель (общее число кусков в целом) равен \(3\). Чтобы перевести целое число \(2\) в эти кусочки, мы умножаем его на знаменатель: \(2 = \dfrac{2 \cdot 3}{3} = \dfrac{6}{3}\).</li><li>Теперь, когда знаменатели одинаковы, мы просто складываем числители: \(\dfrac{6 + 1}{3} = \dfrac{7}{3}\).</li></ol>
+<p><strong>Школьный автоматический алгоритм (быстрый):</strong></p>
+<ol><li>Умножь целую часть на знаменатель (\(2 \cdot 3 = 6\)).</li><li>Прибавь числитель (\(6 + 1 = 7\)).</li><li>Запиши результат в числитель новой дроби, а знаменатель (\(3\)) оставь прежним.</li></ol>
+<blockquote><p><strong>Для отрицательного:</strong> определи знак отдельно, работай с модулем, потом верни знак:</p></blockquote>
+<p>\[</p>
+<blockquote><p>-2\dfrac{1}{3} \to \left\lvert 2\dfrac{1}{3} \right\rvert = \dfrac{7}{3} \to \mathbf{-\dfrac{7}{3}}. \]</p></blockquote>
+<blockquote><p><strong>Пояснение.</strong> Минус — общий знак всего выражения. Сначала убираем минус и считаем чистую дробь, получаем \(\dfrac{7}{3}\). Затем возвращаем знак «−» перед результатом.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-16">
+<header class="slide-header"><span class="slide-num">Слайд 16</span><h2>Обратный перевод: из неправильной дроби в смешанное</h2></header>
+<div class="slide-body">
+<p><strong>Шаг 1.</strong> Раздели числитель на знаменатель уголком с остатком (или устно). <strong>Шаг 2.</strong> Целый результат деления → становится новой целой частью. <strong>Шаг 3.</strong> Полученный остаток от деления → отправляется в числитель дробной части. <strong>Шаг 4.</strong> Знаменатель оставь прежним. <strong>Шаг 5.</strong> Проверь, можно ли сократить дробную часть.</p>
+<p><strong>Примеры.</strong></p>
+<ul><li>\(\dfrac{7}{3}\): делим \(7 \div 3 = 2\) (остаток \(1\)). Целая часть — \(2\), числитель — \(1\), знаменатель прежний. Итог: \(2\dfrac{1}{3}\).</li><li>\(\dfrac{8}{6}\): делим \(8 \div 6 = 1\) (остаток \(2\)). Получаем \(1\dfrac{2}{6}\). Проверяем на сократимость: \(2\) и \(6\) делятся на \(2\). Сокращаем дробную часть. Итог: \(1\dfrac{1}{3}\).</li></ul>
+<blockquote><p><strong>Для отрицательных:</strong> приём абсолютно тот же, знак «−» просто переносится в итоговый ответ: \(-\dfrac{7}{3} = -2\dfrac{1}{3}\).</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-17">
+<header class="slide-header"><span class="slide-num">Слайд 17</span><h2>Отрицательные смешанные числа: минус относится ко всему</h2></header>
+<div class="slide-body">
+<p>Запись \(-2\dfrac{1}{3}\) — это сокращение от «минус две целых и одна третья», то есть строго \(-\left(2 + \dfrac{1}{3}\right)\). <strong>Минус относится ко всему числу целиком</strong>, а не только к двойке.</p>
+<p>Распространённая ошибка — умножить \(-2\) на знаменатель \(3\) и прибавить \(1\) прямо в расчёте:</p>
+<div class="math-block">\[ -2 \cdot 3 + 1 = -6 + 1 = -5 \to \dfrac{-5}{3} \quad \text{❌}. \]</div>
+<p><strong>Как правильно:</strong></p>
+<ol><li>Осознай: минус стоит перед всей суммой.</li><li>Закрой минус рукой, переведи положительное смешанное число по алгоритму Слайда 15 (\(2\dfrac{1}{3} = \dfrac{7}{3}\)).</li><li>Верни знак «−» перед полученной дробью.</li></ol>
+<div class="math-block">\[ -2\dfrac{1}{3} \to 2\dfrac{1}{3} = \dfrac{7}{3} \to \mathbf{-\dfrac{7}{3}}. \]</div>
+<blockquote><p><strong>Самопроверка:</strong> если при исходном отрицательном числе у тебя в процессе перевода получилась положительная дробь — ты потерял знак. Вернись на шаг назад.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-18">
+<header class="slide-header"><span class="slide-num">Слайд 18</span><h2>Дробь как часть: сколько кусочков мы взяли</h2></header>
+<div class="slide-body">
+<p>Посмотри, как дробь фиксирует доли на практике:</p>
+<table><thead><tr><th>Дробь</th><th>Что она означает</th></tr></thead><tbody><tr><td>\(\dfrac{1}{2}\)</td><td>Ровно половина от целого</td></tr><tr><td>\(\dfrac{1}{4}\)</td><td>Ровно один кусочек из 4 (четверть)</td></tr><tr><td>\(\dfrac{3}{4}\)</td><td>Три кусочка из 4 возможных (три четверти)</td></tr><tr><td>\(\dfrac{5}{5}\)</td><td>У нас есть все 5 кусочков из 5 = 1 целое</td></tr><tr><td>\(\dfrac{7}{4}\)</td><td>У нас есть 7 кусков, хотя в одном целом их всего 4 (это больше, чем 1 целое)</td></tr></tbody></table>
+<p><strong>Ключевая мысль:</strong> знаменатель фиксирует размер и общее количество кусочков, на которые делится целое. Числитель работает как счётчик, который просто показывает, сколько этих кусочков перед нами лежит.</p>
+<blockquote><p><strong>Для ученика с нуля.</strong> Если в задаче сказано «найди \(\dfrac{3}{4}\) от числа \(12\)», читай это так: разбей число \(12\) на \(4\) равные группы (в одной группе будет \(3\)), а затем возьми \(3\) такие группы (\(3 \cdot 3 = 9\)). Поэтому \(\dfrac{3}{4} \cdot 12 = 9\).</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-19">
+<header class="slide-header"><span class="slide-num">Слайд 19</span><h2>Дробь и знак «−»: модуль и направление</h2></header>
+<div class="slide-body">
+<p>Запись \(-\dfrac{3}{4}\) означает: «взять \(\dfrac{3}{4}\) кусочка и отложить их влево от нуля». Знак «−» — это просто указатель направления движения по числовой прямой.</p>
+<p>Когда ты считаешь выражение с отрицательной дробью, всегда разделяй работу на два простых этапа:</p>
+<ol><li>Вычисли и определи знак будущего ответа отдельно.</li><li>Закрой знаки и спокойно посчитай чистые дроби (модули).</li><li>Верни вычисленный знак на место перед ответом.</li></ol>
+<p><strong>Пример.</strong> Вычислить \(-\dfrac{3}{4} + \dfrac{5}{6}\).</p>
+<p><strong>Шаг 1.</strong> Анализ знаков. Первое число отрицательное, второе положительное. Знаки разные — значит, будем вычитать из большего меньшее.</p>
+<p><strong>Шаг 2.</strong> Сравнение. Сравним \(\dfrac{3}{4}\) и \(\dfrac{5}{6}\). Приведём их к общему знаменателю \(12\) (см. Блок 5b): \(\dfrac{9}{12}\) и \(\dfrac{10}{12}\). Мы видим, что \(\dfrac{5}{6}\) больше.</p>
+<p><strong>Шаг 3.</strong> Расчёт. Вычитаем из большего меньшее: \(\dfrac{10}{12} - \dfrac{9}{12} = \dfrac{1}{12}\).</p>
+<p><strong>Шаг 4.</strong> Знак. Так как положительное число было больше по модулю, ответ будет со знаком «плюс»:</p>
+<div class="math-block">\[ + \left\lvert \dfrac{5}{6} \right\rvert - \left\lvert \dfrac{3}{4} \right\rvert = +\dfrac{10}{12} - \dfrac{9}{12} = +\dfrac{1}{12}. \]</div>
+<p><strong>Ответ:</strong> \(\dfrac{1}{12}\).</p>
+</div>
+</section>
+<section class="slide" id="slide-20">
+<header class="slide-header"><span class="slide-num">Слайд 20</span><h2>Что такое период и зачем он нужен</h2></header>
+<div class="slide-body">
+<p>Возьми дробь \(\dfrac{1}{3}\). Если делить \(1\) на \(3\) столбиком, в частном будут бесконечно появляться тройки: \(0,33333…\). У этой бесконечной записи есть явный повтор — группа цифр «\(3\)» появляется снова и снова. Такая бесконечная десятичная дробь называется <strong>периодической</strong>, а повторяющаяся группа — <strong>период</strong>.</p>
+<p>Чтобы не писать бесконечную последовательность из одинаковых цифр, математики договорились период брать в круглые скобки. Запись \(0,(3)\) — это та же самая \(\dfrac{1}{3}\).</p>
+<p>Не путай периодическую дробь с <strong>бесконечной, но не периодической</strong> записью. У числа \(\pi = 3{,}14159…\) повтора тоже нет — но это уже иррациональное число, знакомство с ним отложим до старшей школы. Здесь важнее увидеть закон без периода на простом примере: посмотри на узор \(0{,}101001000100001…\) — количество нулей каждый раз растёт на один. <strong>Закон в записи есть</strong>, но группы цифр, которая бы просто повторялась по кругу, <strong>нет</strong>. Поэтому в скобки её взять нельзя.</p>
+<table><thead><tr><th>Понятие</th><th>Что это</th></tr></thead><tbody><tr><td>Периодическая дробь</td><td>бесконечная десятичная, у которой после некоторого разряда группа цифр повторяется</td></tr><tr><td>Период</td><td>повторяющаяся группа цифр</td></tr><tr><td><strong>Чистая</strong> периодическая</td><td>период идёт сразу после запятой: \(0,(3)\), \(5,(26)\)</td></tr><tr><td><strong>Смешанная</strong> периодическая</td><td>между запятой и периодом есть «лишние» цифры: \(0,5(36)\)</td></tr><tr><td><strong>Не путать</strong> с бесконечными без периода</td><td>\(0{,}101001000100001…\) — узор есть, но повторяющейся группы цифр нет</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-21">
+<header class="slide-header"><span class="slide-num">Слайд 21</span><h2>Чистая периодическая → обыкновенная</h2></header>
+<div class="slide-body">
+<p>Правило: <strong>числитель = число из цифр периода; знаменатель = столько \(9\), сколько цифр в периоде</strong>.</p>
+<table><thead><tr><th>Период в \(1\) цифру</th><th>Период в \(2\) цифры</th><th>Период в \(3\) цифры</th></tr></thead><tbody><tr><td>\(9\) в знаменателе</td><td>\(99\) в знаменателе</td><td>\(999\) в знаменателе</td></tr><tr><td>\(0,(3) = \dfrac{3}{9} = \dfrac{1}{3}\)</td><td>\(0,(26) = \dfrac{26}{99}\)</td><td>\(0,(216) = \dfrac{216}{999}\)</td></tr></tbody></table>
+<p>После перевода всегда проверь, можно ли сократить.</p>
+<p><strong>Откуда берутся девятки.</strong> Если \(x = 0,(3)\), то \(10x = 3,(3)\). Вычтем \(x\) из \(10x\):</p>
+<div class="math-block">\[ 10x - x = 3,(3) - 0,(3) \;\Rightarrow\; 9x = 3 \;\Rightarrow\; x = \dfrac{3}{9}. \]</div>
+<p>Девятка — это разность \(10 - 1\). Для периода в две цифры разность будет \(100 - 1 = 99\), для трёх цифр — \(1000 - 1 = 999\). Отсюда общее правило.</p>
+</div>
+</section>
+<section class="slide" id="slide-22">
+<header class="slide-header"><span class="slide-num">Слайд 22</span><h2>Смешанная периодическая → обыкновенная</h2></header>
+<div class="slide-body">
+<p>Правило:</p>
+<ul><li><strong>Числитель</strong> = все цифры после запятой подряд <strong>минус</strong> цифры ДО периода.</li><li><strong>Знаменатель</strong> = \(9\) по числу цифр В периоде + \(0\) по числу цифр ДО периода.</li></ul>
+<p><strong>Пример.</strong> Перевести \(0,5(36)\).</p>
+<ul><li>До периода \(1\) цифра (\(5\)), в периоде \(2\) цифры (\(3\) и \(6\)).</li><li>Числитель: \(536 - 5 = 531\).</li><li>Знаменатель: \(99\) (две девятки на период) \(+\;0\) (один ноль на цифру до периода) \(= 990\).</li><li>Дробь: \(\dfrac{531}{990}\). Сокращаем на \(9\) (сумма цифр \(5+3+1 = 9\)) → \(\dfrac{59}{110}\).</li></ul>
+<blockquote><p><strong>Для отрицательных:</strong> переведи модуль, верни знак: \(-0,5(36) = -\dfrac{59}{110}\).</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-23">
+<header class="slide-header"><span class="slide-num">Слайд 23</span><h2>Чек-лист и обратная проверка</h2></header>
+<div class="slide-body">
+<p>Перед тем как записать ответ, проверь три вещи:</p>
+<ol><li><strong>Девяток столько, сколько цифр в скобках.</strong></li><li><strong>Нулей столько, сколько цифр между запятой и скобками.</strong></li><li><strong>Дробь проверена на сократимость</strong> (по сумме цифр или через НОД).</li></ol>
+<p><strong>Обратная проверка</strong> (если сомневаешься): раздели числитель на знаменатель уголком. Если восстановился исходный бесконечный период — перевод верный.</p>
+<table><thead><tr><th>Типичная ошибка</th><th>Как она звучит</th><th>Как её увидеть в чек-листе</th></tr></thead><tbody><tr><td>\(900\) вместо \(990\)</td><td>перепутал количество нулей и девяток</td><td>п. 1 и п. 2</td></tr><tr><td>\(\dfrac{536}{990}\)</td><td>забыл вычесть цифры до периода</td><td>шаг «числитель минус то, что до периода»</td></tr><tr><td>оставил \(\dfrac{531}{990}\)</td><td>не сократил</td><td>п. 3</td></tr></tbody></table>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-24">
+<header class="slide-header"><span class="slide-num">Слайд 24</span><h2>Почему знаменатель решает всё</h2></header>
+<div class="slide-body">
+<p>Вся наша система счисления — десятичная. Десятка собирается исключительно из двух простых чисел: \(10 = 2 \cdot 5\). Значит, и любая степень десятки раскладывается только на двойки и пятёрки:</p>
+<div class="math-block">\[ 10 = 2 \cdot 5,\quad 100 = 2^2 \cdot 5^2,\quad 1000 = 2^3 \cdot 5^3. \]</div>
+<p>Никаких других простых множителей в степенях десятки физически нет.</p>
+<p>Конечная десятичная дробь — это обыкновенная дробь, у которой знаменатель можно умножением привести к \(10, 100, 1000, \dots\), то есть к \(2^n \cdot 5^n\). Если знаменатель приводится к степени десятки — дробь конечная. Если нет — она будет бесконечной.</p>
+<p><strong>Главный закон.</strong> Обыкновенная дробь превращается в конечную десятичную <strong>в том и только в том случае</strong>, когда её знаменатель после полного сокращения состоит только из множителей \(2\) и \(5\).</p>
+<blockquote><p>Закон работает и для \(\dfrac{a}{-b}\), \(\dfrac{-a}{b}\): знаменатель проверяется <strong>по модулю</strong>. Знак «−» из знаменателя выносится в числитель как коэффициент \((-1)\).</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-25">
+<header class="slide-header"><span class="slide-num">Слайд 25</span><h2>Алгоритм проверки на конечность</h2></header>
+<div class="slide-body">
+<p><strong>Шаг 1. Сократи.</strong> Проверь, что \(\text{НОД(числитель, знаменатель)} = 1\). Если пропустишь — попадёшь в типичную ошибку.</p>
+<p><strong>Шаг 2. Быстрый фильтр по делимости на \(3\).</strong> Число делится на \(3\) тогда и только тогда, когда сумма его цифр делится на \(3\).</p>
+<ul><li>\(123\): \(1+2+3 = 6\) → делится на \(3\).</li><li>\(142\): \(1+4+2 = 7\) → не делится на \(3\).</li><li>\(999\): \(9+9+9 = 27\) → делится и на \(3\), и на \(9\).</li></ul>
+<p>Если сумма цифр знаменателя <strong>не делится на \(3\)</strong>, значит, сам знаменатель не делится на \(3\) нацело, а значит, тройка не входит в его разложение на простые множители (то есть он не содержит тройку в качестве множителя).</p>
+<p><strong>Шаг 3. Разложи знаменатель на простые множители.</strong></p>
+<ul><li>Только \(2\) и \(5\) → <strong>конечная</strong> дробь.</li><li>Есть любой другой простой множитель → <strong>бесконечная</strong> дробь.</li></ul>
+<p><strong>Шпаргалка разрешённых знаменателей</strong> (только двойки и пятёрки):</p>
+<div class="math-block">\[ 1,\ 2,\ 4,\ 5,\ 8,\ 10,\ 16,\ 20,\ 25,\ 32,\ 40,\ 50,\ 100,\ 125,\ 128,\ 200,\ 250,\ 500,\ 1000. \]</div>
+</div>
+</section>
+<section class="slide" id="slide-26">
+<header class="slide-header"><span class="slide-num">Слайд 26</span><h2>Практика: какие дроби конечные</h2></header>
+<div class="slide-body">
+<p>Задание. Из списка выбери те, что <strong>нельзя</strong> представить в виде конечной десятичной:</p>
+<div class="math-block">\[ \dfrac{1}{2},\ \dfrac{1}{3},\ \dfrac{8}{25},\ \dfrac{11}{16},\ \dfrac{3}{5},\ \dfrac{5}{6}. \]</div>
+<table><thead><tr><th>Дробь</th><th>Сократима?</th><th>Знаменатель (простые)</th><th>Тип</th></tr></thead><tbody><tr><td>\(\dfrac{1}{2}\)</td><td>несократима</td><td>\(2\)</td><td>✅ конечная</td></tr><tr><td>\(\dfrac{1}{3}\)</td><td>несократима</td><td>\(3\)</td><td>❌ бесконечная</td></tr><tr><td>\(\dfrac{8}{25}\)</td><td>несократима</td><td>\(5^2\)</td><td>✅ конечная</td></tr><tr><td>\(\dfrac{11}{16}\)</td><td>несократима</td><td>\(2^4\)</td><td>✅ конечная</td></tr><tr><td>\(\dfrac{3}{5}\)</td><td>несократима</td><td>\(5\)</td><td>✅ конечная</td></tr><tr><td>\(\dfrac{5}{6}\)</td><td>несократима</td><td>\(2 \cdot 3\)</td><td>❌ бесконечная</td></tr></tbody></table>
+<p><strong>Ответ:</strong> \(\dfrac{1}{3}\) и \(\dfrac{5}{6}\).</p>
+</div>
+</section>
+<section class="slide" id="slide-27">
+<header class="slide-header"><span class="slide-num">Слайд 27</span><h2>Типовая ошибка: пропуск сокращения</h2></header>
+<div class="slide-body">
+<p>Ситуация: \(\dfrac{9}{15}\). Глаз видит «\(1+5=6\), делится на \(3\)» → «бесконечная!» ❌</p>
+<p>Что пошло не так: пропущен <strong>Шаг 1</strong> — сокращение.</p>
+<div class="math-block">\[ \dfrac{9}{15} = \dfrac{9 \div 3}{15 \div 3} = \dfrac{3}{5}. \]</div>
+<p>После сокращения тройка полностью исчезла из знаменателя. На её месте осталась чистая пятёрка. \(\dfrac{3}{5}\) — дробь <strong>конечная</strong>: \(0,6\).</p>
+<p><strong>Закон.</strong> \(\dfrac{9}{15}\) и \(\dfrac{3}{5}\) — это <strong>одно и то же число</strong>, записанное по-разному. Мы проверяем не запись, а число. У каждого рационального числа в несократимой форме <strong>один</strong> знаменатель — и только по нему можно судить, конечная дробь или бесконечная.</p>
+<p><strong>Жёсткое правило.</strong> Не проверяй знаменатель без сокращения — ты отвечаешь за запись, а нужно за число.</p>
+</div>
+</section>
+<section class="slide" id="slide-28">
+<header class="slide-header"><span class="slide-num">Слайд 28</span><h2>Перевод конечной десятичной в обыкновенную и обратно</h2></header>
+<div class="slide-body">
+<p>Прямой переход (десятичная → обыкновенная): запиши все цифры после запятой в числитель, а в знаменатель — \(1\) с тем количеством нулей, сколько цифр после запятой. Потом сократи.</p>
+<div class="math-block">\[ 0,375 = \dfrac{375}{1000} \;\to\; \dfrac{3}{8}. \]</div>
+<p>Обратный переход (обыкновенная → десятичная), если знаменатель уже \(2^a \cdot 5^b\):</p>
+<ol><li>Если \(a &gt; b\) — домножь числитель и знаменатель на \(5^{a-b}\).</li><li>Если \(b &gt; a\) — домножь на \(2^{b-a}\).</li><li>Если \(a = b\) — знаменатель уже \(10^a\), просто дели числитель.</li></ol>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-29">
+<header class="slide-header"><span class="slide-num">Слайд 29</span><h2>Основное свойство: принцип сохранения баланса</h2></header>
+<div class="slide-body">
+<p>Представь целое, разрезанное на \(4\) равные части. Ты берёшь \(3\). Это та же самая доля, как если бы целое разрезали на \(20\) равных частей, а ты взял \(15\). Меняются числа, но величина доли остаётся неизменной.</p>
+<p><strong>Закон.</strong> Если числитель и знаменатель домножить или разделить на одно и то же число \(c \ne 0\), значение дроби не изменится:</p>
+<div class="math-block">\[ \dfrac{a}{b} = \dfrac{a \cdot c}{b \cdot c} \qquad \text{и} \qquad \dfrac{a \cdot c}{b \cdot c} = \dfrac{a}{b}. \]</div>
+<p><strong>Почему работает.</strong> Ты по сути умножаешь на \(1\): \(\dfrac{c}{c} = 1\), а умножение на \(1\) ничего не меняет.</p>
+<blockquote><p><strong>Следствие для отрицательных:</strong> знак «−» можно оставить в числителе или вынести перед дробью — это одно и то же число.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-30">
+<header class="slide-header"><span class="slide-num">Слайд 30</span><h2>Сокращение — это следствие основного свойства</h2></header>
+<div class="slide-body">
+<p>Сокращение — это <strong>не отдельная операция</strong>. Сокращение — это применение основного свойства: если у числителя и знаменателя есть общий делитель \(c\), ты заменяешь \(\dfrac{a}{b}\) на \(\dfrac{a \div c}{b \div c}\), и значение дроби не меняется. Это тождество, а не действие.</p>
+<p>Пример: \(\dfrac{12}{18} = \dfrac{\cancel{12}^{2}}{\cancel{18}_{3}} = \dfrac{2}{3}\).</p>
+<p><strong>Как читать перечёркивание.</strong> Числитель и знаменатель делим на общий делитель \(6\). Над числителем пишем, сколько получилось (\(2\)), под знаменателем — сколько осталось (\(3\)). Числа \(12\) и \(18\) перечёркнуты — они «сгорели» при делении.</p>
+</div>
+</section>
+<section class="slide" id="slide-31">
+<header class="slide-header"><span class="slide-num">Слайд 31</span><h2>Алгоритм: умножение целого на дробь без громоздких чисел</h2></header>
+<div class="slide-body">
+<p>Когда видишь «большое» выражение с целым числом и дробью, не считай в лоб. Действуй по шагам:</p>
+<p><strong>Шаг 1.</strong> Целое отправь наверх: \(n \cdot \dfrac{a}{b} = \dfrac{n \cdot a}{b}\).</p>
+<p><strong>Шаг 2.</strong> Оставь запись в виде произведения, <strong>не перемножай</strong>. Зачем плодить трёхзначные числа, если их можно сократить до умножения.</p>
+<p><strong>Шаг 3.</strong> Проверь делимость по сумме цифр или по таблице простых множителей.</p>
+<p><strong>Шаг 4.</strong> Сократи и только потом считай.</p>
+<blockquote><p><strong>Для отрицательных:</strong> знаки считай отдельно, модули сокращай стандартно.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-32">
+<header class="slide-header"><span class="slide-num">Слайд 32</span><h2>Практика: умножение целого на дробь</h2></header>
+<div class="slide-body">
+<p>Задание. Вычисли \(230 \cdot \dfrac{2}{9}\) и сократи результат.</p>
+<p><strong>Шаг 1–2.</strong> \(230 \cdot \dfrac{2}{9} = \dfrac{230 \cdot 2}{9}\). Не перемножаем. <strong>Шаг 3.</strong> \(9 = 3 \cdot 3\). Проверим: делится ли \(230\) на \(3\)? Сумма цифр \(2+3+0 = 5\) — не делится. Число \(2\) тоже не делится на \(3\). Общих множителей с \(9\) нет. <strong>Шаг 4.</strong> \(\dfrac{230 \cdot 2}{9} = \dfrac{460}{9}\). Делим \(460 \div 9 = 51\) ост. \(1\) → \(\mathbf{51\dfrac{1}{9}}\).</p>
+<blockquote><p>Урок: даже когда сокращение невозможно, проверка делимости дисциплинирует. Пропускать шаг 3 — впустую множить большие числа.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-33">
+<header class="slide-header"><span class="slide-num">Слайд 33</span><h2>Типовая ошибка: нельзя сокращать сумму или разность</h2></header>
+<div class="slide-body">
+<p>Ситуация: \(\dfrac{3 + 5}{4 + 5}\). Ты видишь одинаковые пятёрки, радостно их зачёркиваешь и пишешь \(\dfrac{3}{4}\). Это ошибка.</p>
+<p><strong>Почему.</strong> Дробная черта — это знак деления. Деление является обратным действием <strong>только для умножения</strong>. Плюсы и минусы связывают числа в числителе и знаменателе в единые блоки. Выдёргивать из них отдельные слагаемые нельзя.</p>
+<p><strong>Жёсткое правило.</strong> Сокращать можно только тогда, когда числитель и знаменатель представлены в виде <strong>произведений</strong>. Если там стоят плюсы или минусы — сначала посчитай скобки:</p>
+<div class="math-block">\[ \dfrac{3 + 5}{4 + 5} = \dfrac{8}{9}. \]</div>
+<blockquote><p><strong>Следствие для отрицательных:</strong> \(-\dfrac{a + b}{c} = \dfrac{-a - b}{c}\). Знак «−» распределяется на каждое слагаемое.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-34">
+<header class="slide-header"><span class="slide-num">Слайд 34</span><h2>Быстрая зачистка конечных нулей</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Выражение</th><th>Действие</th><th>Результат</th></tr></thead><tbody><tr><td>\(\dfrac{2130}{100}\)</td><td>делим на \(10\)</td><td>\(\dfrac{213}{10} = 21,3\)</td></tr><tr><td>\(\dfrac{1200}{500}\)</td><td>делим на \(100\)</td><td>\(\dfrac{12}{5} = 2,4\)</td></tr><tr><td>\(\dfrac{17000}{300}\)</td><td>делим на \(100\)</td><td>\(\dfrac{170}{3} = 56\dfrac{2}{3}\)</td></tr></tbody></table>
+<p><strong>Правило:</strong> убираем <strong>одинаковое</strong> количество нулей в числителе и в знаменателе. Антиошибка: не сокращай нули только в числителе или только в знаменателе.</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-35">
+<header class="slide-header"><span class="slide-num">Слайд 35</span><h2>Три правила сравнения</h2></header>
+<div class="slide-body">
+<p>Прежде чем искать общий знаменатель, проверь три быстрых случая:</p>
+<table><thead><tr><th>Что совпадает</th><th>Что делать</th></tr></thead><tbody><tr><td>Типы разные (правильная vs неправильная)</td><td><strong>любая правильная &lt; любой неправильной</strong></td></tr><tr><td>Знаменатели равны</td><td>больше та, у которой <strong>больше числитель</strong></td></tr><tr><td>Числители равны</td><td>больше та, у которой <strong>меньше знаменатель</strong></td></tr></tbody></table>
+<p>Если ни одно из трёх не сработало — ищи общий знаменатель.</p>
+</div>
+</section>
+<section class="slide" id="slide-36">
+<header class="slide-header"><span class="slide-num">Слайд 36</span><h2>Зачем нужен общий знаменатель</h2></header>
+<div class="slide-body">
+<p>Чтобы сравнение стало честным, нужно привести обе дроби к одному размеру долей. Тогда задача сводится к правилу «равный знаменатель» — больше тот, у кого больше числитель.</p>
+<p>Число, на которое делятся оба знаменателя, называется <strong>общим знаменателем</strong>. Наименьшее из таких чисел — это <strong>НОК</strong> (наименьшее общее кратное).</p>
+<p><strong>Пример.</strong> \(\dfrac{3}{4}\) и \(\dfrac{5}{6}\). НОК\((4, 6) = 12\).</p>
+<div class="math-block">\[ \dfrac{3}{4} = \dfrac{9}{12}, \qquad \dfrac{5}{6} = \dfrac{10}{12}, \qquad 9 < 10 \;\Rightarrow\; \dfrac{3}{4} < \dfrac{5}{6}. \]</div>
+<blockquote><p><strong>Для отрицательных:</strong> общий знаменатель берётся <strong>по модулю</strong>, знак учитывается отдельно.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-37">
+<header class="slide-header"><span class="slide-num">Слайд 37</span><h2>Алгоритм сравнения двух дробей</h2></header>
+<div class="slide-body">
+<p><strong>Шаг 1. Разные типы?</strong> Если одна дробь правильная (числитель меньше знаменателя), а другая неправильная — всё ясно сразу: <strong>любая правильная меньше любой неправильной</strong>. Готово.</p>
+<p><strong>Шаг 2. Один тип. Числители равны?</strong> Тогда больше та, у которой <strong>знаменатель меньше</strong> (равные куски, но в первой дроби кусок крупнее). Готово.</p>
+<p><strong>Шаг 3. Знаменатели равны?</strong> Тогда больше та, у которой <strong>числитель больше</strong> (одинаковый размер куска, но во второй дроби кусков больше). Готово.</p>
+<p><strong>Шаг 4. Всё разное?</strong> Ни одно из быстрых правил не сработало. Бери общий знаменатель через НОК, приводи обе дроби и сравнивай числители.</p>
+</div>
+</section>
+<section class="slide" id="slide-38">
+<header class="slide-header"><span class="slide-num">Слайд 38</span><h2>Практика: подбор НОК методом увеличения</h2></header>
+<div class="slide-body">
+<p>Задание. Сравни \(\dfrac{3}{4}\) и \(\dfrac{5}{6}\).</p>
+<p>Старший знаменатель — \(6\). Крутим «увеличивалку»:</p>
+<ul><li>\(6 \div 4\)? Нет.</li><li>\(6 \cdot 2 = 12\), делится на \(4\)? Да. → НОК \(= 12\).</li></ul>
+<p>Приведение:</p>
+<ul><li>\(\dfrac{3}{4} \cdot \dfrac{12 \div 4 = 3}{1} = \dfrac{9}{12}\).</li><li>\(\dfrac{5}{6} \cdot \dfrac{12 \div 6 = 2}{1} = \dfrac{10}{12}\).</li></ul>
+<p>Сравниваем: \(9 &lt; 10 \;\Rightarrow\; \mathbf{\dfrac{3}{4} &lt; \dfrac{5}{6}}\).</p>
+</div>
+</section>
+<section class="slide" id="slide-39">
+<header class="slide-header"><span class="slide-num">Слайд 39</span><h2>Перекрёстное умножение: быстрая проверка</h2></header>
+<div class="slide-body">
+<p><strong>Правило.</strong> Умножь числитель каждой дроби на знаменатель другой (по диагонали). Больше то произведение, на чьей диагонали больше.</p>
+<p><strong>Пример.</strong> \(\dfrac{3}{4}\) и \(\dfrac{5}{6}\):</p>
+<table><thead><tr><th>Левая диагональ</th><th>Правая диагональ</th></tr></thead><tbody><tr><td>\(3 \cdot 6 = 18\)</td><td>\(5 \cdot 4 = 20\)</td></tr></tbody></table>
+<p>\(18 &lt; 20 \;\Rightarrow\; \dfrac{3}{4} &lt; \dfrac{5}{6}\).</p>
+<p><strong>Откуда метод.</strong> Это сокращённое приведение к общему знаменателю \(4 \cdot 6 = 24\): \(\dfrac{3}{4} = \dfrac{18}{24}\), \(\dfrac{5}{6} = \dfrac{20}{24}\). Сравнение \(18\) и \(20\) — тот же знак.</p>
+</div>
+</section>
+<section class="slide" id="slide-40">
+<header class="slide-header"><span class="slide-num">Слайд 40</span><h2>Отрицательные дроби: разворот знака</h2></header>
+<div class="slide-body">
+<p>Ситуация: \(-\dfrac{3}{4}\) vs \(-\dfrac{5}{6}\).</p>
+<p><strong>Ошибочное рассуждение:</strong> «\(3 &lt; 5\), значит \(-\dfrac{3}{4} &lt; -\dfrac{5}{6}\)» — ❌.</p>
+<p><strong>Почему не работает.</strong> На отрицательной стороне координатной прямой всё <strong>зеркально</strong>: чем больше модуль отрицательного числа, тем дальше оно левее от нуля, тем оно <strong>меньше</strong>.</p>
+<div class="math-block">\[ \underbrace{-\dfrac{5}{6}}_{\text{левее, меньше}} \quad \underbrace{-\dfrac{3}{4}}_{\text{правее, больше}} \quad0 \quad \to \]</div>
+<p><strong>Правило Весов (через долг).</strong> Минус — это твой долг. Что хуже для твоего кошелька: быть должным \(\dfrac{5}{6}\) рубля или \(\dfrac{3}{4}\) рубля? Долг \(\dfrac{5}{6}\) больше по размеру — значит, денег у тебя останется меньше. Чем глубже ты в долгу (чем больше модуль отрицательного числа), тем меньше само число. Поэтому:</p>
+<div class="math-block">\[ \text{если } |a| > |b|, \text{ то } -a < -b. \]</div>
+<p><strong>3-шаговый алгоритм:</strong></p>
+<ol><li>Закрой знаки.</li><li>Сравни модули стандартно: \(\dfrac{3}{4} &lt; \dfrac{5}{6}\).</li><li>Верни знаки <strong>и разверни знак неравенства</strong>: \(\mathbf{-\dfrac{3}{4} &gt; -\dfrac{5}{6}}\).</li></ol>
+<blockquote><p><strong>Контроль:</strong> если сравнил отрицательные «как обычно» и знак не развернул — ошибка.</p></blockquote>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-41">
+<header class="slide-header"><span class="slide-num">Слайд 41</span><h2>Мостик: что мы уже знаем и куда идём</h2></header>
+<div class="slide-body">
+<p><strong>Что мы уже умеем</strong> (слайды 1–40):</p>
+<ul><li>читать разряды любого числа;</li><li>понимать дробь как деление и как часть целого;</li><li>различать правильные и неправильные дроби;</li><li>переводить смешанные числа и обратно;</li><li>работать с периодическими и конечными десятичными;</li><li>сокращать, сравнивать, умножать на целое число.</li></ul>
+<p><strong>Сквозной приём, который пригодится дальше:</strong></p>
+<ul><li><strong>«Часть от целого = умножение; целое по части = деление»</strong> (Слайды 109, 111).</li><li>«Определи знак отдельно → работай с модулем → верни знак».</li></ul>
+<p><strong>Куда мы идём:</strong></p>
+<ul><li>Слайды 42–50: применим всё это к конкретным экзаменационным задачам.</li><li>Слайды 51+: переходим от чисел к <strong>буквенным выражениям</strong> — здесь появляются скобки, ФСУ, вынесение за скобки. Все законы, которые ты выучил для чисел, работают и для букв.</li></ul>
+<blockquote><p><strong>Зачем нужен мостик.</strong> Переход «дроби → буквы» — самый сложный момент. Если ты видишь выражение с буквами, вспомни: дробная черта всё та же, она по-прежнему означает деление. Буква — это просто число, имя которого пока не раскрыто. Подставь конкретное число, проверь, что получится, и верни букву.</p></blockquote>
+<p><strong>Дыхательная пауза.</strong> Прежде чем перейти к буквам, проверь себя по Блокам 1–5b: реши устно \(\dfrac{2}{3} + \dfrac{5}{6}\) и сверь ответ (\(\dfrac{9}{6} = 1\dfrac{1}{2}\)). Если сошлось — мостик пройден.</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-42">
+<header class="slide-header"><span class="slide-num">Слайд 42</span><h2>Стандартный вид числа: зачем он нужен</h2></header>
+<div class="slide-body">
+<p>Когда ты перемножаешь или делишь большие и маленькие числа, в ответе может появиться что-то вроде \(2,523 \cdot 10^5\) или \(0,0035\). Глазу сравнивать такие числа между собой неудобно: сразу не видно, где больше нулей, где меньше.</p>
+<p>Чтобы навести порядок, существует <strong>стандартный вид числа</strong>:</p>
+<div class="math-block">\[ A = x \cdot 10^n, \quad \text{где} \quad 1 \le x < 10, \quad n \in \mathbb{Z}. \]</div>
+<p>То есть мантисса \(x\) стоит в диапазоне от \(1\) (включительно) до \(10\) (строго меньше). Степень \(n\) — целое число, положительное, отрицательное или ноль.</p>
+</div>
+</section>
+<section class="slide" id="slide-43">
+<header class="slide-header"><span class="slide-num">Слайд 43</span><h2>Полная задача на стандартный вид числа</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Пусть \(a = 2,9\), \(b = 8,7 \cdot 10^{3}\). Найди произведение \(a \cdot b\) и запиши его в стандартном виде.</p>
+<p><strong>Варианты ответа:</strong> 1) \(2523 \cdot 10^{1}\) 2) \(0,2523 \cdot 10^{5}\) 3) \(2,523 \cdot 10^{2}\) 4) \(25,23 \cdot 10^{3}\) 5) \(2,523 \cdot 10^{4}\)</p>
+<p><strong>Пошаговое решение:</strong></p>
+<p><strong>Шаг 1.</strong> Умножим мантиссы: \(2,9 \cdot 8,7\).</p>
+<div class="math-block">\[ 2,9 \cdot 8,7 = 2,9 \cdot (9 - 0,3) = 26,1 - 0,87 = 25,23. \]</div>
+<p><strong>Шаг 2.</strong> Соберём степень: \(10^3\) переходит в ответ как есть.</p>
+<div class="math-block">\[ a \cdot b = 25,23 \cdot 10^{3}. \]</div>
+<p><strong>Шаг 3.</strong> Приведём к стандартному виду. Мантисса \(25,23\) стоит в диапазоне \(10 \le 25,23 &lt; 100\) — это <strong>не</strong> стандартный вид. Сдвигаем запятую на одну позицию влево: \(25,23 = 2,523 \cdot 10^{1}\). Степени складываются:</p>
+<div class="math-block">\[ 25,23 \cdot 10^{3} = 2,523 \cdot 10^{1} \cdot 10^{3} = 2,523 \cdot 10^{4}. \]</div>
+<p><strong>Ответ: 5)</strong> \(2,523 \cdot 10^{4}\).</p>
+<p><strong>Разбор остальных вариантов:</strong></p>
+<table><thead><tr><th>Вариант</th><th>Что не так</th></tr></thead><tbody><tr><td>1) \(2523 \cdot 10^{1}\)</td><td>мантисса \(2523\) — целое число \(\ge 10\), нарушено условие \(1 \le x &lt; 10\)</td></tr><tr><td>2) \(0,2523 \cdot 10^{5}\)</td><td>мантисса \(&lt; 1\), нарушено условие \(1 \le x &lt; 10\)</td></tr><tr><td>3) \(2,523 \cdot 10^{2}\)</td><td>степень \(2\) вместо \(4\) — типичная ошибка «забыл прибавить единицу при сдвиге»</td></tr><tr><td>4) \(25,23 \cdot 10^{3}\)</td><td>мантисса не в диапазоне \([1, 10)\), это полноценное число, но не стандартный вид</td></tr></tbody></table>
+</div>
+</section>
+<section class="slide" id="slide-44">
+<header class="slide-header"><span class="slide-num">Слайд 44</span><h2>Эквивалентные дроби: прямой тест на основное свойство</h2></header>
+<div class="slide-body">
+<p>В задачнике регулярно всплывает тип: «среди дробей укажите ту, которая равна \(\dfrac{a}{b}\)». По сути это <strong>прямая проверка основного свойства</strong>: нужно либо сократить все варианты и сравнить с целевой, либо развернуть целевую и сравнить с вариантами.</p>
+<p><strong>Главная опасность.</strong> Одинаковый числитель или знаменатель у варианта и цели <strong>не означает</strong> равенство. Нужно проверять <strong>и числитель, и знаменатель</strong> одновременно.</p>
+</div>
+</section>
+<section class="slide" id="slide-45">
+<header class="slide-header"><span class="slide-num">Слайд 45</span><h2>Полная задача на эквивалентные дроби</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Среди дробей \(\dfrac{6}{8},\ \dfrac{12}{18},\ \dfrac{10}{15},\ \dfrac{16}{20},\ \dfrac{21}{30}\) укажи ту, которая равна \(\dfrac{3}{4}\).</p>
+<p><strong>Варианты ответа:</strong> 1) \(\dfrac{6}{8}\) 2) \(\dfrac{12}{18}\) 3) \(\dfrac{10}{15}\) 4) \(\dfrac{16}{20}\) 5) \(\dfrac{21}{30}\)</p>
+<p><strong>Решение (через сокращение):</strong></p>
+<p><strong>Шаг 1.</strong> Приведём целевую к несократимому виду. \(\text{НОД}(3, 4) = 1\) → уже несократима: \(\dfrac{3}{4}\).</p>
+<p><strong>Шаг 2.</strong> Сократим каждый вариант и сравним с \(\dfrac{3}{4}\):</p>
+<table><thead><tr><th>Вариант</th><th>НОД числ. и знам.</th><th>Сокращённый вид</th><th>Равен \(\dfrac{3}{4}\)?</th></tr></thead><tbody><tr><td>1) \(\dfrac{6}{8}\)</td><td>\(2\)</td><td>\(\dfrac{3}{4}\)</td><td>✅ да</td></tr><tr><td>2) \(\dfrac{12}{18}\)</td><td>\(6\)</td><td>\(\dfrac{2}{3}\)</td><td>❌ нет</td></tr><tr><td>3) \(\dfrac{10}{15}\)</td><td>\(5\)</td><td>\(\dfrac{2}{3}\)</td><td>❌ нет</td></tr><tr><td>4) \(\dfrac{16}{20}\)</td><td>\(4\)</td><td>\(\dfrac{4}{5}\)</td><td>❌ нет</td></tr><tr><td>5) \(\dfrac{21}{30}\)</td><td>\(3\)</td><td>\(\dfrac{7}{10}\)</td><td>❌ нет</td></tr></tbody></table>
+<p><strong>Ответ: 1)</strong> \(\dfrac{6}{8}\).</p>
+<p><strong>Разбор ловушек:</strong></p>
+<ul><li>\(\dfrac{12}{18}\) и \(\dfrac{10}{15}\) обе сокращаются до \(\dfrac{2}{3}\) — это <strong>не</strong> \(\dfrac{3}{4}\).</li><li>\(\dfrac{16}{20}\) похожа на \(\dfrac{3}{4}\) визуально, но \(16/20 = 4/5\). Проверка числителя без знаменателя — типовая ошибка.</li></ul>
+</div>
+</section>
+<section class="slide" id="slide-46">
+<header class="slide-header"><span class="slide-num">Слайд 46</span><h2>Задачи на НОД: деление поровну</h2></header>
+<div class="slide-body">
+<p>В задачнике часто встречается формулировка: «\(A\) банок, \(B\) плиток, \(C\) пакетов распределили поровну между \(N\) участниками. Найди наибольшее возможное \(N\)».</p>
+<p>Логика: количество участников должно быть <strong>делителем каждого</strong> из трёх чисел. Самое большое такое число — это <strong>НОД</strong> трёх чисел.</p>
+<p><strong>Когда применяется НОД:</strong> «поровну между \(N\)», «разложить в одинаковые наборы», «нарезать на равные части без остатка».</p>
+<p><strong>Когда применяется НОК:</strong> «каждые \(A\) дней и каждые \(B\) дней встречаются — на какой день совпадут», «наименьшее число, делящееся и на \(A\), и на \(B\)».</p>
+</div>
+</section>
+<section class="slide" id="slide-47">
+<header class="slide-header"><span class="slide-num">Слайд 47</span><h2>Полная задача на НОД из задачника РИКЗ</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Для группы туристов закуплен сухой паёк: \(238\) банок тушёнки, \(170\) плиток шоколада и \(204\) пакетика чая. Все продукты распределены между туристами поровну. Определи наибольшее возможное количество туристов в группе.</p>
+<p><strong>Варианты ответа:</strong> 1) \(170\) 2) \(85\) 3) \(68\) 4) \(34\) 5) \(17\)</p>
+<p><strong>Решение:</strong></p>
+<p><strong>Шаг 1.</strong> Наименьшее из чисел: \(170\).</p>
+<p><strong>Шаг 2.</strong> Разложим \(170\) на простые множители: \(170 = 2 \cdot 5 \cdot 17\). Список делителей: \(1, 2, 5, 10, 17, 34, 85, 170\).</p>
+<p><strong>Шаг 3.</strong> Проверяем каждого кандидата на деление \(238\) и \(204\):</p>
+<table><thead><tr><th>Кандидат \(d\)</th><th>\(238 \div d\)</th><th>\(204 \div d\)</th><th>Подходит?</th></tr></thead><tbody><tr><td>\(170\)</td><td>\(238 \div 170 = 1,4\) — не целое</td><td>—</td><td>❌</td></tr><tr><td>\(85\)</td><td>\(238 \div 85 = 2,8\) — не целое</td><td>—</td><td>❌</td></tr><tr><td>\(68\)</td><td>\(170 \div 68 = 2,5\) — не целое, не делитель \(170\)</td><td>—</td><td>❌</td></tr><tr><td>\(\mathbf{34}\)</td><td>\(238 \div 34 = 7\) ✅</td><td>\(204 \div 34 = 6\) ✅</td><td>✅ <strong>да</strong></td></tr></tbody></table>
+<p><strong>Шаг 4.</strong> Кандидат \(34\) — первый, который делит все три числа. Это и есть НОД.</p>
+<p><strong>Ответ: 4)</strong> \(34\).</p>
+<blockquote><p><strong>Тонкость.</strong> \(17\) — тоже общий делитель всех трёх чисел, но он <strong>не наибольший</strong>. Задача просит <strong>наибольшее возможное количество</strong>, поэтому выбираем \(34\).</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-48">
+<header class="slide-header"><span class="slide-num">Слайд 48</span><h2>Полная задача Q8: сумма неправильных дробей с числителем 4</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Найди сумму всех неправильных дробей, у которых числитель равен \(4\), а знаменатель — натуральное число.</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1. Пойми условие.</strong> Неправильная дробь — это дробь, у которой числитель \(\ge\) знаменатель (см. Слайд 13). Числитель зафиксирован на \(4\). Знаменатель должен быть натуральным числом, меньшим или равным \(4\) (иначе числитель окажется меньше знаменателя — и дробь станет правильной).</p>
+<p>Возможные знаменатели: \(1, 2, 3, 4\).</p>
+<p><strong>Шаг 2. Выпиши все дроби.</strong></p>
+<table><thead><tr><th>Дробь</th><th>Тип</th><th>Значение</th></tr></thead><tbody><tr><td>\(\dfrac{4}{1}\)</td><td>неправильная</td><td>\(4\)</td></tr><tr><td>\(\dfrac{4}{2}\)</td><td>неправильная</td><td>\(2\)</td></tr><tr><td>\(\dfrac{4}{3}\)</td><td>неправильная</td><td>\(1\dfrac{1}{3}\)</td></tr><tr><td>\(\dfrac{4}{4}\)</td><td>неправильная</td><td>\(1\)</td></tr></tbody></table>
+<p><strong>Шаг 3. Сложи.</strong> Дробь — это деление, имеющее особый смысл (см. Слайд 10), значит, складываем как обычные числа и дроби:</p>
+<div class="math-block">\[ \dfrac{4}{1} + \dfrac{4}{2} + \dfrac{4}{3} + \dfrac{4}{4} = 4 + 2 + \dfrac{4}{3} + 1. \]</div>
+<p><strong>Шаг 4. Приведи целые к общему знаменателю.</strong></p>
+<div class="math-block">\[ 4 + 2 + 1 = 7 = \dfrac{21}{3}. \]</div>
+<p><strong>Шаг 5. Сложи дроби.</strong></p>
+<div class="math-block">\[ \dfrac{21}{3} + \dfrac{4}{3} = \dfrac{25}{3}. \]</div>
+<p><strong>Шаг 6. Запиши ответ в смешанном виде (если требуется).</strong></p>
+<div class="math-block">\[ \dfrac{25}{3} = 8\dfrac{1}{3}. \]</div>
+<p><strong>Ответ:</strong> \(\dfrac{25}{3}\) (или \(8\dfrac{1}{3}\)).</p>
+</div>
+</section>
+<section class="slide" id="slide-49">
+<header class="slide-header"><span class="slide-num">Слайд 49</span><h2>Полная задача Q14: остаток от деления как процент от неполного частного</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Число \(180\) делят на \(11\) с остатком. Найди, сколько процентов остаток составляет от неполного частного.</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1. Выполни деление с остатком.</strong> Подбери наибольшее число, которое меньше или равно \(180\) и делится на \(11\) нацело:</p>
+<div class="math-block">\[ 11 \cdot 16 = 176, \qquad 180 - 176 = 4. \]</div>
+<p>Итого: \(180 = 11 \cdot 16 + 4\).</p>
+<ul><li><strong>Неполное частное</strong> = \(16\) (результат целочисленного деления).</li><li><strong>Остаток</strong> = \(4\).</li></ul>
+<p><strong>Шаг 2. Переведи отношение в проценты.</strong> «Сколько процентов \(A\) составляет от \(B\)» = «\(\dfrac{A}{B} \cdot 100\%\)» (это прямое следствие того, что \(\dfrac{A}{B}\) — это часть, см. Слайд 18).</p>
+<div class="math-block">\[ \dfrac{4}{16} \cdot 100\% = \dfrac{1}{4} \cdot 100\% = 25\%. \]</div>
+<p><strong>Ответ:</strong> \(25\%\).</p>
+</div>
+</section>
+<section class="slide" id="slide-50">
+<header class="slide-header"><span class="slide-num">Слайд 50</span><h2>Полная задача Q10: сумма натуральных \(n\), для которых \(\text{НОК}(n, 117) = 117\)</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Найди сумму всех натуральных чисел \(n\), для которых выполняется равенство \(\text{НОК}(n, 117) = 117\).</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1. Пойми условие.</strong> \(\text{НОК}(n, 117) = 117\) означает: наименьшее общее кратное чисел \(n\) и \(117\) равно \(117\). Значит, <strong>\(117\) должно делиться на \(n\) нацело</strong> (иначе НОК был бы больше \(117\)).</p>
+<p><strong>Шаг 2. Разложи \(117\) на простые множители.</strong></p>
+<div class="math-block">\[ 117 = 9 \cdot 13 = 3^2 \cdot 13. \]</div>
+<p><strong>Шаг 3. Выпиши все делители.</strong> Делители строятся как \(3^a \cdot 13^b\), где \(a \in \{0, 1, 2\}\), \(b \in \{0, 1\}\):</p>
+<table><thead><tr><th>\(a\)</th><th>\(b\)</th><th>Делитель</th></tr></thead><tbody><tr><td>\(0\)</td><td>\(0\)</td><td>\(1\)</td></tr><tr><td>\(1\)</td><td>\(0\)</td><td>\(3\)</td></tr><tr><td>\(2\)</td><td>\(0\)</td><td>\(9\)</td></tr><tr><td>\(0\)</td><td>\(1\)</td><td>\(13\)</td></tr><tr><td>\(1\)</td><td>\(1\)</td><td>\(39\)</td></tr><tr><td>\(2\)</td><td>\(1\)</td><td>\(117\)</td></tr></tbody></table>
+<p><strong>Шаг 4. Сложи.</strong></p>
+<div class="math-block">\[ 1 + 3 + 9 + 13 + 39 + 117 = 182. \]</div>
+<p><strong>Ответ:</strong> \(182\).</p>
+</div>
+</section>
+<section class="slide" id="slide-51">
+<header class="slide-header"><span class="slide-num">Слайд 51</span><h2>Итог Блока 6: что покрыто</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Тип задачи</th><th>Источник</th><th>Слайд</th></tr></thead><tbody><tr><td>Стандартный вид числа</td><td>РИКЗ, общий шаблон</td><td>42–43</td></tr><tr><td>Эквивалентные дроби</td><td>конструированный чистый пример</td><td>44–45</td></tr><tr><td>НОД в задачах «поровну»</td><td>РИКЗ, №5</td><td>46–47</td></tr><tr><td>Сумма неправильных дробей</td><td>Q8 из твоего пула</td><td>48</td></tr><tr><td>Остаток от деления в процентах</td><td>Q14 из твоего пула</td><td>49</td></tr><tr><td>Делители через НОК</td><td>Q10 из твоего пула</td><td>50</td></tr></tbody></table>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-52">
+<header class="slide-header"><span class="slide-num">Слайд 52</span><h2>Зачем раскрывать скобки</h2></header>
+<div class="slide-body">
+<p>Когда ты видишь выражение вроде \(3 \cdot (x + 5)\), у тебя два пути: либо подставить конкретное число вместо \(x\) и считать, либо работать с буквой. Чтобы работать с буквой было удобно, скобки нужно <strong>раскрыть</strong> — превратить в запись без скобок.</p>
+<p>Раскрытие скобок опирается на одно-единственное свойство умножения, которое математики называют <strong>распределительным законом</strong>.</p>
+</div>
+</section>
+<section class="slide" id="slide-53">
+<header class="slide-header"><span class="slide-num">Слайд 53</span><h2>Распределительный закон (формулировка)</h2></header>
+<div class="slide-body">
+<p><strong>Закон.</strong> Умножение числа на сумму (или разность) можно заменить умножением этого числа на каждое слагаемое по отдельности:</p>
+<div class="math-block">\[ a \cdot (b + c) = a \cdot b + a \cdot c, \]</div>
+<div class="math-block">\[ a \cdot (b - c) = a \cdot b - a \cdot c. \]</div>
+<p><strong>Почему работает.</strong> Если у тебя есть, например, \(3\) коробки, в каждой из которых лежат \(4\) яблока и \(5\) груш, то общее число яблок равно \(3 \cdot 4\), а общее число груш равно \(3 \cdot 5\). Общее число фруктов: \(3 \cdot 4 + 3 \cdot 5 = 3 \cdot (4 + 5)\).</p>
+</div>
+</section>
+<section class="slide" id="slide-54">
+<header class="slide-header"><span class="slide-num">Слайд 54</span><h2>Алгоритм раскрытия скобок (с плюсом перед скобкой)</h2></header>
+<div class="slide-body">
+<p>Если перед скобкой стоит <strong>плюс</strong> или нет никакого знака (то есть «+1» по умолчанию), скобки можно просто убрать, оставив знаки внутри без изменений:</p>
+<div class="math-block">\[ +(a + b) = a + b, \qquad +(a - b) = a - b. \]</div>
+<p><strong>Пример.</strong></p>
+<div class="math-block">\[ (x + 5) + (3 - 2x) = x + 5 + 3 - 2x = -x + 8. \]</div>
+</div>
+</section>
+<section class="slide" id="slide-55">
+<header class="slide-header"><span class="slide-num">Слайд 55</span><h2>Раскрытие скобок с минусом перед скобкой (типичная ошибка)</h2></header>
+<div class="slide-body">
+<p>Если перед скобкой стоит <strong>минус</strong>, скобки можно убрать, но <strong>каждый знак внутри нужно поменять на противоположный</strong>:</p>
+<div class="math-block">\[ -(a + b) = -a - b, \qquad -(a - b) = -a + b. \]</div>
+<p><strong>Типичная ошибка.</strong> При виде \(-(a - b)\) многие ученики пишут \(-a - b\) — то есть меняют только первое слагаемое и оставляют знак минус перед вторым. Это ошибка.</p>
+<p><strong>Почему это ошибка.</strong> Минус перед скобкой — это невидимый множитель \(-1\). Он применяется к каждому слагаемому внутри. Второе слагаемое \(-b\) само по себе отрицательное, и на него тоже действует \(-1\): минус на минус даёт плюс.</p>
+<p><strong>Правильный приём.</strong> Поставь перед каждым слагаемым внутри скобки множитель \(-1\) и примени распределительный закон:</p>
+<div class="math-block">\[ -(a - b) = -1 \cdot (a - b) = (-1) \cdot a + (-1) \cdot (-b) = -a + b. \]</div>
+<p><strong>Обрати внимание:</strong> мы умножаем \(-1\) на отрицательное число \(-b\). Минус на минус даёт плюс, поэтому перед \(b\) знак меняется на противоположный.</p>
+<p><strong>Пример.</strong></p>
+<div class="math-block">\[ -(3x - 7) = -3x + 7. \]</div>
+<div class="math-block">\[ -(2a + b - 4c) = -2a - b + 4c. \]</div>
+<blockquote><p><strong>Самопроверка.</strong> Проверь себя обратным действием: «сверни» полученное выражение обратно в скобки. Если получил исходное — раскрыл правильно.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-56">
+<header class="slide-header"><span class="slide-num">Слайд 56</span><h2>Раскрытие скобок с числовым множителем</h2></header>
+<div class="slide-body">
+<p>Если перед скобкой стоит число, распредели его на каждое слагаемое:</p>
+<div class="math-block">\[ 2 \cdot (a + b) = 2a + 2b, \]</div>
+<div class="math-block">\[ 3 \cdot (a - b + c) = 3a - 3b + 3c. \]</div>
+<p>Если множитель <strong>отрицательный</strong>, распределяй его с переворотом знаков:</p>
+<div class="math-block">\[ -2 \cdot (a + b) = -2a - 2b, \]</div>
+<div class="math-block">\[ -3 \cdot (a - b + c) = -3a + 3b - 3c. \]</div>
+<p><strong>Пример.</strong></p>
+<div class="math-block">\[ -4 \cdot (2x - 3y + 5) = -8x + 12y - 20. \]</div>
+</div>
+</section>
+<section class="slide" id="slide-57">
+<header class="slide-header"><span class="slide-num">Слайд 57</span><h2>Приведение подобных слагаемых</h2></header>
+<div class="slide-body">
+<p><strong>Подобные слагаемые</strong> — это слагаемые, которые отличаются только числовым коэффициентом (буквенная часть одинакова):</p>
+<ul><li>\(3x\) и \(-5x\) — подобные;</li><li>\(2a\) и \(7a\) — подобные;</li><li>\(x\) и \(x^2\) — <strong>не</strong> подобные (степени разные);</li><li>\(3x\) и \(3y\) — <strong>не</strong> подобные (буквы разные).</li></ul>
+<p>Чтобы привести подобные, сложи их коэффициенты и оставь общую буквенную часть:</p>
+<div class="math-block">\[ 3x - 5x = -2x, \qquad 2a + 7a - 4a = 5a. \]</div>
+<p><strong>Пример.</strong></p>
+<div class="math-block">\[ 3x - (5x - 7) = 3x - 5x + 7 = -2x + 7. \]</div>
+</div>
+</section>
+<section class="slide" id="slide-58">
+<header class="slide-header"><span class="slide-num">Слайд 58</span><h2>Типовая ошибка: минус только у первого слагаемого</h2></header>
+<div class="slide-body">
+<p>Ситуация: \(a - (b + c)\). Ученик раскрывает скобки как \(a - b + c\). Это <strong>неправильно</strong>.</p>
+<p><strong>Как правильно:</strong></p>
+<div class="math-block">\[ a - (b + c) = a + (-1) \cdot (b + c) = a + (-b) + (-c) = a - b - c. \]</div>
+<p><strong>Почему ошибка так популярна.</strong> Ученик видит «минус перед скобкой» и применяет его только к первому слагаемому. На самом деле минус — это общий множитель \(-1\), который должен быть распределён <strong>на всё</strong> содержимое скобки.</p>
+<p><strong>Жёсткое правило.</strong> Минус перед скобкой переворачивает знак <strong>у каждого</strong> слагаемого внутри. Без исключений.</p>
+</div>
+</section>
+<section class="slide" id="slide-59">
+<header class="slide-header"><span class="slide-num">Слайд 59</span><h2>Полная задача на раскрытие скобок и приведение подобных</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Упрости выражение: \(2a - (3a - 5) + (7 - 4a)\).</p>
+<p><strong>Пошаговое решение:</strong></p>
+<p><strong>Шаг 1. Раскрой скобки с плюсом.</strong> \((7 - 4a)\) → знаки внутри не меняются: \(7 - 4a\).</p>
+<p><strong>Шаг 2. Раскрой скобки с минусом.</strong> \(-(3a - 5)\) → каждый знак внутри меняется на противоположный: \(-3a + 5\).</p>
+<p><strong>Шаг 3. Собери всё вместе.</strong></p>
+<div class="math-block">\[ 2a + (-3a + 5) + (7 - 4a) = 2a - 3a + 5 + 7 - 4a. \]</div>
+<p><strong>Шаг 4. Приведи подобные.</strong> Слагаемые с \(a\): \(2a - 3a - 4a = -5a\). Свободные числа: \(5 + 7 = 12\).</p>
+<p><strong>Ответ:</strong> \(-5a + 12\).</p>
+<blockquote><p><strong>Самопроверка.</strong> Подставь, например, \(a = 2\): исходное \(= 4 - (6 - 5) + (7 - 8) = 4 - 1 - 1 = 2\). Ответ: \(-5 \cdot 2 + 12 = -10 + 12 = 2\). Совпало — раскрытие верное.</p></blockquote>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-60">
+<header class="slide-header"><span class="slide-num">Слайд 60</span><h2>Формула разности квадратов</h2></header>
+<div class="slide-body">
+<p><strong>Закон.</strong> Для любых чисел или выражений \(a\) и \(b\):</p>
+<div class="math-block">\[ a^2 - b^2 = (a - b)(a + b). \]</div>
+<p><strong>Откуда берётся.</strong> Раскроем правую часть по распределительному закону:</p>
+<div class="math-block">\[ (a - b)(a + b) = a \cdot a + a \cdot b - b \cdot a - b \cdot b = a^2 + ab - ab - b^2 = a^2 - b^2. \]</div>
+<p>Средние слагаемые \(ab\) и \(-ab\) взаимно уничтожаются.</p>
+</div>
+</section>
+<section class="slide" id="slide-61">
+<header class="slide-header"><span class="slide-num">Слайд 61</span><h2>Когда применять формулу</h2></header>
+<div class="slide-body">
+<p>Формула работает всегда, когда у тебя стоит разность двух квадратов:</p>
+<div class="math-block">\[ a^2 - b^2, \qquad (2x)^2 - 5^2, \qquad (a + 3)^2 - (b - 1)^2. \]</div>
+<p><strong>Главное — увидеть основания.</strong> В первом случае основания \(a\) и \(b\). Во втором — \(2x\) и \(5\). В третьем — \((a + 3)\) и \((b - 1)\).</p>
+</div>
+</section>
+<section class="slide" id="slide-62">
+<header class="slide-header"><span class="slide-num">Слайд 62</span><h2>Алгоритм применения</h2></header>
+<div class="slide-body">
+<p><strong>Шаг 1.</strong> Запиши выражение как разность двух квадратов: «что-то в квадрате минус что-то в квадрате».</p>
+<p><strong>Шаг 2.</strong> Определи основания — то, что стоит в квадрате. Это будут \(a\) и \(b\).</p>
+<p><strong>Шаг 3.</strong> Запиши результат: \((a - b)(a + b)\).</p>
+<p><strong>Шаг 4.</strong> Раскрой скобки (если нужно) или используй как множители (если сокращаешь дробь).</p>
+<p><strong>Пример.</strong> Разложи \(49 - x^2\).</p>
+<ul><li>Шаг 1: \(49 - x^2 = 7^2 - x^2\).</li><li>Шаг 2: основания \(a = 7\), \(b = x\).</li><li>Шаг 3: \((7 - x)(7 + x)\).</li></ul>
+<p><strong>Пример.</strong> Разложи \(4a^2 - 9b^2\).</p>
+<ul><li>Шаг 1: \(4a^2 - 9b^2 = (2a)^2 - (3b)^2\).</li><li>Шаг 2: основания \(a = 2a\), \(b = 3b\).</li><li>Шаг 3: \((2a - 3b)(2a + 3b)\).</li></ul>
+</div>
+</section>
+<section class="slide" id="slide-63">
+<header class="slide-header"><span class="slide-num">Слайд 63</span><h2>Полная задача на разность квадратов</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Разложи на множители: \(81 - 16y^2\).</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1.</strong> Запишем как разность квадратов: \(81 = 9^2\), \(16y^2 = (4y)^2\). Получаем: \(9^2 - (4y)^2\).</p>
+<p><strong>Шаг 2.</strong> Основания: \(a = 9\), \(b = 4y\).</p>
+<p><strong>Шаг 3.</strong> По формуле: \((9 - 4y)(9 + 4y)\).</p>
+<p><strong>Ответ:</strong> \((9 - 4y)(9 + 4y)\).</p>
+<blockquote><p><strong>Самопроверка.</strong> Раскрой скобки обратно: \((9 - 4y)(9 + 4y) = 81 + 36y - 36y - 16y^2 = 81 - 16y^2\). Получилось исходное выражение — раскладывание верное.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-64">
+<header class="slide-header"><span class="slide-num">Слайд 64</span><h2>Типовая ошибка: перепутать основания с коэффициентами</h2></header>
+<div class="slide-body">
+<p>Ситуация: \(4x^2 - 9\). Ученик видит «\(4x^2\)» и «\(9\)» и пишет: \((4x - 9)(4x + 9)\). Это ошибка.</p>
+<p><strong>Как правильно.</strong> \(4x^2 = (2x)^2\) (квадрат числа \(2x\), а не \(4x\)). \(9 = 3^2\). Основания: \(a = 2x\), \(b = 3\). По формуле: \((2x - 3)(2x + 3)\).</p>
+<p><strong>Жёсткое правило.</strong> Под квадратом стоит основание — выражение, <strong>которое при умножении само на себя даёт исходный квадрат</strong>. Ищем такое основание <strong>перебором</strong>: какое число, умноженное само на себя, даёт \(4\)? Это \(2\), потому что \(2 \cdot 2 = 4\). Значит, \((2x)^2 = 4x^2\). Аналогично \(9 = 3 \cdot 3\), значит \((3y)^2 = 9y^2\). Если подобрать такое основание нельзя (например, \(2x^2\) — здесь нечего умножить само на себя, чтобы получить \(2\)), формулу разности квадратов напрямую применить нельзя.</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-65">
+<header class="slide-header"><span class="slide-num">Слайд 65</span><h2>Общее и различное у квадрата суммы и квадрата разности</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Что</th><th>\((a + b)^2\)</th><th>\((a - b)^2\)</th></tr></thead><tbody><tr><td>Количество слагаемых в результате</td><td>3</td><td>3</td></tr><tr><td>Форма</td><td>\(a^2 + 2ab + b^2\)</td><td>\(a^2 - 2ab + b^2\)</td></tr><tr><td>Общее</td><td>квадрат первого, удвоенное произведение, квадрат второго</td><td>то же</td></tr><tr><td><strong>Различие</strong></td><td>средний член <strong>с плюсом</strong></td><td>средний член <strong>с минусом</strong></td></tr></tbody></table>
+<p><strong>Зачем эта таблица.</strong> Дальше будет два больших алгоритма: «свернуть в квадрат» и «раскрыть квадрат». Оба они работают по одной и той же структуре — три слагаемых, удвоенное произведение посередине. Различие только в знаке среднего члена.</p>
+<p><strong>Мостик-память.</strong> Запомни только одно: средний член — это <strong>\(2 \cdot a \cdot b\)</strong> с тем знаком, который стоит между \(a\) и \(b\) в скобке. Плюс между ними → плюс перед удвоенным произведением. Минус → минус.</p>
+</div>
+</section>
+<section class="slide" id="slide-66">
+<header class="slide-header"><span class="slide-num">Слайд 66</span><h2>Две формулы — два разных знака</h2></header>
+<div class="slide-body">
+<p><strong>Закон.</strong></p>
+<div class="math-block">\[ (a + b)^2 = a^2 + 2ab + b^2, \]</div>
+<div class="math-block">\[ (a - b)^2 = a^2 - 2ab + b^2. \]</div>
+<p><strong>Откуда берётся.</strong> Раскроем по распределительному закону:</p>
+<div class="math-block">\[ (a + b)^2 = (a + b)(a + b) = a^2 + ab + ab + b^2 = a^2 + 2ab + b^2. \]</div>
+<div class="math-block">\[ (a - b)^2 = (a - b)(a - b) = a^2 - ab - ab + b^2 = a^2 - 2ab + b^2. \]</div>
+</div>
+</section>
+<section class="slide" id="slide-67">
+<header class="slide-header"><span class="slide-num">Слайд 67</span><h2>Как узнать, какую формулу применять</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Условие</th><th>Какая формула</th><th>Знак среднего члена</th></tr></thead><tbody><tr><td>\((a + b)^2\)</td><td>квадрат суммы</td><td>плюс</td></tr><tr><td>\((a - b)^2\)</td><td>квадрат разности</td><td>минус</td></tr><tr><td>В выражении \(a^2 \pm 2ab + b^2\) средний член — это <strong>\(2 \cdot a \cdot b\)</strong></td><td>плюс → квадрат суммы; минус → квадрат разности</td><td>по знаку</td></tr></tbody></table>
+<p><strong>Главный признак квадрата суммы/разности.</strong> В записи <strong>три</strong> слагаемых, два из которых — точные квадраты (\(a^2\) и \(b^2\)), а третье — удвоенное произведение их оснований (\(\pm 2ab\)).</p>
+</div>
+</section>
+<section class="slide" id="slide-68">
+<header class="slide-header"><span class="slide-num">Слайд 68</span><h2>Свернуть в квадрат (обратная операция)</h2></header>
+<div class="slide-body">
+<p>Если видишь \(a^2 + 2ab + b^2\) — это квадрат суммы: \((a + b)^2\). Если видишь \(a^2 - 2ab + b^2\) — это квадрат разности: \((a - b)^2\).</p>
+<p><strong>Шаг 1.</strong> Найди точные квадраты (\(a^2\) и \(b^2\)). <strong>Шаг 2.</strong> Определи знак среднего члена (\(\pm 2ab\)). <strong>Шаг 3.</strong> Извлеки основания и запиши квадрат скобки.</p>
+<p><strong>Пример.</strong> \(x^2 + 6x + 9\).</p>
+<ul><li>Квадраты: \(x^2\) и \(9 = 3^2\).</li><li>Средний член: \(6x = 2 \cdot x \cdot 3\). Знак плюс.</li><li>Основания: \(a = x\), \(b = 3\).</li><li>Скобка: \((x + 3)^2\).</li></ul>
+<p><strong>Пример.</strong> \(4y^2 - 12y + 9\).</p>
+<ul><li>Квадраты: \(4y^2 = (2y)^2\), \(9 = 3^2\).</li><li>Средний член: \(-12y = -2 \cdot 2y \cdot 3\). Знак минус.</li><li>Основания: \(a = 2y\), \(b = 3\).</li><li>Скобка: \((2y - 3)^2\).</li></ul>
+</div>
+</section>
+<section class="slide" id="slide-69">
+<header class="slide-header"><span class="slide-num">Слайд 69</span><h2>Раскрыть квадрат (прямая операция)</h2></header>
+<div class="slide-body">
+<p>Если видишь \((a + b)^2\) или \((a - b)^2\) — раскрой по формуле:</p>
+<ul><li>\((a + b)^2 = a^2 + 2ab + b^2\)</li><li>\((a - b)^2 = a^2 - 2ab + b^2\)</li></ul>
+<p><strong>Пример.</strong> \((3x + 5)^2\).</p>
+<ul><li>\(a = 3x\), \(b = 5\).</li><li>\((3x)^2 + 2 \cdot 3x \cdot 5 + 5^2 = 9x^2 + 30x + 25\).</li></ul>
+<p><strong>Пример.</strong> \((2a - 7)^2\).</p>
+<ul><li>\(a = 2a\), \(b = 7\).</li><li>\((2a)^2 - 2 \cdot 2a \cdot 7 + 7^2 = 4a^2 - 28a + 49\).</li></ul>
+</div>
+</section>
+<section class="slide" id="slide-70">
+<header class="slide-header"><span class="slide-num">Слайд 70</span><h2>Когда основание — сложное выражение</h2></header>
+<div class="slide-body">
+<p>Если в формуле под видом \(a\) или \(b\) стоит не одночлен, а скобка, действуй как обычно — основанием считай всю скобку целиком.</p>
+<p><strong>Пример.</strong> \((x + 3)^2\).</p>
+<ul><li>\(a = x\), \(b = 3\).</li><li>\(x^2 + 2 \cdot x \cdot 3 + 9 = x^2 + 6x + 9\).</li></ul>
+<p><strong>Пример.</strong> \((2x + y)^2\).</p>
+<ul><li>\(a = 2x\), \(b = y\).</li><li>\((2x)^2 + 2 \cdot 2x \cdot y + y^2 = 4x^2 + 4xy + y^2\).</li></ul>
+<p><strong>Пример.</strong> \((x + 3y)^2\).</p>
+<ul><li>\(a = x\), \(b = 3y\).</li><li>\(x^2 + 2 \cdot x \cdot 3y + (3y)^2 = x^2 + 6xy + 9y^2\).</li></ul>
+</div>
+</section>
+<section class="slide" id="slide-71">
+<header class="slide-header"><span class="slide-num">Слайд 71</span><h2>Отрицательные основания</h2></header>
+<div class="slide-body">
+<p>Если основание отрицательное, помни: минус в квадрате даёт плюс:</p>
+<div class="math-block">\[ (-a)^2 = a^2. \]</div>
+<p><strong>Пример.</strong> \((-3x + 5)^2\).</p>
+<ul><li>Запишем как \((5 - 3x)^2\) или оставим как есть — формула симметрична.</li><li>По формуле квадрата суммы (если считать \(a = -3x\), \(b = 5\)):</li><li>\(a^2 = (-3x)^2 = 9x^2\).</li><li>\(2ab = 2 \cdot (-3x) \cdot 5 = -30x\).</li><li>\(b^2 = 25\).</li><li>Итого: \(9x^2 - 30x + 25\).</li></ul>
+<p><strong>Альтернативный путь.</strong> \((-3x + 5)^2 = (5 - 3x)^2\). Применяем формулу с \(a = 5\), \(b = 3x\):</p>
+<ul><li>\(25 - 30x + 9x^2\). Тот же ответ.</li></ul>
+</div>
+</section>
+<section class="slide" id="slide-72">
+<header class="slide-header"><span class="slide-num">Слайд 72</span><h2>Типовая ошибка: забыть удвоенное произведение</h2></header>
+<div class="slide-body">
+<p>Ситуация: раскрыть \((x + 3)^2\). Ученик пишет \(x^2 + 9\) или \(x^2 + 3\). Оба раза <strong>неверно</strong>.</p>
+<p><strong>Как правильно.</strong> \((x + 3)^2 = (x + 3)(x + 3)\). По распределительному закону: \(x^2 + 3x + 3x + 9 = x^2 + 6x + 9\). Средний член \(2 \cdot x \cdot 3 = 6x\) присутствует обязательно.</p>
+<p><strong>Жёсткое правило.</strong> Квадрат суммы <strong>всегда</strong> содержит три слагаемых: квадрат первого, удвоенное произведение, квадрат второго. Пропуск любого из них — ошибка.</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-73">
+<header class="slide-header"><span class="slide-num">Слайд 73</span><h2>Повторение дробей, периодических, знаменателя = 2·5</h2></header>
+<div class="slide-body">
+<p>Прежде чем перейти к вынесению знака и группировке, закрепим три вещи из Блоков 2–4.</p>
+<p><strong>Мини-задача 1.</strong> Переведи \(0,5(36)\) в обыкновенную дробь.</p>
+<ul><li>Шаг 1: числитель = \(536 - 5 = 531\). Знаменатель = \(99\) + \(0\) = \(990\).</li><li>Шаг 2: \(\dfrac{531}{990}\). Сокращаем на \(9\) → \(\dfrac{59}{110}\).</li><li><strong>Ответ:</strong> \(\dfrac{59}{110}\).</li></ul>
+<p><strong>Мини-задача 2.</strong> Какие из этих дробей конечные: \(\dfrac{7}{16},\ \dfrac{7}{15},\ \dfrac{7}{12}\)?</p>
+<ul><li>\(\dfrac{7}{16}\): знаменатель \(2^4\) → ✅ конечная.</li><li>\(\dfrac{7}{15}\): знаменатель \(3 \cdot 5\) → ❌ бесконечная.</li><li>\(\dfrac{7}{12}\): знаменатель \(2^2 \cdot 3\) → ❌ бесконечная.</li><li><strong>Ответ:</strong> только \(\dfrac{7}{16}\).</li></ul>
+<p><strong>Мини-задача 3.</strong> Упрости \(\dfrac{2}{3} + \dfrac{5}{6}\).</p>
+<ul><li>НОК\((3, 6) = 6\).</li><li>\(\dfrac{2}{3} = \dfrac{4}{6}\).</li><li>\(\dfrac{4}{6} + \dfrac{5}{6} = \dfrac{9}{6} = 1\dfrac{1}{2}\).</li><li><strong>Ответ:</strong> \(1\dfrac{1}{2}\).</li></ul>
+<blockquote><p><strong>Связь с блоком 10.</strong> Когда ты начнёшь работать с буквенными выражениями в скобках, тебе понадобится: сокращение дробей (блок 5a), приведение подобных (блок 7), основное свойство (блок 5a). Всё это уже отработано выше. Если в мини-задачах всё сошлось — мостик пройден.</p></blockquote>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-74">
+<header class="slide-header"><span class="slide-num">Слайд 74</span><h2>Зеркальное отражение знаков: \((B - A) = -(A - B)\)</h2></header>
+<div class="slide-body">
+<p><strong>Закон.</strong> Если поменять местами слагаемые внутри скобки и одновременно поставить минус перед скобкой, выражение не изменится:</p>
+<div class="math-block">\[ B - A = -(A - B). \]</div>
+<p><strong>Откуда берётся.</strong> По распределительному закону:</p>
+<div class="math-block">\[ -(A - B) = -1 \cdot (A - B) = -A + B = B - A. \]</div>
+<p><strong>Зачем это нужно.</strong> Этот закон позволяет привести <strong>похожие, но не идентичные</strong> скобки к <strong>полностью одинаковому</strong> виду — после чего их можно вынести как общий множитель.</p>
+</div>
+</section>
+<section class="slide" id="slide-75">
+<header class="slide-header"><span class="slide-num">Слайд 75</span><h2>Вынесение общего множителя</h2></header>
+<div class="slide-body">
+<p>Если в выражении несколько слагаемых содержат одинаковый множитель, его можно вынести за скобку:</p>
+<div class="math-block">\[ a \cdot m + b \cdot m = m \cdot (a + b), \]</div>
+<div class="math-block">\[ a \cdot m - b \cdot m = m \cdot (a - b). \]</div>
+<p><strong>Пример.</strong> \(3x + 6y = 3 \cdot (x + 2y)\). <strong>Пример.</strong> \(5a - 10b = 5 \cdot (a - 2b)\).</p>
+<p><strong>Пример.</strong> Вынеси общий множитель в \(x(2a - b) + 3 \cdot (2a - b)\).</p>
+<ul><li>Общий блок — \((2a - b)\).</li><li>\(x(2a - b) + 3(2a - b) = (2a - b)(x + 3)\).</li></ul>
+<blockquote><p><strong>Проверка обратным действием.</strong> Раскрой \((2a - b)(x + 3)\): должно получиться \(2ax - bx + 6a - 3b\). Совпадает с раскрытием \(x(2a - b) + 3(2a - b)\). Значит, вынесение верное.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-76">
+<header class="slide-header"><span class="slide-num">Слайд 76</span><h2>Группировка: как найти общий множитель</h2></header>
+<div class="slide-body">
+<p>Если общий множитель не лежит на поверхности, перегруппируй слагаемые так, чтобы он проявился.</p>
+<p><strong>Алгоритм:</strong></p>
+<ol><li>Сгруппируй слагаемые по два (или больше).</li><li>В каждой группе вынеси общий множитель.</li><li>Должна получиться одинаковая скобка во всех группах.</li><li>Вынеси её за скобку.</li></ol>
+<p><strong>Пример.</strong> Разложи на множители \(ab + ac + 3b + 3c\).</p>
+<ul><li>Шаг 1: \((ab + ac) + (3b + 3c)\).</li><li>Шаг 2: \(a(b + c) + 3(b + c)\).</li><li>Шаг 3: общий блок \((b + c)\).</li><li>Шаг 4: \((b + c)(a + 3)\).</li></ul>
+</div>
+</section>
+<section class="slide" id="slide-77">
+<header class="slide-header"><span class="slide-num">Слайд 77</span><h2>Группировка с переворотом знака</h2></header>
+<div class="slide-body">
+<p>Если в одной из групп знаки «неправильные» относительно другой, используй закон зеркального отражения.</p>
+<p><strong>Пример.</strong> Разложи \(x(2a - b) + b - 2a\).</p>
+<ul><li>Свободные слагаемые: \(b - 2a\). В скобки — \(2a - b\). Знаки противоположны.</li><li>Зеркальное отражение: \(b - 2a = -(2a - b)\).</li><li>Подставь: \(x(2a - b) + (-(2a - b)) = x(2a - b) - (2a - b)\).</li><li>Теперь оба блока одинаковые: \(x \cdot (2a - b) - 1 \cdot (2a - b)\).</li><li>Вынеси: \((2a - b)(x - 1)\).</li></ul>
+<p><strong>Ответ:</strong> \((2a - b)(x - 1)\).</p>
+<blockquote><p><strong>Проверка обратным действием.</strong> Раскрой \((2a - b)(x - 1) = 2ax - 2a - bx + b\). Сравни с раскрытием исходного \(x(2a - b) + b - 2a = 2ax - bx + b - 2a\). Совпало — раскладывание верное.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-78">
+<header class="slide-header"><span class="slide-num">Слайд 78</span><h2>«Невидимая единица» перед скобкой</h2></header>
+<div class="slide-body">
+<p>Когда ты видишь скобку, у которой нет видимого числового множителя, это <strong>всегда</strong> означает, что перед ней стоит \(1\):</p>
+<div class="math-block">\[ (a - b) = 1 \cdot (a - b), \qquad -(a - b) = -1 \cdot (a - b). \]</div>
+<p><strong>Зачем помнить.</strong> При вынесении общего множителя нужно видеть коэффициенты у <strong>всех</strong> скобок. Если у одной скобки есть множитель \(x\), а у другой — только знак «минус», это означает, что у второй скобки множитель \(-1\). Пропуск \(-1\) приводит к потере знака.</p>
+<p><strong>Жёсткое правило.</strong> Любая скобка без видимого множителя имеет множитель \(1\). Любая скобка с минусом перед ней имеет множитель \(-1\).</p>
+</div>
+</section>
+<section class="slide" id="slide-79">
+<header class="slide-header"><span class="slide-num">Слайд 79</span><h2>Типовая ошибка: потеря «невидимой единицы»</h2></header>
+<div class="slide-body">
+<p>Ситуация: \(x(2a - b) - (2a - b)\). Ученик выносит скобку и пишет \(x(2a - b)\) или просто теряет второе слагаемое.</p>
+<p><strong>Почему ошибка.</strong> Ученик не видит коэффициента \(-1\) перед второй скобкой. После вынесения скобки \((2a - b)\) в скобках должно остаться \((x - 1)\), а не просто \(x\).</p>
+<p><strong>Как правильно.</strong></p>
+<div class="math-block">\[ x \cdot (2a - b) - 1 \cdot (2a - b) = (2a - b)(x - 1). \]</div>
+<p><strong>Проверка обратным действием.</strong> Раскрой \((2a - b)(x - 1) = 2ax - 2a - bx + b\). Исходное: \(x(2a - b) - (2a - b) = 2ax - bx - 2a + b\). Совпало — раскладывание верное.</p>
+</div>
+</section>
+<section class="slide" id="slide-80">
+<header class="slide-header"><span class="slide-num">Слайд 80</span><h2>Универсальная проверка: подстановка чисел</h2></header>
+<div class="slide-body">
+<p>Если сомневаешься в правильности разложения, подставь вместо переменных <strong>маленькие удобные числа</strong> (например, \(x = 1\) или \(x = 2\)) и сравни значения исходного выражения и ответа. Если совпали — разложение верное.</p>
+<p><strong>Когда применять:</strong></p>
+<ul><li>длинное выражение с несколькими скобками;</li><li>знаки не очевидны;</li><li>не уверен, что правильно учёл «невидимую единицу»;</li><li>хочешь убедиться, что не потерял элемент при вынесении.</li></ul>
+</div>
+</section>
+<section class="slide" id="slide-81">
+<header class="slide-header"><span class="slide-num">Слайд 81</span><h2>Полная задача на группировку с переворотом знака</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Разложи на множители: \(x(3a - b) + b - 3a\).</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1.</strong> Запишем выражение с явным выделением свободных слагаемых: \(x(3a - b) + (b - 3a)\).</p>
+<p><strong>Шаг 2.</strong> Сравним скобки: \(3a - b\) и \(b - 3a\). Знаки противоположны. По закону зеркального отражения: \(b - 3a = -(3a - b)\).</p>
+<p><strong>Шаг 3.</strong> Подставим: \(x(3a - b) + (-(3a - b)) = x(3a - b) - (3a - b)\).</p>
+<p><strong>Шаг 4.</strong> Запишем «невидимую единицу»: \(x \cdot (3a - b) - 1 \cdot (3a - b)\).</p>
+<p><strong>Шаг 5.</strong> Вынесем общий блок: \((3a - b)(x - 1)\).</p>
+<p><strong>Ответ:</strong> \((3a - b)(x - 1)\).</p>
+<blockquote><p><strong>Проверка обратным действием.</strong> Раскрой \((3a - b)(x - 1) = 3ax - 3a - bx + b\). Исходное: \(x(3a - b) + b - 3a = 3ax - bx + b - 3a\). Совпало.</p></blockquote>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-82">
+<header class="slide-header"><span class="slide-num">Слайд 82</span><h2>Зачем нужен стандартный вид</h2></header>
+<div class="slide-body">
+<p>В науке и на экзаменах приходится работать как с очень большими числами (например, расстояние до звёзд), так и с очень маленькими (размер атома). Записывать и перемножать длинные ряды нулей неудобно — в них легко запутаться и допустить арифметическую ошибку.</p>
+<p>Чтобы навести строгий порядок, математики договорились приводить любые числовые значения к единому стандарту.</p>
+<p><strong>Стандартный вид числа</strong> — это запись в форме произведения, где первый множитель содержит строго одну значащую цифру перед запятой (и это не может быть ноль), а второй множитель — это степень десятки:</p>
+<div class="math-block">\[ A = x \cdot 10^{n}, \quad \text{где} \quad 1 \le x < 10, \quad n \in \mathbb{Z}. \]</div>
+<table><thead><tr><th>Компонент</th><th>Что значит</th></tr></thead><tbody><tr><td>\(x\)</td><td>мантисса; в диапазоне от \(1\) включительно до \(10\) строго меньше</td></tr><tr><td>\(10^n\)</td><td>степень десятки; \(n\) — целое число (может быть отрицательным)</td></tr></tbody></table>
+<p>Такой формат мгновенно показывает реальный масштаб числа через его степень, освобождая тебя от подсчёта лишних разрядов.</p>
+</div>
+</section>
+<section class="slide" id="slide-83">
+<header class="slide-header"><span class="slide-num">Слайд 83</span><h2>Умножение степеней с одинаковым основанием</h2></header>
+<div class="slide-body">
+<p><strong>Закон.</strong> При перемножении степеней с одинаковым основанием показатели складываются:</p>
+<div class="math-block">\[ 10^{a} \cdot 10^{b} = 10^{a+b}. \]</div>
+<p><strong>Пример.</strong> \(10^2 \cdot 10^3 = 10^{2+3} = 10^5\).</p>
+<p><strong>Следствие.</strong> При делении степеней с одинаковым основанием показатели вычитаются:</p>
+<div class="math-block">\[ 10^{a} \div 10^{b} = 10^{a-b}. \]</div>
+<blockquote><p><strong>Важно.</strong> Закон работает только для одинакового основания \(10\). Для разных оснований — другие правила.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-84">
+<header class="slide-header"><span class="slide-num">Слайд 84</span><h2>Закон сохранения значения при сдвиге запятой</h2></header>
+<div class="slide-body">
+<p><strong>Закон.</strong> Значение числа не должно измениться. Поэтому изменение числовой части обязано зеркально компенсироваться изменением показателя степени:</p>
+<table><thead><tr><th>Сдвиг запятой</th><th>Что происходит с числом</th><th>Корректировка степени</th></tr></thead><tbody><tr><td>Налево \((\leftarrow)\)</td><td>число уменьшается</td><td>степень делает плюс \((+)\)</td></tr><tr><td>Направо \((\rightarrow)\)</td><td>число увеличивается</td><td>степень делает минус \((-)\)</td></tr></tbody></table>
+<p>Каждый шаг запятой равен изменению показателя степени строго на одну единицу.</p>
+<p><strong>Пример.</strong> \(2530 = 2,530 \cdot 10^{3}\) — запятая сдвинулась на 3 шага влево, степень увеличилась на \(3\). <strong>Пример.</strong> \(0,0035 = 3,5 \cdot 10^{-3}\) — запятая сдвинулась на 3 шага вправо, степень уменьшилась на \(3\).</p>
+</div>
+</section>
+<section class="slide" id="slide-85">
+<header class="slide-header"><span class="slide-num">Слайд 85</span><h2>Алгоритм умножения чисел в стандартном виде</h2></header>
+<div class="slide-body">
+<p><strong>Шаг 1.</strong> Перемножь числовые части (мантиссы). Забудь на время про степени десятки.</p>
+<p><strong>Шаг 2.</strong> Перемножь степени десятки: сложи показатели.</p>
+<p><strong>Шаг 3.</strong> Собери результат: мантисса × \(10^{\text{сумма степеней}}\).</p>
+<p><strong>Шаг 4.</strong> Проверь стандарт: мантисса должна быть в диапазоне \(1 \le x &lt; 10\). Если нет — сдвинь запятую и синхронно скорректируй степень.</p>
+</div>
+</section>
+<section class="slide" id="slide-86">
+<header class="slide-header"><span class="slide-num">Слайд 86</span><h2>Практика: базовый шаблон</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Пусть \(a = 5,4\), \(b = 3,2 \cdot 10^{1}\). Найди произведение \(a \cdot b\) и запиши его в стандартном виде.</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1.</strong> Перемножим мантиссы: \(5,4 \cdot 3,2 = 17,28\).</p>
+<p><strong>Шаг 2.</strong> Степень: \(10^1\).</p>
+<p><strong>Шаг 3.</strong> Сборка: \(17,28 \cdot 10^1\).</p>
+<p><strong>Шаг 4.</strong> Контроль стандарта: перед запятой две цифры (\(17\)), нарушение. Сдвигаем запятую на 1 шаг влево: \(1,728\). Число уменьшилось → степень увеличивается: \(1 + 1 = 2\).</p>
+<p><strong>Ответ:</strong> \(1,728 \cdot 10^2\).</p>
+</div>
+</section>
+<section class="slide" id="slide-87">
+<header class="slide-header"><span class="slide-num">Слайд 87</span><h2>Практика: с высокой степенью</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Пусть \(a = 2,9\), \(b = 8,7 \cdot 10^{3}\). Найди произведение \(a \cdot b\) и запиши его в стандартном виде.</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1.</strong> Перемножим мантиссы: \(2,9 \cdot 8,7 = 25,23\).</p>
+<p><strong>Шаг 2.</strong> Степень: \(10^3\).</p>
+<p><strong>Шаг 3.</strong> Сборка: \(25,23 \cdot 10^3\).</p>
+<p><strong>Шаг 4.</strong> Контроль стандарта: перед запятой две цифры (\(25\)). Сдвигаем на 1 шаг влево: \(2,523\). Степень увеличивается: \(3 + 1 = 4\).</p>
+<p><strong>Ответ:</strong> \(2,523 \cdot 10^4\).</p>
+</div>
+</section>
+<section class="slide" id="slide-88">
+<header class="slide-header"><span class="slide-num">Слайд 88</span><h2>Типовая ошибка: выбрать ответ с неверной степенью</h2></header>
+<div class="slide-body">
+<p>Тестовые составители специально добавляют в варианты ответов числа с одинаковым набором цифр, но неверной степенью: например, \(25,23 \cdot 10^3\) или \(0,2523 \cdot 10^5\).</p>
+<p>Запись \(25,23 \cdot 10^3\) математически верна <strong>по значению</strong>, но она <strong>не является стандартным видом числа</strong>. Если ты выберешь её, проверяющий засчитает ошибку.</p>
+<p><strong>Жёсткое правило.</strong> Пока перед запятой не осталась строго одна цифра от \(1\) до \(9\), на варианты ответов в бланке смотреть запрещено.</p>
+</div>
+</section>
+<section class="slide" id="slide-89">
+<header class="slide-header"><span class="slide-num">Слайд 89</span><h2>Шпаргалка: компас для движения запятой</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Куда скачет запятая</th><th>Что происходит с числом</th><th>Корректировка степени десятки</th></tr></thead><tbody><tr><td>НАЛЕВО \((\leftarrow)\)</td><td>число уменьшается</td><td>степень делает плюс \((+)\)</td></tr><tr><td>НАПРАВО \((\rightarrow)\)</td><td>число увеличивается</td><td>степень делает минус \((-)\)</td></tr></tbody></table>
+<p>Каждый шаг запятой равен изменению показателя степени строго на одну единицу.</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-90">
+<header class="slide-header"><span class="slide-num">Слайд 90</span><h2>Чётное и нечётное: зачем это нужно</h2></header>
+<div class="slide-body">
+<p>В задачах на делимость и в задачах на анализ произведения часто достаточно знать, <strong>чётное</strong> число или <strong>нечётное</strong>, не вычисляя его точно. Это экономит время на экзамене.</p>
+<p><strong>Определения.</strong></p>
+<table><thead><tr><th>Понятие</th><th>Определение</th><th>Маска</th></tr></thead><tbody><tr><td>Чётное число</td><td>делится на \(2\) без остатка</td><td>\(2n\), \(n \in \mathbb{Z}\)</td></tr><tr><td>Нечётное число</td><td>при делении на \(2\) даёт остаток \(1\)</td><td>\(2n + 1\), \(n \in \mathbb{Z}\)</td></tr></tbody></table>
+<p><strong>Главное свойство.</strong> Чётность и разрядность работают одинаково для положительных и отрицательных чисел. Число разрядов определяется только количеством цифр в числе, <strong>без учёта знака</strong>.</p>
+</div>
+</section>
+<section class="slide" id="slide-91">
+<header class="slide-header"><span class="slide-num">Слайд 91</span><h2>Законы умножения чётных и нечётных чисел</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Произведение</th><th>Результат</th><th>Почему</th></tr></thead><tbody><tr><td>Чётное × Любое</td><td><strong>ЧЁТНОЕ</strong></td><td>чётное число содержит множитель \(2\), он переходит в результат</td></tr><tr><td>Нечётное × Нечётное</td><td><strong>НЕЧЁТНОЕ</strong></td><td>ни одно число не содержит \(2\), ей неоткуда взяться в результате</td></tr></tbody></table>
+<blockquote><p><strong>Следствие.</strong> Если произведение <strong>нечётное</strong>, то <strong>все</strong> множители нечётные. Если хотя бы один множитель чётный, произведение чётное.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-92">
+<header class="slide-header"><span class="slide-num">Слайд 92</span><h2>Алгоритм анализа чётности произведения</h2></header>
+<div class="slide-body">
+<p><strong>Шаг 1.</strong> Посмотри на последнюю цифру результата. Если она чётная (\(0, 2, 4, 6, 8\)) — итог чётный. Если нечётная (\(1, 3, 5, 7, 9\)) — итог нечётный.</p>
+<p><strong>Шаг 2.</strong> Примени законы умножения чётности. Отсеки невозможные комбинации множителей.</p>
+<p><strong>Шаг 3.</strong> Учти отрицательную сторону координатной прямой (если задача на наименьшее/наибольшее число).</p>
+<p><strong>Шаг 4.</strong> Запиши ответ.</p>
+</div>
+</section>
+<section class="slide" id="slide-93">
+<header class="slide-header"><span class="slide-num">Слайд 93</span><h2>Практика: анализ чётности</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Что можно сказать про чётность чисел \(a\) и \(b\), если \(a \cdot b = 39\)?</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1.</strong> Число \(39\) оканчивается на \(9\) (нечётная цифра) → произведение нечётное.</p>
+<p><strong>Шаг 2.</strong> Если бы среди \(a\) или \(b\) было хотя бы одно чётное число, оно бы внесло в результат множитель \(2\), и итог был бы чётным. Но итог нечётный.</p>
+<p><strong>Шаг 3.</strong> Единственный способ получить нечётное произведение — перемножить два нечётных числа.</p>
+<p><strong>Ответ:</strong> оба числа \(a\) и \(b\) нечётные.</p>
+</div>
+</section>
+<section class="slide" id="slide-94">
+<header class="slide-header"><span class="slide-num">Слайд 94</span><h2>Целые однозначные числа и координатная прямая</h2></header>
+<div class="slide-body">
+<p><strong>Целые однозначные числа</strong> — это целые числа от \(-9\) до \(9\) (включительно). Их ровно 19 штук: \(-9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9\).</p>
+<blockquote><p>Заметь: однозначные числа включают отрицательные, потому что «однозначность» определяется только количеством цифр, без учёта знака.</p></blockquote>
+<p><strong>Координатная прямая</strong> показывает, какие числа меньше, а какие больше:</p>
+<table><thead><tr><th>Зона</th><th>Где живёт</th><th>Примеры</th></tr></thead><tbody><tr><td>Отрицательные однозначные</td><td>левее нуля</td><td>\(-9, -8, -7, -6, -5, -4, -3, -2, -1\)</td></tr><tr><td>Ноль</td><td>точка отсчёта</td><td>\(0\)</td></tr><tr><td>Положительные однозначные</td><td>правее нуля</td><td>\(1, 2, 3, 4, 5, 6, 7, 8, 9\)</td></tr></tbody></table>
+<p><strong>Закон прямой.</strong> Самое маленькое — крайнее слева. Самое большое — крайнее справа. Расстояние между соседними точками равно \(1\). Ноль — единственная нейтральная точка: слева от него всё меньше нуля, справа — больше нуля.</p>
+<p><strong>Самые маленькие</strong> — слева. <strong>Самые большие</strong> — справа. Ноль — точка отсчёта.</p>
+<p><strong>Пример.</strong> Среди целых однозначных чётных чисел наименьшее — это \(-8\), а не \(0\). (Именно \(-8\) левее всех на прямой.)</p>
+</div>
+</section>
+<section class="slide" id="slide-95">
+<header class="slide-header"><span class="slide-num">Слайд 95</span><h2>Шпаргалка: чётность и координатная прямая</h2></header>
+<div class="slide-body">
+<table><thead><tr><th>Что нужно</th><th>Как искать</th></tr></thead><tbody><tr><td>Наименьшее однозначное чётное</td><td>ищи самое левое на координатной прямой среди \(\{\dots, -8, -6, -4, -2, 0, 2, 4, 6, 8\}\); ответ: \(-8\)</td></tr><tr><td>Наибольшее двузначное нечётное</td><td>ищи самое правое среди \(\{\dots, -97, -95, \dots, 97, 99\}\); ответ: \(99\)</td></tr><tr><td>Количество чётных чисел на отрезке</td><td>посчитай границы и раздели разность на \(2\)</td></tr></tbody></table>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-96">
+<header class="slide-header"><span class="slide-num">Слайд 96</span><h2>Что это за конструкция</h2></header>
+<div class="slide-body">
+<p>В задачах встречаются дроби, у которых числитель или знаменатель сам является дробью. Например:</p>
+<div class="math-block">\[ \dfrac{\dfrac{b}{c}}{a}, \qquad \dfrac{k}{\dfrac{m}{n}}, \qquad \dfrac{1}{1 + \dfrac{1}{2}}. \]</div>
+<p>Любая дробная черта — это иная форма записи знака деления \((\div)\). Конструкция с дробью в числителе или знаменателе — это просто цепочка последовательных делений, записанных вертикально.</p>
+</div>
+</section>
+<section class="slide" id="slide-97">
+<header class="slide-header"><span class="slide-num">Слайд 97</span><h2>Главная дробная черта</h2></header>
+<div class="slide-body">
+<p>Когда перед тобой конструкция из нескольких дробных черт, главная из них — <strong>самая длинная</strong>. Она разделяет всё выражение на две независимые части:</p>
+<ul><li><strong>числитель</strong> — всё, что стоит выше главной черты;</li><li><strong>знаменатель</strong> — всё, что стоит ниже главной черты.</li></ul>
+<p>Как только ты зафиксировал главную черту, конструкция превращается в обычное деление «числитель : знаменатель».</p>
+</div>
+</section>
+<section class="slide" id="slide-98">
+<header class="slide-header"><span class="slide-num">Слайд 98</span><h2>Правило переноса знаменателя вниз</h2></header>
+<div class="slide-body">
+<p><strong>Закон.</strong> Если дробь стоит в <strong>числителе</strong>, её собственный знаменатель переносится вниз и перемножается с нижним числом:</p>
+<div class="math-block">\[ \dfrac{\dfrac{b}{c}}{a} = \dfrac{b}{c} \div a = \dfrac{b}{c} \cdot \dfrac{1}{a} = \dfrac{b}{c \cdot a}. \]</div>
+<p><strong>Откуда берётся.</strong> Деление на \(a\) заменяем умножением на \(\dfrac{1}{a}\). Затем числители и знаменатели перемножаются раздельно.</p>
+</div>
+</section>
+<section class="slide" id="slide-99">
+<header class="slide-header"><span class="slide-num">Слайд 99</span><h2>Правило переноса знаменателя вверх</h2></header>
+<div class="slide-body">
+<p><strong>Закон.</strong> Если дробь стоит в <strong>знаменателе</strong>, её собственный знаменатель переносится вверх и перемножается с верхним числом:</p>
+<div class="math-block">\[ \dfrac{k}{\dfrac{m}{n}} = k \div \dfrac{m}{n} = k \cdot \dfrac{n}{m} = \dfrac{k \cdot n}{m}. \]</div>
+<p><strong>Откуда берётся.</strong> Деление на дробь \(\dfrac{m}{n}\) заменяется умножением на обратную дробь \(\dfrac{n}{m}\): числитель \(m\) и знаменатель \(n\) меняются местами.</p>
+</div>
+</section>
+<section class="slide" id="slide-100">
+<header class="slide-header"><span class="slide-num">Слайд 100</span><h2>Типовая ошибка: одинаковая длина всех черт</h2></header>
+<div class="slide-body">
+<p>Записи \(\dfrac{\dfrac{b}{c}}{a}\) и \(\dfrac{b}{\dfrac{c}{a}}\) выглядят похоже, но дают разные результаты.</p>
+<table><thead><tr><th>Запись</th><th>Главная черта</th><th>Результат</th></tr></thead><tbody><tr><td>\(\dfrac{\dfrac{b}{c}}{a}\)</td><td>нижняя</td><td>\(\dfrac{b}{c \cdot a}\)</td></tr><tr><td>\(\dfrac{b}{\dfrac{c}{a}}\)</td><td>верхняя</td><td>\(\dfrac{b \cdot a}{c}\)</td></tr></tbody></table>
+<p><strong>Как избежать ошибки.</strong> Переписывая выражение из условия на свой черновик, <strong>делай главную дробную черту в два раза длиннее остальных</strong>. Это твой ориентир.</p>
+<p><strong>Закон разметки главной черты.</strong> Главная дробная черта <strong>никогда не летает в воздухе</strong>. Она всегда стоит на одной горизонтальной линии со знаком ПЛЮС, МИНУС, УМНОЖИТЬ, РАЗДЕЛИТЬ или РАВНО, который стоит снаружи всей дроби.</p>
+<ul><li>Если в записи \(X = \dfrac{\dfrac{a}{b}}{c}\) знак «=\(=\)» стоит напротив нижней черты — <strong>нижняя черта главная</strong>, выражение означает \(\dfrac{a}{b} \div c\).</li><li>Если в записи \(X = \dfrac{a}{\dfrac{b}{c}}\) знак «=\(=\)» стоит напротив верхней черты — <strong>верхняя черта главная</strong>, выражение означает \(a \div \dfrac{b}{c}\).</li></ul>
+<p>Смотри не на длину палочек, а на то, напротив какого внешнего знака они нарисованы.</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-101">
+<header class="slide-header"><span class="slide-num">Слайд 101</span><h2>Зачем нужен общий знаменатель</h2></header>
+<div class="slide-body">
+<p>Ты не можешь складывать или вычитать дроби с разными знаменателями напрямую, потому что они представляют собой части разного размера. Чтобы операция стала возможной, нужно привести обе дроби к наименьшему общему знаменателю (НОК). Как только знаменатели станут одинаковыми, процесс сводится к простому закону сложения числителей:</p>
+<div class="math-block">\[ \dfrac{a}{m} + \dfrac{b}{m} = \dfrac{a + b}{m}, \qquad \dfrac{a}{m} - \dfrac{b}{m} = \dfrac{a - b}{m}. \]</div>
+</div>
+</section>
+<section class="slide" id="slide-102">
+<header class="slide-header"><span class="slide-num">Слайд 102</span><h2>Алгоритм сложения/вычитания смешанных чисел</h2></header>
+<div class="slide-body">
+<p><strong>Шаг 1.</strong> Найди НОК знаменателей. Используй подбор через увеличение старшего знаменателя.</p>
+<p><strong>Шаг 2.</strong> Определи дополнительные множители и запиши их над числителями.</p>
+<p><strong>Шаг 3.</strong> При вычитании оцени числители: если числитель первой дроби меньше числителя второй, подготовь слагаемые (<strong>займи единицу у целой части</strong>).</p>
+<p><strong>Шаг 4.</strong> Выполни раздельный расчёт целых и дробных частей.</p>
+<p><strong>Шаг 5.</strong> Проверь результат: если дробная часть неправильная — выдели целую часть; если сократима — сократи.</p>
+<p><strong>Как работает «займ единицы» на примере.</strong></p>
+<p>Задача: \(5\dfrac{1}{4} - 2\dfrac{3}{4}\).</p>
+<p>Здесь общий знаменатель уже \(4\) (дополнительные множители равны \(1\)). Пример: \(5\dfrac{1}{4} - 2\dfrac{3}{4}\).</p>
+<p>Но из \(\dfrac{1}{4}\) нельзя вычесть \(\dfrac{3}{4}\) (\(1 &lt; 3\)). Занимаем \(1\) у пятёрки (остаётся \(4\)).</p>
+<p><strong>Что происходит с этой \(1\).</strong> Целая единица — это «четыре четверти», потому что наш знаменатель равен \(4\). Записываем её как \(\dfrac{4}{4}\) и <strong>прибавляем к нашей дробной части</strong> \(\dfrac{1}{4}\):</p>
+<div class="math-block">\[ \dfrac{1}{4} + \dfrac{4}{4} = \dfrac{1 + 4}{4} = \dfrac{5}{4}. \]</div>
+<p>Теперь числитель стал равен \(5\), и дробь превращается в \(4\dfrac{5}{4}\). Целая часть уменьшилась с \(5\) до \(4\), а числитель дробной части увеличился с \(1\) до \(5\) — это и есть «займ единицы».</p>
+<p>Итоговое вычитание:</p>
+<ul><li>Целые части: \(4 - 2 = 2\).</li><li>Числители: \(5 - 3 = 2\).</li><li>Знаменатель: \(4\).</li></ul>
+<p><strong>Ответ:</strong> \(2\dfrac{2}{4} = 2\dfrac{1}{2}\) (сократили на \(2\)).</p>
+<p><strong>Общий принцип займа.</strong> Когда в дробной части верхнего числа не хватает для вычитания: возьми у его целой части \(1\), преврати её в \(\dfrac{\text{знаменатель}}{\text{знаменатель}}\), прибавь к числителю. Целая часть уменьшится на \(1\).</p>
+</div>
+</section>
+<section class="slide" id="slide-103">
+<header class="slide-header"><span class="slide-num">Слайд 103</span><h2>Практика: путь 1 (классический раздельный счёт)</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Вычисли \(6\dfrac{1}{2} - 2\dfrac{2}{3}\).</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1.</strong> Старший знаменатель — \(3\). Увеличиваем: \(3 \cdot 2 = 6\), делится на \(2\). НОК = \(6\).</p>
+<p><strong>Шаг 2.</strong> Дополнительный множитель для первой дроби: \(6 : 2 = 3\). Для второй: \(6 : 3 = 2\). Пример: \(6\dfrac{3}{6} - 2\dfrac{4}{6}\).</p>
+<p><strong>Шаг 3.</strong> Из тройки нельзя вычесть четвёрку (\(3 &lt; 4\)). Нужно занять единицу у целой части.</p>
+<p><strong>Шаг 4.</strong> Занимаем \(1\) у шестёрки (остаётся \(5\)). Представляем её как \(\dfrac{6}{6}\) и прибавляем к числителю: \(3 + 6 = 9\). Дробь превращается в \(5\dfrac{9}{6}\).</p>
+<p><strong>Шаг 5.</strong> Итоговое вычитание:</p>
+<ul><li>Целые части: \(5 - 2 = 3\).</li><li>Числители: \(9 - 4 = 5\).</li><li>Знаменатель: \(6\).</li></ul>
+<p><strong>Ответ:</strong> \(3\dfrac{5}{6}\).</p>
+</div>
+</section>
+<section class="slide" id="slide-104">
+<header class="slide-header"><span class="slide-num">Слайд 104</span><h2>Практика: путь 2 (перевод в неправильные дроби)</h2></header>
+<div class="slide-body">
+<p>Тот же пример \(6\dfrac{1}{2} - 2\dfrac{2}{3}\), но через перевод в неправильные дроби.</p>
+<p><strong>Шаг 1.</strong> Переводим:</p>
+<ul><li>\(6\dfrac{1}{2} = \dfrac{6 \cdot 2 + 1}{2} = \dfrac{13}{2}\).</li><li>\(2\dfrac{2}{3} = \dfrac{2 \cdot 3 + 2}{3} = \dfrac{8}{3}\).</li></ul>
+<p><strong>Шаг 2.</strong> Приведение к общему знаменателю \(6\):</p>
+<div class="math-block">\[ \dfrac{13 \cdot 3 - 8 \cdot 2}{6} = \dfrac{39 - 16}{6} = \dfrac{23}{6}. \]</div>
+<p><strong>Шаг 3.</strong> Выделяем целую часть: \(23 \div 6 = 3\) ост. \(5\). Получаем \(3\dfrac{5}{6}\).</p>
+<p><strong>Ответ:</strong> \(3\dfrac{5}{6}\).</p>
+<blockquote><p><strong>Какой путь выбрать.</strong> Путь 1 удобен, когда числитель первой дроби больше числителя второй (займа не нужно). Путь 2 универсален и не требует оценки.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-105">
+<header class="slide-header"><span class="slide-num">Слайд 105</span><h2>Типовая ошибка: вычитание смешанного из целого</h2></header>
+<div class="slide-body">
+<p>Ситуация: \(4 - 1\dfrac{3}{7}\). Ученик считает \(4 - 1 = 3\) и приписывает дробную часть сверху → \(3\dfrac{3}{7}\). Это ошибка.</p>
+<p><strong>Почему.</strong> Число \(4\) не имеет дробной части, но вычитать нужно <strong>всё</strong> смешанное число \(1\dfrac{3}{7}\) — и единицу, и три седьмых.</p>
+<p><strong>Способ 1 (займ).</strong> \(4 = 3\dfrac{7}{7}\). Тогда \(3\dfrac{7}{7} - 1\dfrac{3}{7} = 2\dfrac{4}{7}\).</p>
+<p><strong>Способ 2 (перевод в неправильные дроби).</strong> \(4 = \dfrac{4}{1}\), \(1\dfrac{3}{7} = \dfrac{10}{7}\). Общий знаменатель \(7\): \(\dfrac{28 - 10}{7} = \dfrac{18}{7} = 2\dfrac{4}{7}\).</p>
+<p><strong>Ответ:</strong> \(2\dfrac{4}{7}\).</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-106">
+<header class="slide-header"><span class="slide-num">Слайд 106</span><h2>Умножение дробей: закон</h2></header>
+<div class="slide-body">
+<p><strong>Закон.</strong> При умножении дробей числители и знаменатели перемножаются независимо друг от друга:</p>
+<div class="math-block">\[ \dfrac{a}{b} \cdot \dfrac{d}{c} = \dfrac{a \cdot d}{b \cdot c}. \]</div>
+<p><strong>Смысл.</strong> Умножение дробей — это нахождение доли от другой доли. Если тебе нужно взять половину \(\dfrac{1}{2}\) от трети \(\dfrac{1}{3}\), ты дробишь эту треть ещё на две части: \(\dfrac{1}{2} \cdot \dfrac{1}{3} = \dfrac{1}{6}\).</p>
+</div>
+</section>
+<section class="slide" id="slide-107">
+<header class="slide-header"><span class="slide-num">Слайд 107</span><h2>Деление дробей: закон</h2></header>
+<div class="slide-body">
+<p><strong>Закон.</strong> Деление на дробь заменяется умножением на обратную дробь (числитель и знаменатель меняются местами):</p>
+<div class="math-block">\[ \dfrac{a}{b} \div \dfrac{c}{d} = \dfrac{a}{b} \cdot \dfrac{d}{c} = \dfrac{a \cdot d}{b \cdot c}. \]</div>
+<p><strong>Смысл.</strong> Деление — это операция, обратная умножению. Разделить на дробь — значит узнать, сколько раз эта дробь помещается в заданном числе.</p>
+</div>
+</section>
+<section class="slide" id="slide-108">
+<header class="slide-header"><span class="slide-num">Слайд 108</span><h2>Алгоритм умножения и деления</h2></header>
+<div class="slide-body">
+<p><strong>Шаг 1.</strong> Если есть смешанные числа — переведи их в неправильные дроби.</p>
+<p><strong>Шаг 2.</strong> Если стоит знак деления — переверни вторую дробь и замени знак на умножение.</p>
+<p><strong>Шаг 3.</strong> Запиши выражение под одной дробной чертой: все множители числителя наверху, знаменателя — внизу. <strong>Не перемножай на этом этапе</strong>.</p>
+<p><strong>Шаг 4.</strong> Проверь пары «верх–низ» на общие делители и сократи дробь до упора.</p>
+<p><strong>Шаг 5.</strong> Перемножь оставшиеся числа. Если итог неправильная дробь — выдели целую часть.</p>
+</div>
+</section>
+<section class="slide" id="slide-109">
+<header class="slide-header"><span class="slide-num">Слайд 109</span><h2>Практика: умножение смешанных чисел</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Вычисли \(4\dfrac{2}{7} \cdot 5\dfrac{3}{5}\).</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1.</strong> Перевод в неправильные дроби:</p>
+<ul><li>\(4\dfrac{2}{7} = \dfrac{4 \cdot 7 + 2}{7} = \dfrac{30}{7}\).</li><li>\(5\dfrac{3}{5} = \dfrac{5 \cdot 5 + 3}{5} = \dfrac{28}{5}\).</li></ul>
+<p><strong>Шаг 2.</strong> Сборка: \(\dfrac{30 \cdot 28}{7 \cdot 5}\).</p>
+<p><strong>Шаг 3.</strong> Сокращение:</p>
+<div class="math-block">\[ \dfrac{30 \cdot 28}{7 \cdot 5} \;=\; \dfrac{\cancel{30}^{6} \cdot \cancel{28}^{4}}{\cancel{7} \cdot \cancel{5}} \;=\; \dfrac{6 \cdot 4}{1 \cdot 1} \;=\; 24. \]</div>
+<p><strong>Как читать перечёркивание.</strong> \(30\) и \(5\) сократились на \(5\) (в числителе осталось \(6\), в знаменателе \(1\)). \(28\) и \(7\) сократились на \(7\) (в числителе осталось \(4\), в знаменателе \(1\)). Перечёркнутые числа — это «сгоревшие» при делении части.</p>
+<p><strong>Шаг 4.</strong> Числитель: \(6 \cdot 4 = 24\).</p>
+<p><strong>Ответ:</strong> \(24\).</p>
+</div>
+</section>
+<section class="slide" id="slide-110">
+<header class="slide-header"><span class="slide-num">Слайд 110</span><h2>Текстовые задачи: «часть от целого» и «целое по его части»</h2></header>
+<div class="slide-body">
+<p>В текстовых задачах нужно различать два противоположных квеста по ключевым словам.</p>
+<table><thead><tr><th>Квест</th><th>Слова-маркеры</th><th>Логика</th><th>Действие</th></tr></thead><tbody><tr><td>Нахождение части от целого</td><td>«найди \(p/q\) <strong>от</strong> числа», «\(p/q\) <strong>от</strong> \(N\)»</td><td>дано целое, ищем его часть</td><td><strong>УМНОЖЕНИЕ</strong> (целое · дробь)</td></tr><tr><td>Нахождение целого по его части</td><td>«\(p/q\) <strong>которого</strong> равны \(N\)», «\(N\) <strong>составляет</strong> \(p/q\)»</td><td>дана часть, восстанавливаем целое</td><td><strong>ДЕЛЕНИЕ</strong> (часть ÷ дробь)</td></tr></tbody></table>
+<p><strong>Контроль адекватности.</strong> Если ищешь часть от целого, ответ должен быть <strong>меньше</strong> исходного числа. Если ищешь целое по его части, ответ должен быть <strong>больше</strong> известной части.</p>
+</div>
+</section>
+<section class="slide" id="slide-111">
+<header class="slide-header"><span class="slide-num">Слайд 111</span><h2>Практика: часть от целого</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Найди \(\dfrac{3}{4}\) от числа \(12\).</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1.</strong> Видим «от числа \(12\)» → целое известно, ищем часть.</p>
+<p><strong>Шаг 2.</strong> Действие — умножение: \(12 \cdot \dfrac{3}{4} = \dfrac{12 \cdot 3}{4}\).</p>
+<p><strong>Шаг 3.</strong> Сокращение:</p>
+<div class="math-block">\[ 12 \cdot \dfrac{3}{4} \;=\; \dfrac{\cancel{12}^{3} \cdot 3}{\cancel{4}} \;=\; \dfrac{9}{1} \;=\; 9. \]</div>
+<p><strong>Как читать перечёркивание.</strong> \(12\) и \(4\) сократились на \(4\). В числителе вместо \(12\) осталось \(3\), в знаменателе вместо \(4\) осталось \(1\). Зачёркнутые числа — это «сгоревшие» при делении части.</p>
+<p><strong>Шаг 4.</strong> Числитель: \(3 \cdot 3 = 9\).</p>
+<p><strong>Ответ:</strong> \(9\).</p>
+<blockquote><p><strong>Контроль:</strong> \(9 &lt; 12\). Часть меньше целого — ответ адекватный.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-112">
+<header class="slide-header"><span class="slide-num">Слайд 112</span><h2>Практика: целое по его части</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Найди число, \(\dfrac{4}{5}\) которого равны \(7\).</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1.</strong> Видим «которого равны \(7\)» → \(7\) — это часть, ищем целое.</p>
+<p><strong>Шаг 2.</strong> Действие — деление: \(7 \div \dfrac{4}{5}\).</p>
+<p><strong>Шаг 3.</strong> Заменяем деление умножением и переворачиваем вторую дробь: \(7 \cdot \dfrac{5}{4} = \dfrac{35}{4}\).</p>
+<p><strong>Шаг 4.</strong> Выделяем целую часть: \(35 \div 4 = 8\) ост. \(3\). Получаем \(8\dfrac{3}{4}\).</p>
+<p><strong>Ответ:</strong> \(8\dfrac{3}{4}\).</p>
+<blockquote><p><strong>Контроль:</strong> \(8\dfrac{3}{4} &gt; 7\). Целое больше своей части — ответ адекватный.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-113">
+<header class="slide-header"><span class="slide-num">Слайд 113</span><h2>Типовая ошибка: перепутать умножение и деление</h2></header>
+<div class="slide-body">
+<p>Ситуация: «найди число, \(\dfrac{4}{5}\) которого равны \(7\)». Ученик применяет умножение вместо деления: \(7 \cdot \dfrac{4}{5} = \dfrac{28}{5} = 5,6\). Получает \(5,6\) и радостно выбирает из ответов.</p>
+<p><strong>Почему это не работает.</strong> Целое число не может быть меньше своей собственной части (\(5,6 &lt; 7\)). Если твой ответ нарушает это правило — операция выбрана неверно.</p>
+<p><strong>Самопроверка.</strong> Перед записью ответа задай себе вопрос: «Что я искал — часть от целого или всё целое?». Если искал целое, а число на черновике уменьшилось — перепутал операцию. Переверни дробь и сделай деление.</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-114">
+<header class="slide-header"><span class="slide-num">Слайд 114</span><h2>Названия разрядов после запятой</h2></header>
+<div class="slide-body">
+<p>Чтобы безошибочно округлять, нужно чётко помнить названия разрядов справа от запятой:</p>
+<table><thead><tr><th>Разряд</th><th>Позиция</th></tr></thead><tbody><tr><td>десятые</td><td>1-я цифра после запятой</td></tr><tr><td>сотые</td><td>2-я цифра</td></tr><tr><td>тысячные</td><td>3-я</td></tr><tr><td>десятитысячные</td><td>4-я</td></tr></tbody></table>
+<p><strong>Запомни приём.</strong> Каждый следующий разряд — это в \(10\) раз меньше предыдущего: десятые → сотые → тысячные → десятитысячные. Переход «десятые → сотые» — это деление на \(10\), далее по цепочке.</p>
+</div>
+</section>
+<section class="slide" id="slide-115">
+<header class="slide-header"><span class="slide-num">Слайд 115</span><h2>Примеры разрядов в десятичной дроби</h2></header>
+<div class="slide-body">
+<p>Рассмотрим число \(1,8347\):</p>
+<table><thead><tr><th>Цифра</th><th>\(1\)</th><th>\(8\)</th><th>\(3\)</th><th>\(4\)</th><th>\(7\)</th></tr></thead><tbody><tr><td>Позиция</td><td>до запятой</td><td>десятые</td><td>сотые</td><td>тысячные</td><td>десятитысячные</td></tr></tbody></table>
+<p><strong>Как прочитать число.</strong> \(1\) целая, \(8\) десятых, \(3\) сотых, \(4\) тысячных, \(7\) десятитысячных.</p>
+<p><strong>Связь с дробной чертой.</strong> \(1,8347 = 1\dfrac{8347}{10000} = \dfrac{18347}{10000}\) (дробь с десятью тысячами в знаменателе).</p>
+</div>
+</section>
+<section class="slide" id="slide-116">
+<header class="slide-header"><span class="slide-num">Слайд 116</span><h2>Правила округления</h2></header>
+<div class="slide-body">
+<p><strong>Правило 1.</strong> Если первая выбрасываемая цифра меньше \(5\) (то есть \(0, 1, 2, 3, 4\)), последняя оставляемая цифра не изменяется.</p>
+<p><strong>Правило 2.</strong> Если первая выбрасываемая цифра \(5\) или больше (\(5, 6, 7, 8, 9\)), к последней оставляемой цифре прибавляется \(1\).</p>
+</div>
+</section>
+<section class="slide" id="slide-117">
+<header class="slide-header"><span class="slide-num">Слайд 117</span><h2>Алгоритм округления</h2></header>
+<div class="slide-body">
+<p><strong>Шаг 1.</strong> Найди нужный разряд и поставь после него разграничительную черту \(|\).</p>
+<p><strong>Шаг 2.</strong> Посмотри на соседа справа от черты — это первая выбрасываемая цифра.</p>
+<p><strong>Шаг 3.</strong> Примени правило коррекции (меньше \(5\) — оставь, \(5\) и больше — прибавь \(1\)).</p>
+<p><strong>Шаг 4.</strong> Отбрось все цифры справа от черты (для дробной части) или замени их нулями (для целой части).</p>
+<p><strong>Пример.</strong> Округли \(1,8347\) до тысячных.</p>
+<ul><li>Целевой разряд — тысячные, это цифра \(4\). Черта: \(1,834\,|\,7\).</li><li>Сосед — \(7 \ge 5\). Прибавляем \(1\): \(4 + 1 = 5\).</li><li>Итог: \(1,835\).</li></ul>
+<p><strong>Пример.</strong> Округли \(4,503\) до сотых.</p>
+<ul><li>Целевой разряд — сотые, это цифра \(0\). Черта: \(4,50\,|\,3\).</li><li>Сосед — \(3 &lt; 5\). Цифру перед чертой не трогаем.</li><li>Итог: \(4,50\) (<strong>важно: сохраняем ноль как значащую цифру</strong>).</li></ul>
+<p><strong>Записи \(4,50\) и \(4,5\) равны по математическому значению.</strong> \(4,50 = 4,5\) — это одно и то же число. Но в задачах на округление ноль на конце оставляют умышленно: он показывает, что число округлили именно <strong>до сотых, а не до десятых</strong>. Если этот ноль стереть и написать \(4,5\), проверяющий не сможет отличить округление до сотых от округления до десятых — информация о точности округления будет потеряна. Различие — только в форме записи, но на экзамене форма имеет значение.</p>
+</div>
+</section>
+<section class="slide" id="slide-118">
+<header class="slide-header"><span class="slide-num">Слайд 118</span><h2>Типовая ошибка: округление целой части без сохранения масштаба</h2></header>
+<div class="slide-body">
+<p>Ситуация: округлить \(2423\) до сотен. Ученик ставит черту \(24\,|\,23\), видит \(2 &lt; 5\), оставляет \(4\) и отбрасывает цифры справа от черты → пишет \(24\).</p>
+<p><strong>Почему это не работает.</strong> Было \(2423\) рубля, после округления стало \(24\) рубля. Масштаб величины уничтожен.</p>
+<p><strong>Логика перед правилом.</strong> Округлить число до сотен — это значит ответить на вопрос: <strong>к какому ближайшему «круглому» числу сотен оно находится?</strong> Число \(2423\) лежит между двумя круглыми числами сотен: \(2400\) и \(2500\). Какое из них ближе? \(|2423 - 2400| = 23\), \(|2423 - 2500| = 77\). Ближе \(2400\). Именно поэтому цифры справа от черты заменяются нулями, <strong>сохраняя масштаб тысячи</strong>, а не отбрасываются.</p>
+<p><strong>Жёсткое правило.</strong></p>
+<ul><li>При округлении <strong>дробной части</strong> (после запятой) цифры справа от черты просто отбрасываются.</li><li>При округлении <strong>целой части</strong> (до запятой) все знаки за чертой обязаны замениться нулями.</li></ul>
+<p><strong>Правильно:</strong> \(24\,|\,23 \to 2400\).</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-119">
+<header class="slide-header"><span class="slide-num">Слайд 119</span><h2>Когда распределение экономит силы</h2></header>
+<div class="slide-body">
+<p>Когда ты встречаешь выражение, где число умножается на сумму или разность дробей с неудобными знаменателями, автоматическая реакция — начать вычислять значение в скобках. Однако это часто приводит к громоздким промежуточным расчётам, в которых легко допустить ошибку.</p>
+<p><strong>Суть распределительного закона.</strong> Умножение внешнего числа на каждое слагаемое в скобках позволяет обрабатывать элементы параллельно:</p>
+<div class="math-block">\[ A \cdot (B + C) = A \cdot B + A \cdot C. \]</div>
+<p>Если знаменатели дробей внутри скобок не связаны друг с другом, распределение помогает избавиться от дробных долей на ранних этапах.</p>
+</div>
+</section>
+<section class="slide" id="slide-120">
+<header class="slide-header"><span class="slide-num">Слайд 120</span><h2>Два закона, которые нужны для распределения</h2></header>
+<div class="slide-body">
+<p><strong>Закон 1. Переместительный закон умножения.</strong> От перестановки мест сомножителей результат не изменяется. Множитель можно перенести в начало выражения, сохранив знак:</p>
+<div class="math-block">\[ \dots - (B + C) \cdot A = \dots - A \cdot (B + C). \]</div>
+<p><strong>Закон 2. Умножение на отрицательное число.</strong> Если перед скобкой оказывается отрицательный множитель, при распределении внутрь знаки каждого слагаемого меняются на противоположные:</p>
+<div class="math-block">\[ -A \cdot (B + C) = -A \cdot B - A \cdot C. \]</div>
+</div>
+</section>
+<section class="slide" id="slide-121">
+<header class="slide-header"><span class="slide-num">Слайд 121</span><h2>Полная задача на распределительное свойство</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Найди значение выражения:</p>
+<div class="math-block">\[ 240 \cdot \dfrac{4}{7} - \left( \dfrac{4}{7} + \dfrac{1}{10} \right) \cdot 240. \]</div>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1. Переносим множитель.</strong> Число \(240\) переносим из конца выражения в начало скобки. Знак «минус» перед скобкой превращает его в отрицательный коэффициент \(-240\):</p>
+<div class="math-block">\[ 240 \cdot \dfrac{4}{7} - 240 \cdot \left( \dfrac{4}{7} + \dfrac{1}{10} \right). \]</div>
+<p><strong>Шаг 2. Распределяем.</strong> Умножаем \(-240\) на оба слагаемых внутри. Минус меняет плюс на противоположный знак:</p>
+<div class="math-block">\[ 240 \cdot \dfrac{4}{7} - 240 \cdot \dfrac{4}{7} - 240 \cdot \dfrac{1}{10}. \]</div>
+<p><strong>Шаг 3. Уничтожение противоположных элементов.</strong> Первые два элемента полностью идентичны по модулю, но имеют противоположные знаки. Они взаимно сокращаются до нуля:</p>
+<div class="math-block">\[ 0 - 240 \cdot \dfrac{1}{10}. \]</div>
+<p><strong>Шаг 4. Финальный расчёт.</strong> Сокращаем на \(10\):</p>
+<div class="math-block">\[ -\dfrac{240}{10} = -24. \]</div>
+<p><strong>Ответ:</strong> \(-24\).</p>
+</div>
+</section>
+<section class="slide" id="slide-122">
+<header class="slide-header"><span class="slide-num">Слайд 122</span><h2>Когда распределение **не** помогает</h2></header>
+<div class="slide-body">
+<p>Распределение экономит силы, только если в выражении есть <strong>одинаковые множители</strong>, которые можно сократить. Если после распределения сокращать нечего — распределение лишь удлиняет запись.</p>
+<p><strong>Пример, где распределение НЕ нужно.</strong> \(5 \cdot \left( \dfrac{1}{7} + \dfrac{1}{11} \right)\). После распределения: \(\dfrac{5}{7} + \dfrac{5}{11}\). Общего множителя у этих дробей нет, и сокращение не поможет. Прямой путь — найти НОК знаменателей \(7\) и \(11\) (это \(77\)) и сложить — здесь проще.</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide" id="slide-123">
+<header class="slide-header"><span class="slide-num">Слайд 123</span><h2>Что такое алгебраическая дробь</h2></header>
+<div class="slide-body">
+<p><strong>Алгебраическая дробь</strong> — это дробь, в числителе или знаменателе которой стоит выражение с переменными (\(x, y\) и т.д.).</p>
+<p><strong>Главное правило.</strong> Здесь работают <strong>те же законы</strong>, что и для обычных дробей:</p>
+<ol><li>Основное свойство (умножение числителя и знаменателя на одно и то же выражение сохраняет значение дроби).</li><li>Сокращение можно проводить только тогда, когда числитель и знаменатель представлены в виде <strong>произведений</strong>.</li></ol>
+<p><strong>Почему нельзя сокращать суммы.</strong> Дробная черта — это знак деления. Деление является обратным действием <strong>только для умножения</strong>. Плюсы и минусы связывают элементы в числителе и знаменателе в единые блоки. Выдёргивать из них отдельные слагаемые нельзя.</p>
+<p><strong>Жёсткое правило.</strong> Пока между элементами в числителе и знаменателе стоит знак «плюс» или «минус», сокращение запрещено. Сокращению подлежат только множители, отделённые друг от друга знаками умножения.</p>
+</div>
+</section>
+<section class="slide" id="slide-124">
+<header class="slide-header"><span class="slide-num">Слайд 124</span><h2>Перебор делителей для трёхчлена (без дискриминанта)</h2></header>
+<div class="slide-body">
+<p>Если тебе нужно разложить <strong>квадратный трёхчлен</strong> \(x^2 + bx + c\) (где коэффициент при \(x^2\) равен \(1\)), есть быстрый способ <strong>без дискриминанта</strong>: перебор делителей.</p>
+<p><strong>Зачем этот способ.</strong> Квадратный трёхчлен не требует новых магических формул — мы разложим его с помощью уже знакомого тебе приёма группировки (Слайд \(76\)). Для этого нам нужно сделать всего одно логическое действие — <strong>расщепить центральный элемент на две части</strong>, а дальше работает стандартная группировка.</p>
+<p>\(\textbf{Принцип}\): если \(x^2 + bx + c\) и существуют два числа \(p\) и \(q\) с произведением \(c\) и суммой \(b\), то \(bx = px + qx\), и трёхчлен превращается в \(x^2 + px + qx + c\), который уже группируется стандартно.</p>
+<p><strong>Алгоритм:</strong></p>
+<ol><li>Запиши трёхчлен: \(x^2 + bx + c\).</li><li>Перебором найди два числа, которые <strong>при перемножении</strong> дают \(c\) (свободный член), а <strong>при сложении</strong> дают \(b\) (коэффициент при \(x\)).</li><li><strong>Расщепи средний член</strong> \(bx\) на две части по найденным числам: \(bx = (\text{первое число}) \cdot x + (\text{второе число}) \cdot x\).</li><li>Примени группировку (Слайд \(76\)): вынеси общий множитель из первой пары и общий множитель из второй пары — должна появиться одинаковая скобка.</li><li>Вынеси эту одинаковую скобку за скобку.</li></ol>
+<p><strong>Пример.</strong> Разложи \(x^2 - 10x + 24\).</p>
+<p><strong>Шаг 1.</strong> Нужны два числа, дающие в произведении \(+24\) и в сумме \(-10\).</p>
+<p>Перебираем пары делителей \(24\) (с учётом знаков):</p>
+<ul><li>\(1\) и \(24\): сумма \(25\) ❌</li><li>\(2\) и \(12\): сумма \(14\) ❌</li><li>\(3\) и \(8\): сумма \(11\) ❌</li><li>\(4\) и \(6\): сумма \(10\) ✅ — но знаки оба отрицательные: \(-4\) и \(-6\), произведение \((-4) \cdot (-6) = +24\) ✅, сумма \(-4 + (-6) = -10\) ✅</li></ul>
+<p><strong>Шаг 2.</strong> Расщепим центральный элемент \(-10x\) на две части, используя наши числа:</p>
+<div class="math-block">\[ -10x = -4x - 6x. \]</div>
+<p><strong>Шаг 3.</strong> Запишем выражение:</p>
+<div class="math-block">\[ x^2 - 10x + 24 = x^2 - 4x - 6x + 24. \]</div>
+<p><strong>Шаг 4.</strong> Применяем группировку (Слайд \(76\)): из первой пары выносим \(x\), из второй выносим \(-6\):</p>
+<div class="math-block">\[ x(x - 4) - 6(x - 4) = (x - 4)(x - 6). \]</div>
+<p><strong>Ответ:</strong> \((x - 4)(x - 6)\).</p>
+<blockquote><p><strong>Связь с уже изученным.</strong> Разложение трёхчлена перестало быть обособленной формулой — это продвинутый случай группировки, которую ты уже умеешь делать.</p></blockquote>
+<blockquote><p><strong>Когда применять.</strong> Этот способ работает для трёхчленов с <strong>целыми корнями</strong> и <strong>коэффициентом при \(x^2\), равным \(1\)</strong>. Для более сложных случаев (например, \(3x^2 + 5x + 2\)) используй дискриминант или теорему Виета.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-125">
+<header class="slide-header"><span class="slide-num">Слайд 125</span><h2>Два инструмента разложения на множители</h2></header>
+<div class="slide-body">
+<p><strong>Инструмент 1. Разложение квадратного трёхчлена.</strong> Квадратный трёхчлен \(ax^2 + bx + c\) раскладывается на линейные множители через свои корни \(x_1\) и \(x_2\) (через дискриминант или теорему Виета):</p>
+<div class="math-block">\[ ax^2 + bx + c = a(x - x_1)(x - x_2). \]</div>
+<p><strong>Инструмент 2. Формула разности квадратов.</strong></p>
+<div class="math-block">\[ a^2 - b^2 = (a - b)(a + b). \]</div>
+<p>В качестве основания \(a\) или \(b\) может выступать как одиночная переменная, так и целое выражение в скобках.</p>
+</div>
+</section>
+<section class="slide" id="slide-126">
+<header class="slide-header"><span class="slide-num">Слайд 126</span><h2>Алгоритм сокращения алгебраической дроби</h2></header>
+<div class="slide-body">
+<p><strong>Шаг 1.</strong> Преобразуй числитель в произведение: разложи выражение в числителе на скобки-множители (вынесение за скобки, ФСУ или перебор делителей трёхчлена).</p>
+<p><strong>Шаг 2.</strong> Преобразуй знаменатель в произведение: симметричное разложение для знаменателя.</p>
+<p><strong>Шаг 3.</strong> Собери новую дробь: числитель и знаменатель в виде чистых произведений скобок.</p>
+<p><strong>Шаг 4.</strong> Найди одинаковые скобки в числителе и в знаменателе и сократи их.</p>
+</div>
+</section>
+<section class="slide" id="slide-127">
+<header class="slide-header"><span class="slide-num">Слайд 127</span><h2>Полная задача на сокращение алгебраической дроби</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Сократи дробь: \(\dfrac{x^2 - 10x + 24}{(x + 1)^2 - 25}\).</p>
+<p><strong>Решение.</strong></p>
+<p><strong>Шаг 1. Разложение числителя.</strong> \(x^2 - 10x + 24\) — квадратный трёхчлен. По перебору делителей: нужны два числа с произведением \(+24\) и суммой \(-10\). Это \(-4\) и \(-6\). Корни: \(4\) и \(6\). Раскладываем:</p>
+<div class="math-block">\[ x^2 - 10x + 24 = (x - 4)(x - 6). \]</div>
+<p><strong>Шаг 2. Разложение знаменателя.</strong> \((x + 1)^2 - 25\) — это разность квадратов, где первое основание \((x + 1)\), второе \(5\). По формуле \(A^2 - B^2 = (A - B)(A + B)\):</p>
+<div class="math-block">\[ (x + 1)^2 - 25 = \big((x + 1) - 5\big) \cdot \big((x + 1) + 5\big). \]</div>
+<p><strong>Явный микро-шаг.</strong> Раскроем внутренние скобки (знак «−» или «+» применяется ко всему выражению внутри):</p>
+<div class="math-block">\[ \big((x + 1) - 5\big) \cdot \big((x + 1) + 5\big) = (x + 1 - 5) \cdot (x + 1 + 5) = (x - 4)(x + 6). \]</div>
+<p><strong>Шаг 3. Сборка и сокращение.</strong></p>
+<div class="math-block">\[ \dfrac{(x - 4)(x - 6)}{(x - 4)(x + 6)}. \]</div>
+<p>Между скобками теперь знак умножения — деление законно. Сокращаем одинаковые скобки \((x - 4)\):</p>
+<div class="math-block">\[ \dfrac{x - 6}{x + 6}. \]</div>
+<p><strong>Ответ:</strong> \(\dfrac{x - 6}{x + 6}\).</p>
+<blockquote><p><strong>Проверка обратным действием.</strong> Раскрой \(\dfrac{x - 6}{x + 6}\) умножением на \(\dfrac{(x - 4)(x + 6)}{(x - 4)(x + 6)}\) — должен получиться исходный. Подстановка \(x = 5\): \(\dfrac{5 - 6}{5 + 6} = -\dfrac{1}{11}\); исходный \(\dfrac{25 - 50 + 24}{36 - 25} = -\dfrac{1}{11}\). Совпало.</p></blockquote>
+</div>
+</section>
+<section class="slide" id="slide-128">
+<header class="slide-header"><span class="slide-num">Слайд 128</span><h2>Типовая ошибка: сокращение при наличии плюсов и минусов</h2></header>
+<div class="slide-body">
+<p>Ситуация: \(\dfrac{x^2 - 10x + 24}{(x + 1)^2 - 25}\). Ученик пытается устно сократить \(x^2\) с \((x + 1)^2\), или делит \(24\) на \(25\). Получает математическую кашу.</p>
+<p><strong>Почему это не работает.</strong> Плюсы и минусы склеивают элементы в неделимые блоки. Пока эти блоки не разложены на скобки-множители, сокращение невозможно.</p>
+<p><strong>Жёсткое правило.</strong> Сокращать можно только <strong>после</strong> того, как числитель и знаменатель разложены на произведения скобок. До этого момента — никаких зачёркиваний.</p>
+<p>---</p>
+</div>
+</section>
+<section class="slide final-slide" id="slide-129">
+<header class="slide-header"><span class="slide-num">Слайд 129</span><h2>Задача 1: разряды + десятичная дробь</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Среди чисел \(32{,}154\); \(47{,}362\); \(58{,}294\); \(61{,}473\); \(74{,}596\) найди то, в котором цифра \(4\) стоит в разряде сотых.</p>
+<table><thead><tr><th>Число</th><th>Десятые</th><th>Сотые</th><th>Тысячные</th></tr></thead><tbody><tr><td>\(32{,}154\)</td><td>\(1\)</td><td>\(5\)</td><td>\(4\)</td></tr><tr><td>\(47{,}362\)</td><td>\(3\)</td><td>\(6\)</td><td>\(2\)</td></tr><tr><td>\(58{,}294\)</td><td>\(2\)</td><td>\(9\)</td><td>\(4\)</td></tr><tr><td>\(61{,}473\)</td><td>\(4\)</td><td>\(7\)</td><td>\(3\)</td></tr><tr><td>\(74{,}596\)</td><td>\(5\)</td><td>\(9\)</td><td>\(6\)</td></tr></tbody></table>
+<p><strong>Ответ:</strong> \(32{,}154\) (цифра \(4\) в сотых).</p>
+</div>
+</section>
+<section class="slide final-slide" id="slide-130">
+<header class="slide-header"><span class="slide-num">Слайд 130</span><h2>Задача 2: ФСУ + дробь</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Вычисли значение \(\dfrac{(0,4)^2 - 2 \cdot 0,4 \cdot 1,6 + (1,6)^2}{5}\).</p>
+<p><strong>Решение.</strong> Распознаём структуру квадрата разности:</p>
+<div class="math-block">\[ (0,4)^2 - 2 \cdot 0,4 \cdot 1,6 + (1,6)^2 = (0,4 - 1,6)^2 = (-1,2)^2 = 1,44. \]</div>
+<p>Дробь: \(\dfrac{1,44}{5} = 0,288\).</p>
+<p><strong>Ответ:</strong> \(0,288\).</p>
+</div>
+</section>
+<section class="slide final-slide" id="slide-131">
+<header class="slide-header"><span class="slide-num">Слайд 131</span><h2>Задача 3: стандартный вид + целое по части</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Расстояние от Земли до Солнца — \(1,496 \cdot 10^8\) км. Сколько километров до Солнца, если это \(\dfrac{1}{3}\) всего расстояния, которое пройдёт космический аппарат за 3 года?</p>
+<p><strong>Решение.</strong> Если \(\dfrac{1}{3}\) всего расстояния = расстояние до Солнца = \(1,496 \cdot 10^8\), то всё расстояние = \(3 \cdot 1,496 \cdot 10^8 = 4,488 \cdot 10^8\) км.</p>
+<p><strong>Ответ:</strong> \(4,488 \cdot 10^8\) км (в стандартном виде).</p>
+</div>
+</section>
+<section class="slide final-slide" id="slide-132">
+<header class="slide-header"><span class="slide-num">Слайд 132</span><h2>Задача 4: отрицательная дробь + сравнение</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Расположи в порядке возрастания: \(-\dfrac{3}{4}\), \(-\dfrac{5}{6}\), \(-\dfrac{2}{3}\).</p>
+<p><strong>Решение.</strong></p>
+<ul><li>Модули: \(\dfrac{3}{4} = \dfrac{9}{12}\), \(\dfrac{5}{6} = \dfrac{10}{12}\), \(\dfrac{2}{3} = \dfrac{8}{12}\).</li><li>Возрастание модулей: \(\dfrac{8}{12} &lt; \dfrac{9}{12} &lt; \dfrac{10}{12}\).</li><li>Для отрицательных — порядок обратный: \(-\dfrac{10}{12} &lt; -\dfrac{9}{12} &lt; -\dfrac{8}{12}\).</li></ul>
+<p><strong>Ответ:</strong> \(-\dfrac{5}{6}, -\dfrac{3}{4}, -\dfrac{2}{3}\).</p>
+</div>
+</section>
+<section class="slide final-slide" id="slide-133">
+<header class="slide-header"><span class="slide-num">Слайд 133</span><h2>Задача 5: группировка + переворот знаков</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Разложи на множители: \(a(2x - 5) - 2x + 5\).</p>
+<p><strong>Решение.</strong> Свободные слагаемые: \(-2x + 5 = -(2x - 5)\). Тогда:</p>
+<div class="math-block">\[ a(2x - 5) - 1 \cdot (2x - 5) = (2x - 5)(a - 1). \]</div>
+<p><strong>Ответ:</strong> \((2x - 5)(a - 1)\).</p>
+</div>
+</section>
+<section class="slide final-slide" id="slide-134">
+<header class="slide-header"><span class="slide-num">Слайд 134</span><h2>Задача 6: смешанное число + деление дробей</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> Вычисли \(3\dfrac{1}{2} \div \dfrac{7}{4}\).</p>
+<p><strong>Решение.</strong> Переводим в неправильные дроби: \(3\dfrac{1}{2} = \dfrac{7}{2}\). Делим на \(\dfrac{7}{4}\) (заменяем деление умножением на обратную дробь):</p>
+<div class="math-block">\[ \dfrac{7}{2} \cdot \dfrac{4}{7} \;=\; \dfrac{\cancel{7} \cdot \cancel{4}^{2}}{\cancel{2} \cdot \cancel{7}} \;=\; \dfrac{2}{1} \;=\; 2. \]</div>
+<p><strong>Как читать перечёркивание.</strong> Семёрки в числителе первой дроби и в знаменателе второй взаимно уничтожились. Двойка в знаменателе первой дроби и четвёрка в числителе второй сократились на \(2\). Осталось \(\dfrac{2}{1} = 2\).</p>
+<p><strong>Ответ:</strong> \(2\).</p>
+</div>
+</section>
+<section class="slide final-slide" id="slide-135">
+<header class="slide-header"><span class="slide-num">Слайд 135</span><h2>Задача на внимательность: «часть от целого» vs «целое по части»</h2></header>
+<div class="slide-body">
+<p><strong>Условие.</strong> В классе 30 учеников. \(\dfrac{3}{5}\) класса пошли в столовую. Сколько учеников осталось в классе?</p>
+<p><strong>Решение.</strong> Здесь <strong>две</strong> операции подряд.</p>
+<ul><li>Шаг 1: \(\dfrac{3}{5}\) <strong>от</strong> \(30\) = часть от целого = умножение: \(\dfrac{3}{5} \cdot 30 = 18\) учеников ушли.</li><li>Шаг 2: осталось = целое − часть = \(30 - 18 = 12\) учеников.</li></ul>
+<p><strong>Ответ:</strong> \(12\).</p>
+<blockquote><p><strong>Типичная ошибка.</strong> Ученики иногда пытаются умножить \(30\) на \(\dfrac{2}{5}\) (= 12) и сразу получить ответ, минуя первый шаг. Это <strong>работает</strong> случайно (потому что \(1 - \dfrac{3}{5} = \dfrac{2}{5}\)), но метод <strong>ненадёжен</strong>: в других задачах \(\dfrac{3}{5}\) могут быть не от всего класса, а от какого-то другого числа. Всегда выполняй шаги явно.</p></blockquote>
+<p>---</p>
+</div>
+</section>
+<section class="slide reference-slide" id="slide-136">
+<header class="slide-header"><span class="slide-num ref">Слайд 136</span><h2>Все ключевые формулы партии в одной карточке</h2></header>
+<div class="slide-body">
+<p>Это <strong>финальный справочный слайд</strong>. Если в задаче ты не помнишь формулу — вернись сюда, найди раздел и подсмотри. Каждая формула сопровождается <strong>микро-примером</strong>, чтобы буквенная запись сразу оживала в числах.</p>
+<h4>А. Дроби: типы и перевод</h4>
+<table><thead><tr><th>Закон</th><th>Формула</th><th>Микро-пример</th></tr></thead><tbody><tr><td>Дробь = деление</td><td>\(\dfrac{a}{b} = a \div b\)</td><td>\(\dfrac{3}{4} = 3 \div 4\)</td></tr><tr><td>Правильная дробь</td><td>\(\lvert\text{числитель}\rvert &lt; \lvert\text{знаменатель}\rvert\)</td><td>\(\dfrac{3}{7}\) — расстояние от нуля \(&lt; 1\)</td></tr><tr><td>Неправильная дробь</td><td>\(\lvert\text{числитель}\rvert \ge \lvert\text{знаменатель}\rvert\)</td><td>\(\dfrac{7}{3}\) — расстояние от нуля \(\ge 1\)</td></tr><tr><td>Смешанное → неправильная</td><td>\(a\dfrac{b}{c} = \dfrac{a \cdot c + b}{c}\)</td><td>\(2\dfrac{1}{3} = \dfrac{2 \cdot 3 + 1}{3} = \dfrac{7}{3}\)</td></tr><tr><td>Неправильная → смешанное</td><td>числитель \(\div\) знаменатель: целое + остаток</td><td>\(\dfrac{7}{3} = 2\dfrac{1}{3}\) (\(7 = 2 \cdot 3 + 1\))</td></tr></tbody></table>
+<h4>Б. Арифметика дробей</h4>
+<table><thead><tr><th>Закон</th><th>Формула</th><th>Микро-пример</th></tr></thead><tbody><tr><td>Сложение с общим знаменателем</td><td>\(\dfrac{a}{m} + \dfrac{b}{m} = \dfrac{a + b}{m}\)</td><td>\(\dfrac{2}{5} + \dfrac{1}{5} = \dfrac{3}{5}\)</td></tr><tr><td>Вычитание с общим знаменателем</td><td>\(\dfrac{a}{m} - \dfrac{b}{m} = \dfrac{a - b}{m}\)</td><td>\(\dfrac{4}{5} - \dfrac{1}{5} = \dfrac{3}{5}\)</td></tr><tr><td>Умножение дробей</td><td>\(\dfrac{a}{b} \cdot \dfrac{d}{c} = \dfrac{a \cdot d}{b \cdot c}\)</td><td>\(\dfrac{2}{3} \cdot \dfrac{5}{7} = \dfrac{10}{21}\)</td></tr><tr><td>Деление дробей</td><td>\(\dfrac{a}{b} \div \dfrac{c}{d} = \dfrac{a}{b} \cdot \dfrac{d}{c}\): при делении верхний и нижний элементы делителя \(\dfrac{c}{d}\) меняются своими позициями (\(c\) и \(d\) обмениваются местами)</td><td>\(\dfrac{2}{3} \div \dfrac{5}{7} = \dfrac{2}{3} \cdot \dfrac{7}{5} = \dfrac{14}{15}\); в делителе \(\dfrac{5}{7}\) верх \(5\) стал низом, низ \(7\) стал верхом</td></tr><tr><td>Основное свойство</td><td>\(\dfrac{a}{b} = \dfrac{a \cdot c}{b \cdot c},\ c \ne 0\)</td><td>\(\dfrac{2}{3} = \dfrac{4}{6} = \dfrac{6}{9}\)</td></tr></tbody></table>
+<h4>В. Десятичные и периодические</h4>
+<table><thead><tr><th>Закон</th><th>Формула</th><th>Микро-пример</th></tr></thead><tbody><tr><td>Конечная десятичная</td><td>знаменатель (несократимый) = \(2^a \cdot 5^b\)</td><td>\(\dfrac{3}{5} = 0{,}6\)</td></tr><tr><td>Чистая периодическая</td><td>\(0{,}(ABC) = \dfrac{ABC}{999}\)</td><td>\(0{,}(3) = \dfrac{3}{9} = \dfrac{1}{3}\)</td></tr><tr><td>Смешанная периодическая</td><td>\(0{,}A(BC) = \dfrac{ABC - A}{990}\)</td><td>\(0{,}5(36) = \dfrac{536 - 5}{990} = \dfrac{59}{110}\)</td></tr></tbody></table>
+<h4>Г. Раскрытие скобок и ФСУ</h4>
+<table><thead><tr><th>Закон</th><th>Формула</th><th>Микро-пример</th></tr></thead><tbody><tr><td>Плюс перед скобкой</td><td>\(+(a + b) = a + b\)</td><td>\(+(3 + 5) = 8\)</td></tr><tr><td>Минус перед скобкой</td><td>\(-(a - b) = -1 \cdot (a - b) = (-1) \cdot a + (-1) \cdot (-b) = -a + b\)</td><td>\(-(3 - 5) = -3 + 5 = 2\)</td></tr><tr><td>Распределительный закон</td><td>\(a \cdot (b + c) = a \cdot b + a \cdot c\)</td><td>\(2 \cdot (3 + 4) = 6 + 8 = 14\)</td></tr><tr><td>Разность квадратов</td><td>\(a^2 - b^2 = (a - b)(a + b)\)</td><td>\(9 - 4 = (3 - 2)(3 + 2) = 5\)</td></tr><tr><td>Квадрат суммы</td><td>\((a + b)^2 = a^2 + 2ab + b^2\)</td><td>\((x + 3)^2 = x^2 + 6x + 9\)</td></tr><tr><td>Квадрат разности</td><td>\((a - b)^2 = a^2 - 2ab + b^2\)</td><td>\((x - 3)^2 = x^2 - 6x + 9\)</td></tr></tbody></table>
+<h4>Д. Группировка и разложение</h4>
+<table><thead><tr><th>Закон</th><th>Формула</th><th>Микро-пример</th></tr></thead><tbody><tr><td>Вынесение общего множителя</td><td>\(a \cdot m + b \cdot m = m \cdot (a + b)\)</td><td>\(3x + 6y = 3(x + 2y)\)</td></tr><tr><td>Группировка</td><td>\(a(b + c) + d(b + c) = (b + c)(a + d)\)</td><td>\(2(x + 3) + 5(x + 3) = (x + 3) \cdot 7\)</td></tr><tr><td>Зеркальное отражение знаков</td><td>\(B - A = -(A - B)\)</td><td>\(5 - x = -(x - 5)\)</td></tr><tr><td>Разложение трёхчлена (мостик к группировке)</td><td>\(x^2 + bx + c = (\text{число}_1 \cdot x) + (\text{число}_2 \cdot x)\), затем группировка</td><td>\(x^2 - 10x + 24 = x^2 - 4x - 6x + 24 = (x - 4)(x - 6)\)</td></tr></tbody></table>
+<h4>Е. Стандартный вид и степени</h4>
+<table><thead><tr><th>Закон</th><th>Формула</th><th>Микро-пример</th></tr></thead><tbody><tr><td>Стандартный вид числа</td><td>\(A = x \cdot 10^n,\ 1 \le x &lt; 10,\ n \in \mathbb{Z}\)</td><td>\(2530 = 2{,}53 \cdot 10^3\)</td></tr><tr><td>Умножение степеней</td><td>\(10^a \cdot 10^b = 10^{a + b}\)</td><td>\(10^2 \cdot 10^3 = 10^{2 + 3} = 10^5\)</td></tr><tr><td>Деление степеней</td><td>\(10^a \div 10^b = 10^{a - b}\)</td><td>\(10^5 \div 10^2 = 10^{5 - 2} = 10^3\)</td></tr></tbody></table>
+<h4>Ж. Чётность</h4>
+<table><thead><tr><th>Закон</th><th>Формула</th><th>Микро-пример</th></tr></thead><tbody><tr><td>Чётное число</td><td>\(2n,\ n \in \mathbb{Z}\)</td><td>\(4 = 2 \cdot 2\)</td></tr><tr><td>Нечётное число</td><td>\(2n + 1,\ n \in \mathbb{Z}\)</td><td>\(5 = 2 \cdot 2 + 1\)</td></tr><tr><td>Чётное × Любое</td><td>результат <strong>чётный</strong></td><td>\(2 \cdot 3 = 6\) (чётное)</td></tr><tr><td>Нечётное × Нечётное</td><td>результат <strong>нечётный</strong></td><td>\(3 \cdot 5 = 15\) (нечётное)</td></tr></tbody></table>
+<h4>З. Округление</h4>
+<table><thead><tr><th>Закон</th><th>Формула</th><th>Микро-пример</th></tr></thead><tbody><tr><td>Правило округления</td><td>\(&lt; 5\) — оставь; \(\ge 5\) — прибавь \(1\)</td><td>\(1{,}83 \to 1{,}8\); \(1{,}86 \to 1{,}9\)</td></tr><tr><td>Дробная часть</td><td>все цифры справа от черты <strong>исчезают</strong> (полностью убираются из записи)</td><td>\(1{,}83 \big\lvert\, 7 \to 1{,}8\)</td></tr><tr><td>Целая часть</td><td>все позиции цифр справа от черты <strong>заменяются нулями</strong>, сохраняя масштаб числа</td><td>\(24 \big\lvert\, 23 \to 2400\)</td></tr><tr><td>Разметка точности</td><td>\(4{,}50\) и \(4{,}5\) <strong>равны по значению</strong>, ноль на конце — знак «округлено до сотых»</td><td>\(4{,}50\) vs \(4{,}5\) — одно число, разная запись</td></tr></tbody></table>
+<h4>И. Отрицательные числа</h4>
+<table><thead><tr><th>Закон</th><th>Формула</th><th>Микро-пример</th></tr></thead><tbody><tr><td>Приём «знак отдельно»</td><td>определи знак → работай с модулем → верни знак</td><td>\(-\dfrac{3}{4} + \dfrac{5}{6} = +\left(\dfrac{5}{6} - \dfrac{3}{4}\right) = +\dfrac{1}{12}\)</td></tr><tr><td>Правило Весов (через долг)</td><td>если \(\lvert a\rvert &gt; \lvert b\rvert\), то \(-a &lt; -b\)</td><td>долг \(\dfrac{5}{6}\) хуже долга \(\dfrac{3}{4}\), значит \(-\dfrac{5}{6} &lt; -\dfrac{3}{4}\)</td></tr><tr><td>Зеркальность на прямой</td><td>чем больше модуль, тем левее и тем меньше число</td><td>\(-\dfrac{7}{9} &lt; -\dfrac{2}{9}\) (хотя \(7 &gt; 2\))</td></tr></tbody></table>
+<h4>К. Составные и специальные</h4>
+<table><thead><tr><th>Закон</th><th>Формула</th><th>Микро-пример</th></tr></thead><tbody><tr><td>Главная дробная черта</td><td>стоит на уровне знака \(=\), \(+\), \(-\), \(\cdot\), \(\div\) снаружи дроби</td><td>пример \(X = a/b \div c\) — знак «=\(=\)» напротив нижней черты</td></tr><tr><td>Дробь с дробью в числителе</td><td>\(\dfrac{b/c}{a} = \dfrac{b}{c \cdot a}\)</td><td>\(\dfrac{\dfrac{1}{2}}{3} = \dfrac{1}{2 \cdot 3} = \dfrac{1}{6}\)</td></tr><tr><td>Дробь с дробью в знаменателе</td><td>\(\dfrac{k}{m/n} = \dfrac{k \cdot n}{m}\)</td><td>\(\dfrac{2}{\dfrac{1}{3}} = \dfrac{2 \cdot 3}{1} = 6\)</td></tr></tbody></table>
+<blockquote><p><strong>Как пользоваться сборником.</strong> Не зубри формулы наизусть. Нашёл нужную — посмотри микро-пример, подставь свои числа и реши по аналогии. После 3-4 задач формула закрепится сама.</p></blockquote>
+</div>
+</section>
+
+</main>
+</div>
+<button class="back-to-toc" onclick="window.scrollTo(0,0)">↑ Наверх</button>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/cancel.min.js"></script>
+<script>
+function renderMath() {
+  if (typeof renderMathInElement === "undefined") return;
+  renderMathInElement(document.body, {
+    delimiters: [{left: "\\(", right: "\\)", display: false}, {left: "\\[", right: "\\]", display: true}],
+    throwOnError: false
+  });
+}
+window.addEventListener("load", renderMath);
+if (document.readyState === "complete") renderMath();
+</script>
+</body>
+</html>
