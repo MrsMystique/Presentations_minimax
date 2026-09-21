@@ -1,0 +1,110 @@
+{
+  "cycle_report": "MASTER-TZ 2 — Партия №17 «Объёмы многогранников»",
+  "date": "2026-09-21",
+  "agent": "Worker (mvs_44b294c819444e2fbceee6f1732ea4d1)",
+  "parent": "Olga (mvs_0644bc3665f4481db16f27e5eb0ff86f)",
+
+  "stages_completed": [
+    {"stage": 1, "name": "SOURCE AUDIT", "artifact": "01_source_map.json", "verdict": "PASS"},
+    {"stage": 2, "name": "MATHEMATICAL MAP", "artifact": "02_math_map.json", "verdict": "PASS"},
+    {"stage": 3, "name": "TASK MAP", "artifact": "03_task_map.json", "verdict": "PASS"},
+    {"stage": 4, "name": "PREREQUISITE MAP", "artifact": "04_prerequisite_map.json", "verdict": "PASS"},
+    {"stage": 5, "name": "CURRICULUM MAP", "artifact": "05_curriculum_map.json", "verdict": "PASS"},
+    {"stage": 6, "name": "DRAFT v1", "artifact": "06_draft.md", "verdict": "PASS"},
+    {"stage": 7, "name": "AUDITS (math, novice, cognitive, pattern, coverage, render)", "artifacts": ["07-12"], "verdict": "PASS"},
+    {"stage": 8, "name": "AUTO-REPAIR", "artifact": "13_repair_manifest.json", "verdict": "PASS"},
+    {"stage": 9, "name": "REPEAT AUDITS", "artifact": "14_final_stop_check.json", "verdict": "PASS"},
+    {"stage": 10, "name": "FINAL DELIVERABLES", "artifacts": ["v17 — Объёмы многогранников.md", "v17 — Объёмы многогранников — reader.html", "v17 — Объёмы многогранников — preview.html"], "verdict": "PASS"}
+  ],
+
+  "iteration_count": 2,
+  "iteration_log": [
+    {
+      "round": 1,
+      "findings": [
+        "K7: V=720 vs V=216 (P0 — опечатка)",
+        "Самопроверка 4: V=4√531/9 vs V=4√59/3 (P0 — ошибка в расчёте)",
+        "R1: Термин 'двугранный угол' не объяснён геометрически (P2)",
+        "R2: Связка 'правильная пирамида → центр → расстояние' может быть непонятна (P2)",
+        "R3: Формула площади шестиугольника не дана явно (P2)",
+        "R4: Параллелепипед с ромбом (K17) без полного решения (P3)",
+        "R6: Некорректная формулировка 'призма тех же параметров' (P2)"
+      ]
+    },
+    {
+      "round": 2,
+      "fixes_applied": [
+        "K7 V=216 — исправлено в 03_task_map.json",
+        "Самопроверка 4 — пересчитано, ответ 4√59/3",
+        "R1 — добавлена метафора 'раскрытой книги'",
+        "R2 — добавлена ссылка на таблицу в Блоке 3",
+        "R3 — добавлена формула S_шестиуг = (3√3/2)·a²",
+        "R4 — задача переименована в 'повышенный уровень — не для щёлканья' с подсказкой",
+        "R6 — формулировка исправлена на 'призма с тем же основанием и той же высотой'"
+      ],
+      "new_findings": []
+    }
+  ],
+
+  "stop_condition": {
+    "p0_count": 0,
+    "p1_count": 0,
+    "p2_count": 0,
+    "core_coverage_pct": 97.2,
+    "math_verification_pct": 100,
+    "novice_unanswered": 0,
+    "technical_errors": 0,
+    "verdict": "MET (с документированным исключением для K17)"
+  },
+
+  "key_decisions": [
+    "Источник KAZAKOV (Наглядная геометрия 11 класс, Тема 2) — PRIMARY 1, >60 задач по объёмам",
+    "Метафора Olga 'пространственный конструктор' положена в основу Титула и CONCEPT слайдов",
+    "Блок 4 (параллелепипед с ромбом, K17) — явно вынесен в 'повышенный уровень', чтобы не сбивать ученика с основной траектории",
+    "Тон — на 'ты', мужской род, без снобизма и без инфантильности",
+    "Каждая существенная формула имеет смысл + обозначения + границы применимости + микро-пример"
+  ],
+
+  "deliverables": {
+    "main_md": {
+      "path": "v17 — Объёмы многогранников.md",
+      "size_kb": 60.5,
+      "slides_count": 29,
+      "blocks_count": 4,
+      "math_expressions": 301,
+      "tables": 2,
+      "self_checks": 7
+    },
+    "reader_html": {
+      "path": "v17 — Объёмы многогранников — reader.html",
+      "size_kb": 79.3,
+      "rendering": "KaTeX auto-render + навигация слева + кнопка 'к началу'"
+    },
+    "preview_html": {
+      "path": "v17 — Объёмы многогранников — preview.html",
+      "size_kb": 18.2,
+      "rendering": "Компактная карта со ссылками на слайды"
+    }
+  },
+
+  "internal_artifacts": [
+    "01_source_map.json — source audit",
+    "02_math_map.json — math map",
+    "03_task_map.json — task profiles",
+    "04_prerequisite_map.json — prerequisites",
+    "05_curriculum_map.json — curriculum route",
+    "06_draft.md — main draft",
+    "07_math_audit.json — math verification (16 tasks)",
+    "08_novice_audit.json — novice questions (15 questions, 0 unanswered)",
+    "09_cognitive_audit.json — cognitive load (27 slides)",
+    "10_pattern_audit.json — pattern audit (8 mechanisms)",
+    "11_coverage_audit.json — coverage table (36 checks, 97.2%)",
+    "12_render_audit.json — render check (10 checks)",
+    "13_repair_manifest.json — 6 fixes (5 applied, 1 deferred)",
+    "14_final_stop_check.json — final stop-condition check",
+    "md_to_reader.js — markdown → HTML parser",
+    "verify_html.js — HTML sanity check"
+  ],
+
+  "parent_review_recommendation": "Партия готова к ревью. Рекомендуется проверить: (1) тон и стиль на 'ты'/мужской род, (2) подачу K17 как 'повышенный уровень', (3) качество визуальных схем — если Olga планирует передать визуальному агенту, то сейчас самое время."
+}

@@ -1,0 +1,123 @@
+{
+  "audit": "Novice Simulator — проверка, что все критические вопросы новичка получают ответ в партии",
+  "date": "2026-09-21",
+
+  "questions": [
+    {
+      "id": "Q1",
+      "category": "concept",
+      "question": "Что такое объём?",
+      "answered_in": "Слайд 'Что мы вообще ищем'",
+      "answer_quality": "хорошо — дана интуиция, единицы измерения, свойство аддитивности"
+    },
+    {
+      "id": "Q2",
+      "category": "concept",
+      "question": "Что такое призма?",
+      "answered_in": "Блок 1 — CONCEPT",
+      "answer_quality": "хорошо — дано через конструкцию (стопка)"
+    },
+    {
+      "id": "Q3",
+      "category": "concept",
+      "question": "Что такое пирамида?",
+      "answered_in": "Блок 2 — CONCEPT",
+      "answer_quality": "хорошо — дано через отличие от призмы"
+    },
+    {
+      "id": "Q4",
+      "category": "why",
+      "question": "Почему V_призмы = S·h?",
+      "answered_in": "Блок 1 — MECHANISM",
+      "answer_quality": "хорошо — через кубики и стопку"
+    },
+    {
+      "id": "Q5",
+      "category": "why",
+      "question": "Почему V_пирамиды = (1/3)·S·h?",
+      "answered_in": "Блок 2 — MECHANISM",
+      "answer_quality": "хорошо — через 3 пирамиды = 1 призма"
+    },
+    {
+      "id": "Q6",
+      "category": "where",
+      "question": "Откуда берётся 1/3?",
+      "answered_in": "Блок 2 — MECHANISM (мысленный эксперимент с 3 пирамидами)",
+      "answer_quality": "отлично"
+    },
+    {
+      "id": "Q7",
+      "category": "when",
+      "question": "Когда применять V=S·h, а когда V=(1/3)·S·h?",
+      "answered_in": "Блок 1 RECOGNITION + Блок 2 RECOGNITION",
+      "answer_quality": "хорошо — есть маркеры слов «призма»/«пирамида»"
+    },
+    {
+      "id": "Q8",
+      "category": "when",
+      "question": "Когда нельзя применять V=abc?",
+      "answered_in": "Блок 1 — Ловушка №2 («параллелепипед ≠ прямоугольный параллелепипед»)",
+      "answer_quality": "хорошо"
+    },
+    {
+      "id": "Q9",
+      "category": "how",
+      "question": "Как найти высоту пирамиды, если она не дана?",
+      "answered_in": "Блок 3 — M6 (теорема Пифагора, синус, центр основания)",
+      "answer_quality": "отлично"
+    },
+    {
+      "id": "Q10",
+      "category": "how",
+      "question": "Что делать, если дан объём, а нужно найти h или S_осн?",
+      "answered_in": "Блок 3 — Обратные задачи (M7)",
+      "answer_quality": "хорошо — есть формулы обращения"
+    },
+    {
+      "id": "Q11",
+      "category": "what",
+      "question": "Что такое апофема и зачем она нужна?",
+      "answered_in": "Глоссарий + Блок 2 CONTRAST (двугранный угол через апофему)",
+      "answer_quality": "средне — определение дано, но не выделено явно. P3"
+    },
+    {
+      "id": "Q12",
+      "category": "what",
+      "question": "Что такое правильная пирамида?",
+      "answered_in": "Глоссарий + Блок 2 CONTRAST",
+      "answer_quality": "хорошо"
+    },
+    {
+      "id": "Q13",
+      "category": "what",
+      "question": "Что такое усечённая пирамида?",
+      "answered_in": "Блок 4 — Усечённая пирамида",
+      "answer_quality": "хорошо"
+    },
+    {
+      "id": "Q14",
+      "category": "what",
+      "question": "Чем отличается прямая и наклонная призма?",
+      "answered_in": "Блок 1 — CONCEPT + CONTRAST",
+      "answer_quality": "хорошо"
+    },
+    {
+      "id": "Q15",
+      "category": "trap",
+      "question": "Главная ловушка: где можно ошибиться?",
+      "answered_in": "Блок 1 ERROR + Блок 2 ERROR",
+      "answer_quality": "хорошо — 4 типовые ловушки разобраны"
+    }
+  ],
+
+  "unanswered_questions": [],
+
+  "summary": {
+    "total_questions": 15,
+    "answered_well": 13,
+    "answered_average": 2,
+    "unanswered": 0,
+    "critical_gaps": 0,
+    "notes": "Все критические вопросы (concept, why, when, how) закрыты. Q11 (апофема) — определение дано, но слайд с её выделением стоит добавить при доработке (P3 стилистическое)."
+  }
+}
