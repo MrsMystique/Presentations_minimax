@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>_Геометрия_1_11 — preview</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.css">
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ],
+      throwOnError: false
+    });
+  }
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; font-size:16px; line-height:1.6; color:#3E2723; background:#F5F2EB; background-image:linear-gradient(180deg, rgba(245,242,235,1) 0%, rgba(240,235,225,1) 100%); }
+.layout { display:flex; min-height:100vh; }
+nav.toc { width:320px; flex-shrink:0; background:#FAF6EE; border-right:1px solid #D4C8B5; padding:24px 16px; position:sticky; top:0; height:100vh; overflow-y:auto; }
+nav.toc h1 { font-size:17px; margin:0 0 12px 0; color:#3E2723; font-weight:700; }
+nav.toc .block-header { display:block; margin-top:14px; margin-bottom:4px; font-weight:700; font-size:13px; color:#4a5568; text-transform:uppercase; letter-spacing:0.04em; text-decoration:none; }
+nav.toc .slide-link { display:block; padding:4px 8px; font-size:13px; color:#2b6cb0; text-decoration:none; border-radius:4px; }
+nav.toc .slide-link:hover { background:#ebf8ff; }
+nav.toc .slide-link.sub-slide { padding-left: 20px; color: #4a5568; font-size: 12px; }
+main.content { flex:1; max-width:880px; padding:40px 48px; margin:0 auto; background:transparent; }
+section.slide { background:#FFFFFF; border-radius:8px; box-shadow:0 2px 8px rgba(74,44,42,0.08); padding:28px 32px; margin-bottom:28px; scroll-margin-top:20px; border:1px solid #E8DFD0; }
+section.slide.final-slide { border-left:4px solid #38a169; }
+section.slide.reference-slide { border-left:4px solid #d69e2e; background:#fffff0; }
+section.slide.section-slide { background:linear-gradient(135deg, #FBF5E6 0%, #F4ECD8 100%); border-left:4px solid #6B5B95; }
+section.slide.title-slide { text-align:center; background:linear-gradient(135deg, #4A2C2A 0%, #3E2723 100%); color:#F5F2EB; border:none; }
+section.slide.title-slide h2 { color:#F5F2EB; }
+section.slide.bridge-slide { background:linear-gradient(135deg, #FBF5E6 0%, #F4ECD8 100%); border-left:4px solid #6B5B95; }
+header.slide-header { display:flex; align-items:baseline; gap:12px; margin-bottom:16px; border-bottom:1px solid #edf2f7; padding-bottom:12px; }
+.slide-num { background:#EFE5D6; color:#4A2C2A; padding:2px 10px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap; border:1px solid #D4C8B5; }
+.slide-num.ref { background:#fefcbf; color:#975a16; }
+.slide-num.sub { background:#edf2f7; color:#4a5568; }
+header.slide-header h2 { font-size:22px; margin:0; color:#3E2723; line-height:1.3; font-weight:700; letter-spacing:-0.01em; }
+.slide-body p { margin:0 0 12px 0; }
+.slide-body h3 { font-size:18px; margin:20px 0 10px 0; color:#4A2C2A; font-weight:600; }
+.slide-body h4 { font-size:16px; margin:16px 0 8px 0; color:#5D4037; font-weight:600; }
+.slide-body ul, .slide-body ol { margin:0 0 12px 0; padding-left:24px; }
+.slide-body li { margin-bottom:4px; }
+.slide-body blockquote { margin:12px 0; padding:12px 18px; background:#F8E8E5; border-left:4px solid #C97D6F; color:#5D2E2A; border-radius:6px; font-style:normal; }
+.slide-body blockquote p:last-child { margin-bottom:0; }
+.slide-body table { border-collapse:collapse; margin:14px 0; font-size:13px; width:100%; }
+.slide-body th, .slide-body td { border:1px solid #e2e8f0; padding:8px 12px; text-align:left; vertical-align:top; }
+.slide-body th { background:#F5F0E0; font-weight:600; color:#2d3748; }
+.slide-body code { background:#edf2f7; padding:1px 6px; border-radius:3px; font-family:'JetBrains Mono',Consolas,Monaco,monospace; font-size:0.92em; }
+.math-block { text-align:center; margin:0.9em 0; padding:0.2em 0; overflow-x:auto; overflow-y:hidden; }
+.math-block .katex-display { margin:0; }
+.slide-body .katex { font-weight: 700; color: #2C2C2C; }
+.slide-body p > .katex, .slide-body li > .katex { font-size: 1.05em; }
+.slide-body img.slide-image { display:block; max-width:100%; height:auto; margin:14px auto; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+details { margin:12px 0; padding:12px 18px; background:#FBF7EE; border-left:4px solid #6B8E5B; border-radius:6px; }
+details summary { cursor:pointer; font-weight:700; color:#3E2723; }
+details[open] summary { margin-bottom:8px; }
+button.back-to-toc { position:fixed; bottom:24px; right:24px; background:#4A2C2A; color:#F5F2EB; border:none; padding:10px 16px; border-radius:999px; cursor:pointer; font-size:14px; box-shadow:0 4px 12px rgba(74,44,42,0.3); z-index:10; font-weight:600; }
+button.back-to-toc:hover { background:#3E2723; }
+@media (max-width:900px) { .layout { flex-direction:column; } nav.toc { width:100%; height:auto; position:relative; } main.content { padding:20px; } }
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc"><h1>_Геометрия_1_11 — Превью</h1></nav>
+<main class="content">
+<p>﻿# Полный справочник по базовой геометрии: с 1 по 11 класс</p>
+
+<blockquote><p>Ученик: с нулевыми знаниями по геометрии (проходит сейчас объёмы многогранников, 11 класс). Цель — выучить всю базовую геометрию <strong>за час</strong>, на подкорковом уровне, чтобы любая задача из Казакова (или из ЦТ) читалась как родная.</p>
+</blockquote>
+<p>></p>
+<blockquote><p><strong>Как читать этот справочник.</strong> Не пытайся проглотить всё за час от корки до корки. Иди по блокам в порядке 1 → 11. Каждый блок — это ступенька. После блока 3 ты уже умеешь решать задачи на треугольники. После блока 6 — задачи на подобие. После блока 9 — задачи на объёмы многогранников. Каждый блок можно «открыть и прочитать» за 5–10 минут.</p>
+</blockquote>
+<p>></p>
+<blockquote><p><strong>Главный принцип.</strong> Любая формула в этом справочнике даётся <strong>дважды</strong>: один раз в символах (как в учебнике) и один раз словами (что такое катет, высота, и т.д.). Если ты видишь формулу и не понимаешь её — прочитай слова. Если слова непонятны — смотри на картинку (где она есть) или на пример.</p>
+</blockquote>
+<p>></p>
+<blockquote><p><strong>Если ты не знаешь, с чего начать задачу.</strong> Открой раздел «Алгоритм мышления» ниже — там 5 шагов, которые работают всегда.</p>
+</blockquote>
+
+
+
+<blockquote><p><strong>Зачем этот раздел.</strong> Если ты открыл задачу и не знаешь, с чего начать — тебе сюда. Это не формула. Это <strong>пошаговый план</strong>, который работает всегда. Проходи по нему как по лесенке: сначала шаг 1, потом шаг 2, и так далее. Не пытайся перескакивать.</p>
+</blockquote>
+
+<section class="slide" id="slide-1">
+<header class="slide-header"><span class="slide-num">1</span><h2>Шаг 1. Распознай фигуру</h2></header>
+<div class="slide-body">
+
+<p>Первое, что ты делаешь — понимаешь, <strong>что перед тобой</strong> нарисовано (или что описано словами).</p>
+
+<ul>
+<li><strong>3D или 2D?</strong> Если в задаче есть высота, ребро, объём — это стереометрия (3D). Если только стороны и углы — планиметрия (2D).</li>
+<li><strong>Если 3D — какое основание?</strong> Треугольник, квадрат, шестиугольник, круг?</li>
+<li><strong>Если призма — прямая или наклонная?</strong> Прямая: боковое ребро перпендикулярно основанию. Наклонная: боковое ребро наклонено.</li>
+<li><strong>Если пирамида — правильная или нет?</strong> Правильная: вершина проецируется в <strong>центр</strong> основания.</li>
+</ul>
+
+<blockquote><p><strong>Фишка.</strong> Если сомневаешься — нарисуй. Один рисунок стоит тысячи слов.</p>
+</blockquote>
+
+<section class="slide" id="slide-2">
+<header class="slide-header"><span class="slide-num">2</span><h2>Шаг 2. Что известно?</h2></header>
+<div class="slide-body">
+
+<p>Выпиши все данные из условия. Обычно это размеры: стороны основания, высота, диагональ, боковое ребро, радиус.</p>
+
+<ul>
+<li>Размеры основания (стороны, радиус).</li>
+<li>Высота.</li>
+<li>Диагональ (многогранника, грани).</li>
+<li>Боковое ребро.</li>
+<li>Угол (между плоскостями, между прямой и плоскостью, двугранный).</li>
+</ul>
+
+<blockquote><p><strong>Подсказка.</strong> Обведи ключевые слова в условии: «призма», «пирамида», «правильная», «высота», «диагональ», «апофема», «боковое ребро». Это превращает задачу в набор опорных точек.</p>
+</blockquote>
+
+<section class="slide" id="slide-3">
+<header class="slide-header"><span class="slide-num">3</span><h2>Шаг 3. Что ищем?</h2></header>
+<div class="slide-body">
+
+<p>Определи, <strong>какой ответ</strong> от тебя хотят.</p>
+
+<ul>
+<li><strong>Объём</strong> → нужны \(S_{\text{осн}}\) и \(h\).</li>
+<li><strong>Площадь поверхности</strong> → нужны площади всех граней.</li>
+<li><strong>Высоту, ребро, диагональ</strong> → обратная задача: из формулы выражаешь то, что нужно.</li>
+<li><strong>Площадь сечения</strong> → нужно понять, какая фигура получилась в сечении.</li>
+</ul>
+
+<section class="slide" id="slide-4">
+<header class="slide-header"><span class="slide-num">4</span><h2>Шаг 4. Какая формула?</h2></header>
+<div class="slide-body">
+
+<p>Вот тут у многих ступор: формулу забыл. Что делать?</p>
+
+<ul>
+<li>Если помнишь формулу — примени.</li>
+<li>Если забыл — <strong>дострой фигуру</strong> (см. раздел «Достраивание фигур» дальше).</li>
+<li>Если совсем не знаешь, с чего начать — попробуй <strong>Пифагор</strong> или <strong>подобие</strong> (это два самых частых ключа в стереометрии).</li>
+</ul>
+
+<section class="slide" id="slide-5">
+<header class="slide-header"><span class="slide-num">5</span><h2>Шаг 5. Проверь</h2></header>
+<div class="slide-body">
+
+<p>Когда получил ответ — проверь его тремя способами.</p>
+
+<ul>
+<li><strong>Размерность.</strong> Объём — в кубических единицах (см³, м³). Площадь — в квадратных (см², м²). Если не сходится — где-то потерял умножение.</li>
+<li><strong>Логика.</strong> Объём не может быть отрицательным. Сторона не может быть больше диагонали. Высота не может быть больше бокового ребра.</li>
+<li><strong>Граничные случаи.</strong> Если в задаче все стороны одинаковые (куб, равносторонний треугольник) — ответ должен быть «симметричным».</li>
+</ul>
+
+
+<section class="slide" id="slide-6">
+<header class="slide-header"><span class="slide-num">6</span><h2>Содержание</h2></header>
+<div class="slide-body">
+
+<ul>
+<li><strong>Алгоритм мышления.</strong> С чего начать задачу (5 шагов)</li>
+<li><strong>🔍 Скрипт штурма.</strong> Универсальный 5-шаговый план для любой геометрической задачи</li>
+<li><strong>Блок 1 (1–4 класс).</strong> Точка, линия, луч, отрезок, простые фигуры, периметр, площадь, единицы</li>
+<li><strong>Блок 2 (5 класс).</strong> Углы, биссектриса угла</li>
+<li><strong>Блок 3 (5–7 класс).</strong> Треугольники — виды, 7 формул площади, признаки равенства, признаки подобия, теорема синусов и косинусов, теорема Пифагора через два сценария</li>
+<li><strong>Блок 4 (5–8 класс).</strong> Четырёхугольники — все 6 типов</li>
+<li><strong>Блок 5 (5–9 класс).</strong> Окружность и круг</li>
+<li><strong>Блок 6 (7–9 класс).</strong> Подобие (k, k², k³ для объёмов)</li>
+<li><strong>Блок 7 (9–11 класс).</strong> Векторы и координаты</li>
+<li><strong>Блок 8 (10–11 класс).</strong> Стереометрия — базовые понятия</li>
+<li><strong>Блок 9 (10–11 класс).</strong> Многогранники — виды и формулы, тела с отверстиями, расшифровка переменных</li>
+<li><strong>Блок 10 (11 класс).</strong> Тела вращения</li>
+<li><strong>🛠️ Лайфхаки 21–36.</strong> Методы достраивания, фокусы с кругами, теорема Пика, теорема Птолемея, тригонометрия на пальцах, Закон Кожи и Мяса, Слайд 22.14 (угловой вырез куба)</li>
+<li><strong>Сборник формул</strong></li>
+<li><strong>Достраивание фигур.</strong> Как получить нужную формулу</li>
+<li><strong>Площадь поверхности.</strong> Что это и формулы для каждого тела</li>
+<li><strong>Глоссарий.</strong> Все термины от А до Я + расширенный глоссарий</li>
+</ul>
+
+
+<h1>🔍 Скрипт штурма любой геометрической задачи</h1>
+
+<blockquote><p><strong>Зачем этот раздел.</strong> Это физическая инструкция, которую ты кладёшь перед собой на черновик. Когда откроешь условие задачи и не будешь знать, с чего начать, — пройди по этим 5 шагам как по лесенке. Они работают всегда.</p>
+</blockquote>
+
+<section class="slide" id="slide-7">
+<header class="slide-header"><span class="slide-num">7</span><h2>Шаг 1. Раскликни фигуру (распили её в воображении)</h2></header>
+<div class="slide-body">
+
+<p>Посмотри на объёмное тело и спроси себя: <strong>из каких плоских листов оно собрано?</strong> Пирамида сшита из треугольников, параллелепипед — из прямоугольников, конус — из сектора-круга и одного круга. Мысленно «разверни» тело на плоские заготовки.</p>
+
+<blockquote><p><strong>Фишка.</strong> Как только ты представил плоские листы — ты уже наполовину решил задачу. Потому что объёмное тело собирается из плоских листов по простым правилам.</p>
+</blockquote>
+
+<section class="slide" id="slide-8">
+<header class="slide-header"><span class="slide-num">8</span><h2>Шаг 2. Найди «Короля» черновика</h2></header>
+<div class="slide-body">
+
+<p>Найди на рисунке <strong>плоский треугольник или четырёхугольник, где известно больше всего цифр</strong>. Обведи его цветным карандашом. Твоя задача — достать из него все остальные линии по закону Пифагора или через площадь, пока он полностью не раскроет свои секреты.</p>
+
+<blockquote><p><strong>Фишка.</strong> Король черновика — это маленький замочек, который открывает всю задачу. Когда Король раскрыт, остальные линии вычисляются автоматически.</p>
+</blockquote>
+
+<section class="slide" id="slide-9">
+<header class="slide-header"><span class="slide-num">9</span><h2>Шаг 3. Свяжи плоское дно и пространство</h2></header>
+<div class="slide-body">
+
+<p>Если тебе нужен <strong>объём</strong>, сначала полностью сосредоточься на <strong>плоском дне</strong> фигуры. Найди его площадь так, словно объёма вообще нет. Как только площадь дна готова — просто вытяни её вверх, умножив на вертикальное ребро (высоту стопки).</p>
+
+<blockquote><p><strong>Правило:</strong> объём = площадь плоского дна × высота стопки. Сначала дно, потом вытягивание вверх.</p>
+</blockquote>
+
+<section class="slide" id="slide-10">
+<header class="slide-header"><span class="slide-num">10</span><h2>Шаг 4. Запиши цель</h2></header>
+<div class="slide-body">
+
+<p>Отметь цель задачи знаком вопроса «?». Какая базовая формула связывает мои цветные линии и этот знак вопроса?</p>
+
+<blockquote><p><strong>Приём.</strong> Впиши в формулу все известные величины и знак вопроса. Сразу станет видно, что искать.</p>
+</blockquote>
+
+<section class="slide" id="slide-11">
+<header class="slide-header"><span class="slide-num">11</span><h2>Шаг 5. Если формулы нет — достраивай!</h2></header>
+<div class="slide-body">
+
+<p>Если подходящей формулы в голове нет — не паникуй. Возьми знакомую фигуру (чаще всего это <strong>прямоугольник</strong> или <strong>прямоугольный треугольник</strong>) и дострой забытую фигуру до неё. Сложную фигуру всегда можно разрезать на простые части или достроить до известной.</p>
+
+<blockquote><p><strong>Фишка.</strong> Самый частый инструмент достраивания — <strong>теорема Пифагора</strong>. Если ты её освоил через Сценарий 1 (плюс) и Сценарий 2 (минус), ты сможешь раскрыть 80% геометрических задач.</p>
+</blockquote>
+
+
+<h1>Блок 1 (1–4 класс). Точка, линия, луч, отрезок, простые фигуры</h1>
+
+<section class="slide" id="slide-12">
+<header class="slide-header"><span class="slide-num">12</span><h2>Точка, линия, луч, отрезок</h2></header>
+<div class="slide-body">
+
+<p><strong>Точка</strong> — место в пространстве. Не имеет размера. Обозначается большой буквой: \(A, B, C\).</p>
+
+<p><strong>Прямая</strong> — бесконечная линия без изгибов. Не имеет начала и конца. Обозначается двумя точками или одной строчной буквой: \(AB, l\).</p>
+
+<p><strong>Луч</strong> — часть прямой, у которой есть <strong>начало</strong>, но <strong>нет конца</strong>. Обозначается: луч \(AB\) (начинается в \(A\), идёт через \(B\) и дальше бесконечно).</p>
+
+<p><strong>Отрезок</strong> — часть прямой, ограниченная двумя точками. Имеет длину. Обозначается: \(AB\).</p>
+
+<blockquote><p><strong>Пример.</strong> Линейка — отрезок. Солнечный луч — это луч (у света есть начало, но нет конца). Железная дорога вдали — это прямая (она бесконечна в обе стороны).</p>
+</blockquote>
+
+<section class="slide" id="slide-13">
+<header class="slide-header"><span class="slide-num">13</span><h2>Простые фигуры (плоские)</h2></header>
+<div class="slide-body">
+
+<table>
+<tr><th>Фигура</th><th>Что это</th><th>Пример из жизни</th></tr>
+<tr><td>**Треугольник**</td><td>3 точки, соединённые отрезками</td><td>Дорожный знак «уступи дорогу», элементы стропильной системы крыши</td></tr>
+<tr><td>**Четырёхугольник**</td><td>4 точки, соединённые отрезками</td><td>Лист бумаги, экран телефона</td></tr>
+<tr><td>**Круг**</td><td>Все точки на расстоянии \(r\) от центра</td><td>Тарелка, монета</td></tr>
+<tr><td>**Многоугольник**</td><td>Замкнутая ломаная из \(n\) отрезков</td><td>Шестиугольная гайка, пятиугольная звезда</td></tr>
+</table>
+
+<section class="slide" id="slide-14">
+<header class="slide-header"><span class="slide-num">14</span><h2>Периметр</h2></header>
+<div class="slide-body">
+
+<p><strong>Периметр</strong> — это сумма длин всех сторон фигуры.</p>
+
+<p>\(P = a + b + c\) (для треугольника)</p>
+<p>\(P = a + b + c + d\) (для четырёхугольника)</p>
+
+<p><strong>Словами:</strong> обойди всю фигуру по сторонам и сложи длины.</p>
+
+<p><strong>Зачем нужен.</strong> Чтобы узнать, сколько метров забора нужно вокруг участка, сколько тесьмы по краю салфетки, сколько рамы по периметру окна.</p>
+
+<p><strong>Пример.</strong> Квадрат со стороной 5 см. \(P = 5 + 5 + 5 + 5 = 20\) см.</p>
+
+<section class="slide" id="slide-15">
+<header class="slide-header"><span class="slide-num">15</span><h2>Площадь</h2></header>
+<div class="slide-body">
+
+<p><strong>Площадь</strong> — это сколько места фигура занимает на плоскости. Измеряется в <strong>квадратных</strong> единицах: см², м², км².</p>
+
+<table>
+<tr><th>Фигура</th><th>Формула площади (словами)</th><th>Формула (в символах)</th></tr>
+<tr><td>**Квадрат**</td><td>Квадрат стороны</td><td>\(S = a^2\)</td></tr>
+<tr><td>**Прямоугольник**</td><td>Длину умножить на ширину</td><td>\(S = a\cdot b\)</td></tr>
+<tr><td>**Треугольник**</td><td>Половина произведения стороны на высоту</td><td>\(S = \tfrac{1}{2}\cdot a\cdot h\)</td></tr>
+</table>
+
+<blockquote><p><strong>Важно.</strong> Площадь измеряется в <strong>квадратных</strong> единицах: см² (сантиметр в квадрате), м² (метр в квадрате). Если ты посчитал и получил просто «сантиметры» — где-то потерял умножение.</p>
+</blockquote>
+
+<section class="slide" id="slide-16">
+<header class="slide-header"><span class="slide-num">16</span><h2>Единицы измерения длины, площади, объёма</h2></header>
+<div class="slide-body">
+
+<table>
+<tr><th>Что измеряем</th><th>Единицы</th></tr>
+<tr><td>**Длина**</td><td>мм, см, м, км</td></tr>
+<tr><td>**Площадь**</td><td>мм², см², м², км², га (гектар = 10 000 м²), а (ар = 100 м²)</td></tr>
+<tr><td>**Объём**</td><td>мм³, см³, м³, л (литр = 1 дм³ = 1000 см³)</td></tr>
+</table>
+
+<blockquote><p><strong>Переводы, которые нужно помнить наизусть:</strong></p>
+<ul>
+<li>1 см = 10 мм</li>
+<li>1 м = 100 см</li>
+<li>1 км = 1000 м</li>
+<li>1 дм = 10 см</li>
+<li>1 л = 1 дм³ = 1000 см³ (один литр — это кубик со стороной 10 см)</li>
+</ul>
+</blockquote>
+
+<blockquote><p><strong>Микро-проверка.</strong> Если прямоугольник 3 см × 4 см, его площадь = 12 <strong>см²</strong>. Не 12 см. Площадь — это «12 квадратиков со стороной 1 см».</p>
+</blockquote>
+
+
+<h1>Блок 2 (5 класс). Углы, биссектриса угла</h1>
+
+<section class="slide" id="slide-17">
+<header class="slide-header"><span class="slide-num">17</span><h2>Что такое угол</h2></header>
+<div class="slide-body">
+
+<p><strong>Угол</strong> — это фигура из двух лучей с общим началом (вершиной).</p>
+
+<p>Угол измеряется в <strong>градусах</strong>. Полный оборот = 360°. Прямой угол = 90°. Развёрнутый угол = 180°.</p>
+
+<table>
+<tr><th>Тип угла</th><th>Сколько градусов</th><th>Как выглядит</th></tr>
+<tr><td>**Острый**</td><td>меньше 90°</td><td>Узкий «уголок»</td></tr>
+<tr><td>**Прямой**</td><td>ровно 90°</td><td>Квадратный «уголок»</td></tr>
+<tr><td>**Тупой**</td><td>больше 90°, но меньше 180°</td><td>Широкий «уголок»</td></tr>
+<tr><td>**Развёрнутый**</td><td>180°</td><td>Прямая линия</td></tr>
+</table>
+
+<section class="slide" id="slide-18">
+<header class="slide-header"><span class="slide-num">18</span><h2>Смежные и вертикальные углы</h2></header>
+<div class="slide-body">
+
+<p><strong>Смежные углы</strong> — два угла, у которых общая вершина и одна общая сторона, а другие две стороны — продолжения друг друга. Сумма смежных углов = 180°.</p>
+
+<p><strong>Вертикальные углы</strong> — два угла напротив друг друга при пересечении двух прямых. Вертикальные углы <strong>равны</strong>.</p>
+
+<blockquote><p><strong>Пример.</strong> Перекресток. Дороги пересекаются — получаются 4 угла. Углы напротив друг друга (например, северо-восточный и юго-западный) — вертикальные, они равны.</p>
+</blockquote>
+
+<section class="slide reference-slide" id="slide-19">
+<header class="slide-header"><span class="slide-num class="ref"">19</span><h2>Биссектриса угла</h2></header>
+<div class="slide-body">
+
+<p><strong>Биссектриса</strong> — это луч, который делит угол <strong>пополам</strong>.</p>
+
+<p>Если у тебя угол 60°, биссектриса даёт два угла по 30°. Если угол 90°, биссектриса даёт два угла по 45°.</p>
+
+<blockquote><p><strong>Словарик:</strong> «Бис» — два, «сек» — резать. Биссектриса = режет угол на две равные части.</p>
+</blockquote>
+
+<section class="slide" id="slide-20">
+<header class="slide-header"><span class="slide-num">20</span><h2>Перпендикулярные прямые</h2></header>
+<div class="slide-body">
+
+<p><strong>Перпендикулярные прямые</strong> — это прямые, которые пересекаются под углом 90°. Обозначается: \(l_1 \perp l_2\).</p>
+
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+
+</main>
+</div>
+</body>
+</html>
