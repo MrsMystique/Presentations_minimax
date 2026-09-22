@@ -1,0 +1,58 @@
+﻿{
+  "tools": [
+    {
+      "tool_name": "connector__matrix__audios_understand",
+      "description": "Audio Q&A for at most 10 entries using an HTTPS url plus an optional prompt. Raw data and local file paths are not supported. For a local file or a URL that the server cannot fetch, call upload_temp_url, upload the bytes with the returned form, then pass its temp_url here as url. REQUIRED: use the audio_info array, not audios/audio_list."
+    },
+    {
+      "tool_name": "connector__matrix__batch_text_to_audio",
+      "description": "Batch TTS (text-to-speech) for spoken audio (at most 10 per call). Successful items return success_items[].node_id and success_items[].file_name; file_name is the final base filename including its actual extension. Call get_asset_url with node_id to obtain a short-lived audio URL. Optional requests[].output_file sets the downloaded base filename; directory components are ignored. Do not construct an OSS/CDN URL from node_id. Do NOT pass output_file_list."
+    },
+    {
+      "tool_name": "connector__matrix__batch_text_to_music",
+      "description": "Generate songs and music audio files (at most 5 per call). Lyrics are optional; omit them for instrumental music. Successful items return success_items[].node_id and success_items[].file_name; file_name is the final base filename including its actual extension. To use the generated audio, call get_asset_url with this node_id to obtain a short-lived file URL. MCP HTTP supports MP3 and WAV output; PCM is not available because it cannot carry the required AIGC metadata. Optional requests[].output_file sets the downloaded base filename; directory components are ignored. Do not construct an OSS/CDN URL from node_id. Do NOT pass output_file_list."
+    },
+    {
+      "tool_name": "connector__matrix__describe_images",
+      "description": "Vision Q&A on images using an HTTPS url plus an optional per-image prompt. Raw data and local file paths are not supported. For a local file or a URL that the server cannot fetch, call upload_temp_url, upload the bytes with the returned form, then pass its temp_url here as url. REQUIRED: use the image_info array, not images/image_list/image_urls."
+    },
+    {
+      "tool_name": "connector__matrix__generate_image",
+      "description": "Text-to-image (or image-to-image via input_urls). Wrap each request in a 'requests' array, NOT as a flat prompt. Successful items return success_items[].node_id and success_items[].file_name; file_name is the final base filename including its actual extension. To use the generated image, call get_asset_url with this node_id to obtain a short-lived file URL. Optional requests[].output_file sets the downloaded base filename; directory components are ignored. Do not construct an OSS/CDN URL from node_id. Do NOT pass input_files/output_path."
+    },
+    {
+      "tool_name": "connector__matrix__get_voice_list",
+      "description": "List available TTS (text-to-speech) voices as voice_id and voice_name. Call this only when the user needs to choose a voice; otherwise omit voice_id and use the default voice."
+    },
+    {
+      "tool_name": "connector__matrix__listen_audio",
+      "description": "Transcribe one audio input supplied as an HTTPS url. Raw data and local file paths are not supported. For a local file or a URL that the server cannot fetch, call upload_temp_url, upload the bytes with the returned form, then pass its temp_url here as url."
+    },
+    {
+      "tool_name": "connector__matrix__query_video_generation",
+      "description": "Check one video task returned by matrix_submit_video_generation. Pass the same task_id and model. Returns queued, running, succeeded, failed, or cancelled status; successful results include video_url and file_id, and failed results include failure details. MiniMax-H3-Max tasks typically finish in about 20 seconds, so query shortly after submitting; MiniMax-H3 usually takes 15-30 minutes. MiniMax-H3 / MiniMax-H3-Max videos are retained for 7 days after generation. Download links are temporary; query the task again for a fresh link within that period."
+    },
+    {
+      "tool_name": "connector__matrix__reverse_image_search",
+      "description": "Reverse image search by URL. Pass ONLY image_url. Do NOT pass output_file."
+    },
+    {
+      "tool_name": "connector__matrix__search_images",
+      "description": "Image web search with relevance-prompt filter. One task per query."
+    },
+    {
+      "tool_name": "connector__matrix__submit_video_generation",
+      "description": "Submit one asynchronous video-generation task and return task_id; then call matrix_query_video_generation. HTTP MCP accepts media URLs only. Raw data, base64, data URIs, and local paths are not supported. For local media, call upload_temp_url, upload the bytes, and pass temp_url as url. MiniMax-H3 is recommended for quality, uses account credits, and does not use Token Plan allowance. It supports text-to-video, first/last-frame image-to-video, and multimodal references at 768P or 2K; duration is required and must be 4-15 seconds. MiniMax-H3 also renders a synchronized native audio track as part of the generated video, covering dialogue, ambience, and sound effects described in the prompt, so no separate text-to-speech step is needed. MiniMax-H3-Max is the fast-generation variant of MiniMax-H3: generation typically completes in about 20 seconds, and it also uses account credits with the same native audio track. It supports text-to-video and first/last-frame image-to-video only (no multimodal references) at 480P or 768P; duration is required and must be 5-15 seconds. MiniMax-Hailuo-2.3 is the lower-cost, Token Plan-eligible option. It supports text-to-video and first-frame image-to-video at 768P for 6 or 10 seconds, or 1080P for 6 seconds; legacy subject mode supports 6 seconds. MiniMax-Hailuo-2.3 output is silent, so a voiced result needs matrix_synthesize_speech on top of it. If no model was chosen, recommend MiniMax-H3 for quality and ask the user to choose before submitting."
+    },
+    {
+      "tool_name": "connector__matrix__synthesize_speech",
+      "description": "Single TTS (text-to-speech) for one spoken-audio asset. A successful response returns node_id and file_name; file_name is the final base filename including its actual extension. Call get_asset_url with node_id to obtain a short-lived audio URL. Optional output_file sets the downloaded base filename; directory components are ignored. Do not construct an OSS/CDN URL from node_id. Do NOT pass output_path."
+    },
+    {
+      "tool_name": "connector__matrix__videos_understand",
+      "description": "Video Q&A for at most 10 entries using an HTTPS url plus an optional prompt. Raw data and local file paths are not supported. For a local file or a URL that the server cannot fetch, call upload_temp_url, upload the bytes with the returned form, then pass its temp_url here as url. REQUIRED: use the video_info array, not video_list/videos/tasks."
+    }
+  ],
+  "partial": false,
+  "provider_failures": []
+}
