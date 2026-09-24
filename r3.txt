@@ -1,0 +1,7 @@
+﻿FIX 1 (0.3 nav): FOUND, replacing.
+FIX 2 (0.4): FOUND, replacing.
+FIX 3a (Сводка Сессии 1 — заголовок): FOUND, replacing.
+FIX 3b (Сводка Сессии 1): FOUND, replacing.
+FIX 3c (Сводка Сессии 2): FOUND, replacing.
+
+Final file length: 229003 chars

@@ -1,0 +1,5 @@
+﻿Range to extract: 157251 to 165036 (7785 chars)
+FIX 2: navigation updated.
+
+Final file length: 230011 chars
+Final line count: 4577

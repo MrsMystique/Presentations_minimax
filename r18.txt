@@ -1,0 +1,19 @@
+﻿Kumul starts at: 223927
+Most starts at: -1
+Most ends at: -1
+Prilog Б starts at: 223257
+Block length: 9933
+Block first 100 chars: ## 🧠 Кумулятивная сводка по Сессии 1 (10 ключевых формул и фактов, без подглядки)
+
+Прежде чем заверш
+Block last 100 chars: осле каждой 5-й задачи** — встань, разомни ноги, выпей воды. Это сбросит когнитивную усталость.
+
+---
+Mostec 16 starts at: 218285
+Mostec ends at: 218567
+
+Between mostec_end and Prilog Б start (first 200 chars):
+'\n# 📎 ПРИЛОЖЕНИЯ (история редактуры — для автора, не для ученика)\n\n> **Зачем здесь:** это заметки автора о ходе написания гайда. Ученику читать не нужно — они могут сбить с толку.\n\n## 📎 Приложение А. И'
+FIX: header replaced with clearer structure.
+
+Final length: 233935 chars

@@ -1,0 +1,6 @@
+﻿FIX 1 (14.4 algebra): NOT FOUND exactly. Investigating...
+  -> The problematic text exists. Will use marker-based replacement.
+FIX 2 (14.3 header): FOUND, replacing.
+FIX 3 (Главный мост #5): FOUND, replacing.
+
+Final file length: 228961 chars

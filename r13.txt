@@ -1,0 +1,11 @@
+﻿Found 'r = \dfrac{3V}' at index 199266
+Context (300 chars):
+. ✓
+
+Для **вписанной** сферы используем формулу \(r = \dfrac{3V}{S_{\text{полн}}}\):
+- \(V = \dfrac{a^3\sqrt{2}}{12}\).
+- \(S_{\text{полн}} = 4 \cdot \dfrac{a^2\sqrt{3}}{4} = a^2\sqrt{3}\).
+- \(r = \dfrac{3 \cdot a^3\sqrt{2}/12}{a^2\sqrt{3}} = \dfrac{a\sqrt{2}}{4\sqrt{3}} = \dfrac{a\sqrt{6}}{12}\). ✓
+
+Отношение: \(\dfrac{R}{r} = \dfrac{a\sqrt{6}/4}
+---

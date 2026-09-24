@@ -1,0 +1,26 @@
+﻿Found marker at index 201350
+Context (200 chars before, 600 after):
+---
+одставляем \(OM = r_{\text{осн}}\), \(O_{\text{вп}}K = r\), \(SM = l\), \(SO_{\text{вп}} = h - r\):
+
+\[
+\frac{r_{\text{осн}}}{r} = \frac{l}{h - r}.
+\]
+
+Решая: \(r(h) = r_{\text{осн}}(h - r)\), т.е. \(rh + r \cdot r_{\text{осн}} = r_{\text{осн}} \cdot h\), откуда \(r(h + r_{\text{осн}}) = h \cdot r_{\text{осн}}\), \(r = \dfrac{h \cdot r_{\text{осн}}}{h + r_{\text{осн}}}\).
+
+(Уточнение: для боковой грани пирамиды апофема \(l = \sqrt{h^2 + r_{\text{осн}}^2}\), и для грани получается \(r = \dfrac{h \cdot r_{\text{осн}}}{l + r_{\text{осн}}}\) — что и было в формуле.)
+
+**Частный случай — правильная 4-угольная пирамида (квадрат \(a\), высота \(h\)):**
+- \(V = \dfrac{a^2 h}{3}\). \(S_{\text{полн}} = a^2 + 2al\).
+- \(r = \dfrac{3 \cdot a^2h/3}{a^2 + 2al} = \dfrac{a^2 h}{a(a + 2l)} = \dfrac{ah}{a + 
+---
+Start of 'Решая:' at 201302, end_marker at 201709
+
+Problematic text:
+Решая: \(r(h) = r_{\text{осн}}(h - r)\), т.е. \(rh + r \cdot r_{\text{осн}} = r_{\text{осн}} \cdot h\), откуда \(r(h + r_{\text{осн}}) = h \cdot r_{\text{осн}}\), \(r = \dfrac{h \cdot r_{\text{осн}}}{h + r_{\text{осн}}}\).
+
+(Уточнение: для боковой грани пирамиды апофема \(l = \sqrt{h^2 + r_{\text{осн}}^2}\), и для грани получается \(r = \dfrac{h \cdot r_{\text{осн}}}{l + r_{\text{осн}}}\) — что и было в формуле.)
+
+
+Fixed. New length: 228802
