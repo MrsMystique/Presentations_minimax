@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Одночлены и многочлены — скетчбук-читалка</title>
+<link href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" rel="stylesheet"/>
+<style>
+
+
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat/Montserrat-Regular.ttf'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat/Montserrat-Bold.ttf'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat/Montserrat-ExtraBold.ttf'); font-weight: 800; font-style: normal; font-display: swap; }
+
+:root {
+  --field: #F5F2EB;
+  --paper: #FAF6EE;
+  --dark: #2B2B2A;
+  --ink: #2B2B2A;
+  --text: #4A3B37;
+  --cream: #F5F2EB;
+  --line: #6E554F;
+  --mint: #618B8B;
+  --mustard: #D1A153;
+  --terracotta: #D97443;
+  --note-bg: #F3EBE3;
+  --dark-note: #332F2C;
+  --table-head: #EDE2D4;
+  --paperline: rgba(110,85,79,.38);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background-color: var(--field);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M0 17.5H120M0 73.5H120M29.5 0V120M91.5 0V120' stroke='%236E554F' stroke-opacity='.035' stroke-width='.7'/%3E%3Ccircle cx='18' cy='42' r='.75' fill='%236E554F' fill-opacity='.04'/%3E%3Ccircle cx='77' cy='28' r='.55' fill='%236E554F' fill-opacity='.035'/%3E%3Ccircle cx='103' cy='96' r='.65' fill='%236E554F' fill-opacity='.03'/%3E%3C/svg%3E");
+  color: var(--text);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+}
+.layout { display:flex; min-height:100vh; }
+nav.toc {
+  width:300px;
+  flex-shrink:0;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:auto;
+  background:rgba(245,242,235,.96);
+  border-right:1px solid rgba(110,85,79,.72);
+  padding:24px 18px;
+}
+nav.toc h1 {
+  margin:0 0 14px;
+  color:var(--ink);
+  font-size:18px;
+  line-height:1.25;
+  font-weight:800;
+  letter-spacing:-0.01em;
+}
+nav.toc a {
+  color:var(--ink);
+  text-decoration:none;
+  border-left:2px solid transparent;
+}
+nav.toc a:hover { color:var(--mint); }
+nav.toc .block-header,
+nav.toc .bridge-header {
+  display:block;
+  margin:16px 0 6px;
+  padding-left:8px;
+  font-size:13px;
+  line-height:1.35;
+  font-weight:800;
+  letter-spacing:0.035em;
+  text-transform:uppercase;
+}
+nav.toc .bridge-header {
+  color:var(--line);
+  text-transform:none;
+  letter-spacing:0.01em;
+}
+nav.toc .slide-link {
+  display:block;
+  padding:4px 0 4px 10px;
+  font-size:13px;
+  line-height:1.35;
+}
+nav.toc .slide-link.sub-slide { padding-left:22px; font-size:12px; }
+nav.toc a.is-active { color:var(--mint); border-left-color:var(--mint); }
+nav.toc a[data-order]::before {
+  content: attr(data-order) " · ";
+  color: var(--line);
+  font-size: 0.85em;
+  font-weight: 800;
+}
+
+main.content {
+  flex:1;
+  max-width:1360px;
+  padding:32px 46px;
+  margin:0 auto;
+}
+section.slide {
+  position:relative;
+  overflow:flow-root;
+  background-color:rgba(250,246,238,.96);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M28 0H0V28' fill='none' stroke='%236E554F' stroke-opacity='.055' stroke-width='.55'/%3E%3C/svg%3E");
+  border:1px solid rgba(110,85,79,.78);
+  padding:30px 38px;
+  margin:0 0 34px;
+  scroll-margin-top:16px;
+  border-radius:0;
+}
+section.slide::before {
+  content:"";
+  position:absolute;
+  left:14px;
+  top:14px;
+  bottom:14px;
+  width:2px;
+  background:rgba(97,139,139,.32);
+  pointer-events:none;
+}
+section.slide.sub-slide,
+section.slide.reference-slide,
+section.slide.final-slide { border-left:1px solid rgba(110,85,79,.78); }
+section.slide.bridge-slide {
+  background:rgba(250,246,238,.86);
+  border:1px dashed rgba(110,85,79,.75);
+}
+section.slide-horizontal { min-height:440px; }
+figure.sketch.sketch-compact {
+  width:44%;
+  max-width:520px;
+}
+section.formula-atlas { min-height:0; }
+section.formula-atlas .formula-card {
+  clear:both;
+  display:grid;
+  grid-template-columns:minmax(280px, 40%) minmax(0, 1fr);
+  column-gap:1.1cm;
+  align-items:start;
+  padding:18px 0;
+  border-top:1px dashed rgba(110,85,79,.58);
+}
+section.formula-atlas .formula-card.formula-card-no-image { display:block; }
+section.formula-atlas .formula-card figure.sketch {
+  float:none;
+  clear:none;
+  width:100%;
+  max-width:none;
+  margin:0;
+}
+section.formula-atlas .formula-copy { min-width:0; }
+section.formula-atlas .formula-copy .math-block { clear:none; text-align:left; }
+section.formula-atlas .formula-copy .math-block .katex-display { text-align:left; }
+section.slide-dark {
+  background:var(--dark);
+  color:var(--cream);
+  border-color:var(--dark);
+}
+section.slide-dark::before { background:rgba(209,161,83,.55); }
+header.slide-header {
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+  margin:0 0 18px;
+  padding:0 0 12px;
+  border-bottom:1px dashed rgba(110,85,79,.55);
+}
+.slide-num {
+  display:inline-block;
+  padding:2px 8px;
+  border:1px solid rgba(110,85,79,.75);
+  border-radius:0;
+  background:rgba(245,242,235,.72);
+  color:var(--mint);
+  font-size:12px;
+  line-height:1.4;
+  font-weight:800;
+  white-space:nowrap;
+}
+.slide-num.ref,
+.slide-num.sub { background:rgba(245,242,235,.72); color:var(--mint); }
+.order-num {
+  display:inline-block;
+  padding:2px 7px;
+  border:1px solid rgba(110,85,79,.72);
+  background:transparent;
+  color:var(--line);
+  font-size:11px;
+  line-height:1.4;
+  font-weight:800;
+  white-space:nowrap;
+}
+section.slide-dark header.slide-header { border-bottom-color:rgba(245,242,235,.38); }
+section.slide-dark h2,
+section.slide-dark .slide-num { color:var(--cream); }
+section.slide-dark .slide-num { background:var(--dark); border-color:var(--cream); }
+section.slide-dark .order-num { color:var(--cream); border-color:var(--cream); }
+header.slide-header h2 {
+  margin:0;
+  color:var(--ink);
+  font-size:25px;
+  line-height:1.25;
+  font-weight:800;
+  letter-spacing:-0.02em;
+}
+section.slide-dark header.slide-header h2 { color:var(--cream); }
+.slide-body::after { content:""; display:table; clear:both; }
+.slide-body p { margin:0 0 12px; }
+.slide-body h3 { margin:20px 0 10px; color:var(--ink); font-size:18px; line-height:1.35; font-weight:800; }
+.slide-body h4 { margin:16px 0 8px; color:var(--ink); font-size:16px; line-height:1.35; font-weight:800; }
+section.slide-dark .slide-body h3,
+section.slide-dark .slide-body h4 { color:var(--cream); }
+.slide-body ul,
+.slide-body ol { margin:0 0 12px; padding-left:24px; }
+.slide-body li { margin-bottom:4px; }
+.slide-body strong { font-weight:800; color:var(--ink); }
+section.slide-dark .slide-body strong { color:var(--cream); }
+.slide-body a { color:var(--mint); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px; }
+
+figure.sketch {
+  float:left;
+  width:clamp(420px, 50%, 680px);
+  max-width:680px;
+  margin:0 1.1cm 0.7cm 0;
+  border:1px solid rgba(110,85,79,.78);
+  background:var(--field);
+  padding:7px;
+}
+figure.sketch img {
+  display:block;
+  width:100%;
+  height:auto;
+  border:0;
+  border-radius:0;
+}
+figure.sketch figcaption {
+  margin-top:7px;
+  color:var(--line);
+  font-size:12.5px;
+  line-height:1.35;
+}
+figure.sketch-full { float:none; width:100%; max-width:none; margin:0 0 20px; }
+figure.sketch-clear { clear:left; }
+/* Картинки мини-тестов: справа, примерно 1/4 обычной учебной картинки. */
+figure.mini-test-image {
+  float:right;
+  width:clamp(280px, 34%, 420px);
+  max-width:420px;
+  min-width:260px;
+  margin:0 0 0.55cm 1.1cm;
+  border:0;
+  background:transparent;
+  padding:0;
+}
+figure.mini-test-image img {
+  width:100%;
+  max-height:360px;
+  object-fit:contain;
+}
+/* Вторичная учебная картинка-исключение: справа, чтобы не перегружать слайд двумя левыми кадрами. */
+figure.sketch-secondary-right {
+  float:right;
+  width:42%;
+  max-width:470px;
+  margin:0 0 0.6cm 1.1cm;
+}
+/* Стикеры остаются сигналами, не декором. */
+figure.inline-sticker {
+  float:left;
+  width:clamp(160px, 17%, 220px);
+  max-width:220px;
+  min-width:150px;
+  margin:0 0.9cm 0.55cm 0;
+  border:0;
+  background:transparent;
+  padding:0;
+}
+figure.inline-sticker img {
+  width:100%;
+  max-height:185px;
+  object-fit:contain;
+}
+figure.inline-sticker.motivation-image {
+  width:clamp(340px, 36%, 460px);
+  max-width:460px;
+  min-width:320px;
+}
+figure.inline-sticker.motivation-image img { max-height:390px; }
+figure.inline-sticker.inline-sticker-right { float:right; margin:0 0 0.55cm 0.9cm; }
+figure.inline-sticker.sticker-exception {
+  width:clamp(130px, 14%, 180px);
+  max-width:180px;
+  min-width:130px;
+}
+figure.inline-sticker.sticker-exception img { max-height:150px; }
+figure.hole-filler-sticker {
+  float:right;
+  width:clamp(145px, 15%, 210px);
+  max-width:210px;
+  min-width:145px;
+  margin:0 0 0.55cm 0.9cm;
+  border:0;
+  background:transparent;
+  padding:0;
+}
+figure.hole-filler-sticker img {
+  width:100%;
+  max-height:180px;
+  object-fit:contain;
+}
+figure.hole-filler-sticker figcaption { display:none; }
+.note-with-sticker {
+  clear:both;
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) minmax(130px, 18%);
+  column-gap:24px;
+  align-items:center;
+  margin:14px 0;
+}
+.note-with-sticker blockquote { margin:0; }
+.note-with-sticker figure.sticker-exception {
+  float:none;
+  width:100%;
+  max-width:210px;
+  min-width:0;
+  margin:0;
+  justify-self:end;
+}
+figure.mini-test-image figcaption,
+figure.inline-sticker figcaption { display:none; }
+section.slide-dark figure.mini-test-image,
+section.slide-dark figure.inline-sticker { background:transparent; border:0; }
+section.slide-dark figure.mini-test-image img,
+section.slide-dark figure.inline-sticker img { border:0; }
+section.slide-dark figure.sketch { background:var(--dark-note); border-color:var(--cream); }
+section.slide-dark figure.sketch figcaption { color:var(--cream); }
+
+.slide-body table,
+.slide-body .math-block,
+.slide-body details,
+.slide-body .note-trap,
+.slide-body .note-rule,
+.slide-body .note-cheat { clear:both; }
+
+/* На горизонтальных слайдах формулы, details и плашки не должны сбрасываться под картинку: так убираем визуальные «дыры» справа. */
+section.slide-horizontal .slide-body .math-block,
+section.slide-horizontal .slide-body details,
+section.slide-horizontal .slide-body .note-trap,
+section.slide-horizontal .slide-body .note-rule,
+section.slide-horizontal .slide-body .note-cheat { clear:none; }
+section.slide-horizontal .slide-body blockquote,
+section.slide-horizontal .slide-body details { overflow:hidden; }
+section.slide-horizontal .slide-body .math-block {
+  overflow-x:auto;
+  overflow-y:hidden;
+  text-align:left;
+  margin:0.65em 0 0.9em;
+}
+section.slide-horizontal .slide-body .math-block .katex-display { text-align:left; }
+section.slide-fill-right .slide-body table {
+  clear:none;
+  width:auto;
+  max-width:100%;
+}
+section.slide-fill-right .slide-body table th,
+section.slide-fill-right .slide-body table td {
+  padding:7px 9px;
+  font-size:12.5px;
+}
+
+
+section.cheat-sheet .math-block { font-size:0.88em; }
+section.cheat-sheet .slide-body table { font-size:12.5px; }
+section.cheat-sheet .slide-body li .katex,
+section.cheat-sheet .slide-body p .katex { font-size:1em; }
+
+.slide-body blockquote {
+  margin:14px 0;
+  padding:13px 18px;
+  background:var(--note-bg);
+  border:0;
+  border-top:1px solid rgba(110,85,79,.28);
+  border-bottom:1px solid rgba(110,85,79,.28);
+  border-left:4px solid var(--mint);
+  border-radius:0;
+  color:var(--text);
+  font-style:normal;
+}
+.slide-body blockquote.note-trap { border-left-color:var(--terracotta); }
+.slide-body blockquote.note-rule { border-left-color:var(--mustard); }
+.slide-body blockquote.note-cheat { border-left-color:var(--mint); }
+.slide-body blockquote p:last-child { margin-bottom:0; }
+section.slide-dark .slide-body blockquote {
+  background:var(--dark-note);
+  color:var(--cream);
+}
+
+.slide-body details {
+  margin:14px 0;
+  padding:13px 18px;
+  background:var(--note-bg);
+  border:1px solid rgba(110,85,79,.72);
+  border-left:4px solid var(--mustard);
+  border-radius:0;
+  color:var(--text);
+}
+.slide-body details summary {
+  cursor:pointer;
+  color:var(--mustard);
+  font-weight:800;
+}
+.slide-body details > *:last-child { margin-bottom:0; }
+.slide-body details p { margin-top:10px; }
+section.slide-dark .slide-body details {
+  background:var(--dark-note);
+  color:var(--cream);
+  border-color:rgba(245,242,235,.48);
+  border-left-color:var(--mustard);
+}
+section.slide-dark .slide-body details summary { color:var(--mustard); }
+
+.slide-body table {
+  width:100%;
+  margin:14px 0;
+  border-collapse:collapse;
+  font-size:13.5px;
+  background:var(--paper);
+}
+.slide-body th,
+.slide-body td {
+  border:1px solid rgba(110,85,79,.72);
+  padding:9px 11px;
+  text-align:left;
+  vertical-align:top;
+}
+.slide-body th { background:var(--table-head); color:var(--ink); font-weight:800; }
+.slide-body tr:nth-child(even) td { background:rgba(243,235,227,.55); }
+section.slide-dark .slide-body th,
+section.slide-dark .slide-body td { border-color:rgba(245,242,235,.42); }
+section.slide-dark .slide-body th { background:var(--dark-note); color:var(--cream); }
+section.slide-dark .slide-body tr:nth-child(even) td { background:rgba(51,47,44,.75); }
+.slide-body code {
+  background:var(--note-bg);
+  color:var(--ink);
+  padding:1px 6px;
+  border:1px solid rgba(110,85,79,.72);
+  border-radius:0;
+  font-family:Consolas, Monaco, monospace;
+  font-size:0.92em;
+}
+section.slide-dark .slide-body code { background:var(--dark-note); color:var(--cream); }
+.math-block {
+  text-align:center;
+  margin:0.9em 0;
+  padding:0.25em 0;
+  overflow-x:auto;
+  overflow-y:hidden;
+}
+.math-block .katex-display { margin:0; }
+.slide-body .katex { color:var(--ink); font-weight:700; }
+.slide-body p > .katex,
+.slide-body li > .katex { font-size:1.05em; }
+.slide-body .katex .mbin,
+.slide-body .katex .mrel { color:var(--mint); }
+section.slide-dark .slide-body .katex,
+section.slide-dark .slide-body .katex * { color:var(--cream) !important; }
+section.slide-dark .slide-body .katex .mbin,
+section.slide-dark .slide-body .katex .mrel { color:var(--mustard) !important; }
+
+button.back-to-toc {
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  z-index:10;
+  background:var(--dark);
+  color:var(--cream);
+  border:1px solid var(--dark);
+  border-radius:0;
+  padding:10px 16px;
+  cursor:pointer;
+  font-family:'Montserrat', sans-serif;
+  font-size:14px;
+  font-weight:800;
+}
+button.back-to-toc:hover { background:var(--field); color:var(--dark); }
+
+
+@media (max-width:900px) {
+  .layout { flex-direction:column; }
+  nav.toc {
+    width:100%;
+    position:relative;
+    height:auto;
+    max-height:none;
+    border-right:0;
+    border-bottom:1px solid rgba(110,85,79,.72);
+  }
+  main.content { max-width:none; padding:20px 16px; }
+  section.slide { padding:24px 20px; }
+  section.slide::before { left:8px; }
+  section.slide-horizontal { min-height:0; }
+  figure.sketch, figure.sketch.sketch-compact, figure.sketch-secondary-right { float:none; width:100%; max-width:620px; margin:0 auto 18px; }
+  figure.mini-test-image { float:right; width:42%; max-width:360px; min-width:180px; margin:0 0 16px 18px; }
+  figure.inline-sticker { float:left; width:32%; max-width:210px; min-width:140px; margin:0 18px 12px 0; }
+  figure.inline-sticker.motivation-image { width:60%; max-width:360px; min-width:220px; }
+  figure.inline-sticker.inline-sticker-right { float:right; margin:0 0 12px 18px; }
+  figure.hole-filler-sticker { float:right; width:32%; max-width:200px; min-width:130px; margin:0 0 12px 18px; }
+  .note-with-sticker { display:block; }
+  .note-with-sticker figure.sticker-exception { float:none; width:45%; max-width:180px; margin:12px 0 0 auto; }
+  .slide-body table { display:block; overflow-x:auto; white-space:nowrap; max-width:100%; }
+  section.formula-atlas .formula-card { display:block; padding:16px 0; }
+  section.formula-atlas .formula-card figure.sketch { margin:0 auto 18px; max-width:620px; }
+}
+
+
+/* Atlas v3 visibility pass: make the old-notebook grid actually visible, not just theoretical. */
+section.slide {
+  background-color: rgba(250,246,238,.97);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M32 0H0V32' fill='none' stroke='%236E554F' stroke-opacity='.12' stroke-width='.55'/%3E%3C/svg%3E");
+  background-size: 32px 32px;
+}
+section.slide-dark {
+  background-image: none;
+}
+
+
+@media (min-width:901px) {
+  section
+  section
+  section
+  section
+}
+@media (max-width:900px) {
+  section
+}
+
+
+
+
+.cover-lead { font-size: 18px; font-weight: 700; color: var(--ink); margin: 0 0 14px; }
+section.slide-dark .cover-lead { color: var(--cream); }
+ol.checklist { padding-left: 24px; }
+ol.checklist li { margin-bottom: 8px; }
+header.slide-header h2 { max-width: 52rem; }
+.slide-body h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 18px 0 8px;
+  letter-spacing: -0.01em;
+}
+section.slide-dark .slide-body h3 { color: var(--cream); }
+
+figure.sketch-slot {
+  float: left;
+  width: clamp(280px, 38%, 520px);
+  max-width: 520px;
+  margin: 0 1.1cm 0.7cm 0;
+  border: 1px solid rgba(110,85,79,.78);
+  background: var(--field);
+  padding: 7px;
+}
+figure.sketch-slot .sketch-slot-frame {
+  min-height: 200px;
+  aspect-ratio: 4 / 3;
+  border: 1px dashed rgba(110,85,79,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+figure.sketch-slot .sketch-slot-hint {
+  color: rgba(110,85,79,.55);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+  line-height: 1.45;
+  padding: 14px 16px;
+}
+figure.sketch-slot figcaption {
+  margin-top: 7px;
+  color: var(--line);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+figure.sketch-slot.sketch-full {
+  float: none;
+  width: 100%;
+  max-width: none;
+  margin: 0 0 20px;
+}
+figure.sketch-slot.sketch-full .sketch-slot-frame {
+  min-height: 220px;
+  aspect-ratio: 16 / 6;
+}
+section.slide-dark figure.sketch-slot {
+  background: var(--dark-note);
+  border-color: rgba(245,242,235,.55);
+}
+section.slide-dark .sketch-slot-frame { border-color: rgba(245,242,235,.35); }
+section.slide-dark .sketch-slot-hint { color: rgba(245,242,235,.55); }
+section.slide-dark figure.sketch-slot figcaption { color: var(--cream); }
+
+.slide-body ul,
+.slide-body ol { overflow: hidden; }
+
+section.cheat-sheet figure.sketch-slot,
+section.slide-dark figure.sketch-slot.sketch-full {
+  float: none;
+  width: 100%;
+  max-width: none;
+  margin: 0 0 18px;
+}
+section.cheat-sheet .sketch-slot-frame {
+  min-height: 140px;
+  aspect-ratio: 16 / 5;
+}
+
+@media (max-width: 900px) {
+  figure.sketch-slot { float: none; width: 100%; max-width: 620px; margin: 0 auto 18px; }
+}
+
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc">
+<h1>Одночлены и многочлены</h1>
+<a class="block-header" href="#slide-01" data-order="01">О гайде</a>
+<a class="slide-link" href="#slide-01" data-order="01">Одночлены и многочлены</a>
+<a class="block-header" href="#slide-02" data-order="02">О гайде</a>
+<a class="slide-link" href="#slide-02" data-order="02">Зачем это нужно</a>
+<a class="slide-link" href="#slide-03" data-order="03">Что нужно знать заранее</a>
+<a class="slide-link" href="#slide-04" data-order="04">Как устроен гайд</a>
+<a class="block-header" href="#slide-05" data-order="05">Секция 1. Одночлен и действия с ним</a>
+<a class="slide-link" href="#slide-05" data-order="05">Секция 1. Зачем</a>
+<a class="slide-link" href="#slide-06" data-order="06">Секция 1. Что это</a>
+<a class="slide-link" href="#slide-07" data-order="07">Секция 1. Откуда берётся стандартный вид</a>
+<a class="slide-link" href="#slide-08" data-order="08">Секция 1. Как считать</a>
+<a class="slide-link" href="#slide-09" data-order="09">Секция 1. Где применить</a>
+<a class="slide-link" href="#slide-10" data-order="10">Секция 1. Где ошибиться</a>
+<a class="slide-link sub-slide" href="#slide-11" data-order="11">Секция 1. Задача с полным разбором</a>
+<a class="block-header" href="#slide-12" data-order="12">Секция 2. Многочлен</a>
+<a class="slide-link" href="#slide-12" data-order="12">Секция 2. Зачем</a>
+<a class="slide-link" href="#slide-13" data-order="13">Секция 2. Что это</a>
+<a class="slide-link" href="#slide-14" data-order="14">Секция 2. Откуда берётся стандартный вид</a>
+<a class="slide-link" href="#slide-15" data-order="15">Секция 2. Как считать</a>
+<a class="slide-link" href="#slide-16" data-order="16">Секция 2. Где применить</a>
+<a class="slide-link" href="#slide-17" data-order="17">Секция 2. Где ошибиться</a>
+<a class="slide-link sub-slide" href="#slide-18" data-order="18">Секция 2. Задача с полным разбором</a>
+<a class="block-header" href="#slide-19" data-order="19">Секция 3. Действия с многочленами</a>
+<a class="slide-link" href="#slide-19" data-order="19">Секция 3. Зачем</a>
+<a class="slide-link" href="#slide-20" data-order="20">Секция 3. Что это</a>
+<a class="slide-link" href="#slide-21" data-order="21">Секция 3. Откуда берётся распределительное свойство</a>
+<a class="slide-link" href="#slide-22" data-order="22">Секция 3. Как считать</a>
+<a class="slide-link" href="#slide-23" data-order="23">Секция 3. Где применить</a>
+<a class="slide-link" href="#slide-24" data-order="24">Секция 3. Где ошибиться</a>
+<a class="slide-link sub-slide" href="#slide-25" data-order="25">Секция 3. Задача с полным разбором</a>
+<a class="block-header" href="#slide-26" data-order="26">Секция 4. Формулы сокращённого умножения (ФСУ)</a>
+<a class="slide-link" href="#slide-26" data-order="26">Секция 4. Зачем</a>
+<a class="slide-link" href="#slide-27" data-order="27">Секция 4. Что это</a>
+<a class="slide-link" href="#slide-28" data-order="28">Секция 4. Откуда берутся формулы</a>
+<a class="slide-link" href="#slide-29" data-order="29">Секция 4. Вывод формул третьей степени</a>
+<a class="slide-link" href="#slide-30" data-order="30">Секция 4. Как считать</a>
+<a class="slide-link" href="#slide-31" data-order="31">Секция 4. Где применить</a>
+<a class="slide-link" href="#slide-32" data-order="32">Секция 4. Где ошибиться</a>
+<a class="slide-link sub-slide" href="#slide-33" data-order="33">Секция 4. Задача с полным разбором</a>
+<a class="block-header" href="#slide-34" data-order="34">Секция 5. Разложение многочлена на множители</a>
+<a class="slide-link" href="#slide-34" data-order="34">Секция 5. Зачем</a>
+<a class="slide-link" href="#slide-35" data-order="35">Секция 5. Что это</a>
+<a class="slide-link" href="#slide-36" data-order="36">Секция 5. Откуда берётся способ группировки</a>
+<a class="slide-link" href="#slide-37" data-order="37">Секция 5. Как считать</a>
+<a class="slide-link" href="#slide-38" data-order="38">Секция 5. Где применить</a>
+<a class="slide-link" href="#slide-39" data-order="39">Секция 5. Где ошибиться</a>
+<a class="slide-link sub-slide" href="#slide-40" data-order="40">Секция 5. Задача с полным разбором</a>
+<a class="block-header" href="#slide-41" data-order="41">Секция 6. Делимость и корни многочленов</a>
+<a class="slide-link" href="#slide-41" data-order="41">Секция 6. Зачем</a>
+<a class="slide-link" href="#slide-42" data-order="42">Секция 6. Что это</a>
+<a class="slide-link" href="#slide-43" data-order="43">Секция 6. Откуда берётся теорема</a>
+<a class="slide-link" href="#slide-44" data-order="44">Секция 6. Следствие о делителе свободного члена</a>
+<a class="slide-link" href="#slide-45" data-order="45">Секция 6. Как считать</a>
+<a class="slide-link" href="#slide-46" data-order="46">Секция 6. Полная формулировка теоремы Виета</a>
+<a class="slide-link" href="#slide-47" data-order="47">Секция 6. Где применить</a>
+<a class="slide-link" href="#slide-48" data-order="48">Секция 6. Где ошибиться</a>
+<a class="slide-link sub-slide" href="#slide-49" data-order="49">Секция 6. Задача с полным разбором</a>
+<a class="block-header" href="#slide-50" data-order="50">Секция 7. Комбинированные задачи (секция-практикум)</a>
+<a class="slide-link" href="#slide-50" data-order="50">Секция 7. Зачем</a>
+<a class="slide-link" href="#slide-51" data-order="51">Секция 7. Что это</a>
+<a class="slide-link" href="#slide-52" data-order="52">Секция 7. Как считать</a>
+<a class="slide-link" href="#slide-53" data-order="53">Секция 7. Где применить</a>
+<a class="slide-link" href="#slide-54" data-order="54">Секция 7. Где ошибиться</a>
+<a class="slide-link sub-slide" href="#slide-55" data-order="55">Секция 7. Задача с полным разбором</a>
+<a class="slide-link" href="#slide-56" data-order="56">Секция 7. Проверка через теорему Виета</a>
+<a class="block-header" href="#slide-57" data-order="57">Сборник формул</a>
+<a class="slide-link" href="#slide-57" data-order="57">Сборник формул</a>
+<a class="block-header" href="#slide-58" data-order="58">Чек-лист</a>
+<a class="slide-link" href="#slide-58" data-order="58">Чек-лист</a>
+<a class="block-header" href="#slide-59" data-order="59">Типичные ловушки</a>
+<a class="slide-link" href="#slide-59" data-order="59">Типичные ловушки</a>
+<a class="slide-link" href="#slide-60" data-order="60">Ловушки 5–7</a>
+<a class="block-header" href="#slide-61" data-order="61">Что дальше</a>
+<a class="slide-link" href="#slide-61" data-order="61">Что дальше</a>
+<a class="block-header" href="#slide-62" data-order="62">Сборник, ловушки, финал</a>
+<a class="slide-link" href="#slide-62" data-order="62">Финал</a>
+</nav>
+<main class="content">
+<section class="slide" id="slide-01">
+<header class="slide-header"><span class="order-num">№01</span><span class="slide-num">Титул</span><h2>Одночлены и многочлены</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot sketch-full" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Титул. Скетчбук: кирпичи-одночлены собираются в стену-многочлен. Персонаж и паук. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Одночлены и многочлены — фундамент всей алгебры. Через них решаются уравнения, преобразуются выражения, строятся графики.</p></div>
+</section>
+<section class="slide bridge-slide" id="slide-02">
+<header class="slide-header"><span class="order-num">№02</span><span class="slide-num">Мостик</span><h2>Зачем это нужно</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Четыре сюжета жизни: бросок, прибыль, хеш/код, арка. Карандаш, без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Одночлены и многочлены — <strong>фундамент всей алгебры</strong>. Через них решаются уравнения, преобразуются выражения, строятся графики. Без них не разобраться ни в одной более сложной теме.</p>
+<p><strong>Где встречается в жизни:</strong></p>
+<ul><li><strong>Финансы и экономика.</strong> Формула прибыли \(P = R - C\) — это многочлен. Формула сложного процента \(S = P(1 + r)^n\) раскрывается через бином Ньютона — это тоже про многочлены.</li><li><strong>Физика.</strong> Закон движения \(s = v_0 t + \frac{a t^2}{2}\) — это многочлен от времени. Кинетическая энергия \(E = \frac{mv^2}{2}\) — одночлен.</li><li><strong>Программирование.</strong> Алгоритмы сжатия и кодирования работают с полиномами. Хеш-функции используют деление многочленов.</li><li><strong>Архитектура и инженерия.</strong> Расчёт нагрузок, оптимизация форм, аппроксимация кривых многочленами.</li></ul></div>
+</section>
+<section class="slide" id="slide-03">
+<header class="slide-header"><span class="order-num">№03</span><span class="slide-num">Слайд</span><h2>Что нужно знать заранее</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Поля тетради: степень, скобки, подобные. Пустые места под подписи HTML.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li>Натуральные числа и степени.</li><li>Свойства арифметики: умножение, деление, раскрытие скобок.</li><li>Приведение подобных: \(3x + 5x = 8x\).</li><li>Одночлен с одной переменной (из 7 класса).</li></ul></div>
+</section>
+<section class="slide" id="slide-04">
+<header class="slide-header"><span class="order-num">№04</span><span class="slide-num">Слайд</span><h2>Как устроен гайд</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Цепочка станций: зачем → что → как → ловушка. Атласный разворот без текста.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Каждая секция — один механизм. Структура: <strong>зачем → что это → откуда берётся → как считать → где применить → где ошибиться</strong>. В конце секции — задача с полным разбором («цепочка мыслей»), чтобы закрепить.</p></div>
+</section>
+<section class="slide bridge-slide" id="slide-05">
+<header class="slide-header"><span class="order-num">№05</span><span class="slide-num">Секция 1</span><h2>Секция 1. Зачем</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Один кирпич-одночлен крупно: коэффициент и буквы как штампы. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Любое алгебраическое выражение начинается с одночлена. Умеешь работать с одночленом — собираешь многочлены, решаешь уравнения, строишь графики.</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-06">
+<header class="slide-header"><span class="order-num">№06</span><span class="slide-num">Секция 1</span><h2>Секция 1. Что это</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Разбор одночлена на множители: число, затем буквы по алфавиту. Как конструктор. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Одночлен</strong> — это произведение <strong>чисел</strong> и <strong>степеней переменных</strong> с <strong>натуральным показателем</strong>.</p>
+<blockquote class="note-cheat"><p><strong>Что такое натуральный показатель.</strong> Натуральные числа — это числа, которыми мы считаем предметы: \(1, 2, 3, 4, 5, \ldots\). Ноль к натуральным числам НЕ относится. Поэтому показатель степени в одночлене — это целое положительное число (\(1, 2, 3, \ldots\)), а не ноль и не дробь. Если переменная входит в одночлен без степени — её степень равна \(1\) (то есть \(x = x^1\)). Это объясняет, почему \(x^0\) в одночлене запрещено: оно равно \(1\) — числу, а не переменной.</p></blockquote>
+<p><strong>Стандартный вид одночлена</strong>: числовой множитель стоит на первом месте, затем — степени разных переменных в алфавитном порядке.</p>
+<p><strong>Коэффициент</strong> — числовой множитель в стандартном виде.</p>
+<p><strong>Степень одночлена</strong> — сумма показателей всех переменных (если коэффициент \(\neq 0\)). Отдельное число без переменных — одночлен степени \(0\); это отдельный случай, не путать с запретом \(x^0\) внутри буквенного одночлена.</p>
+<p><strong>Пример.</strong> \(-36a^2 x^{12} y^3\). Коэффициент: \(-36\). Степень: \(2 + 12 + 3 = 17\).</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-07">
+<header class="slide-header"><span class="order-num">№07</span><span class="slide-num">Секция 1</span><h2>Секция 1. Откуда берётся стандартный вид</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Сборка: кучки одинаковых букв слипаются в одну степень. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Любой одночлен можно привести к стандартному виду через <strong>перестановку множителей</strong> и <strong>умножение степеней с одинаковым основанием</strong> (по свойству \(a^m \cdot a^n = a^{m+n}\)).</p>
+<p><strong>Пример.</strong> \(12 a^2 x^4 \cdot (-3 x^8 y^3)\):</p>
+<ol><li>Перемножаем коэффициенты: \(12 \cdot (-3) = -36\).</li><li>Собираем степени \(a\): только \(a^2\).</li><li>Собираем степени \(x\): \(x^4 \cdot x^8 = x^{12}\).</li><li>Собираем степени \(y\): только \(y^3\).</li><li>Итог: \(-36 a^2 x^{12} y^3\). Коэффициент \(-36\), степень \(17\).</li></ol></div>
+</section>
+<section class="slide slide-horizontal" id="slide-08">
+<header class="slide-header"><span class="order-num">№08</span><span class="slide-num">Секция 1</span><h2>Секция 1. Как считать</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Четыре жеста: умножить, разделить, возвести, сложить только подобные. Иконки-действия, без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Умножение одночленов:</strong> перемножаем коэффициенты, степени с одинаковым основанием складываем.</p>
+<div class="math-block">\[\underbrace{2x^3}_{\text{коэф. } 2,\; x^3} \;\cdot\; \underbrace{4x^2}_{\text{коэф. } 4,\; x^2} \;=\; \underbrace{(2\cdot 4)}_{\text{новый коэф.}=8} \;\cdot\; \underbrace{x^{3+2}}_{x^5} \;=\; 8x^5.\]</div>
+<p>Ещё пример с тремя одночленами: \(3x \cdot 5y \cdot 2x^2 = (3 \cdot 5 \cdot 2) \cdot x^{1+2} \cdot y = 30 x^3 y\).</p>
+<p><strong>Деление одночленов:</strong> делим коэффициенты, из показателя степени делимого вычитаем показатель степени делителя (при одинаковом основании).</p>
+<div class="math-block">\[12x^5 : 4x^2 = (12 : 4) \cdot x^{5-2} = 3x^3.\]</div>
+<p>Ещё: \(24 a^3 b^2 : 8 a b = (24 : 8) \cdot a^{3-1} \cdot b^{2-1} = 3 a^2 b\).</p>
+<p><strong>Возведение в степень:</strong> возводим в эту степень каждый множитель: \((a^m)^n = a^{mn}\). Затем перемножаем результаты.</p>
+<div class="math-block">\[(2x^2)^3 = 2^3 \cdot (x^2)^3 = 8 \cdot x^{2 \cdot 3} = 8x^6.\]</div>
+<p>Ещё: \((-3a^2 b)^2 = (-3)^2 \cdot (a^2)^2 \cdot b^2 = 9 a^4 b^2\).</p>
+<p><strong>Сложение и вычитание:</strong> только для <strong>подобных</strong> одночленов — тех, которые отличаются только коэффициентом.</p>
+<div class="math-block">\[3x^2 + 5x^2 = (3+5)x^2 = 8x^2 \quad \text{(подобные)}.\]</div>
+<p>А вот \(3x^2 + 5x^3\) сложить <strong>нельзя</strong> — это неподобные одночлены (разные степени \(x\)).</p></div>
+</section>
+<section class="slide" id="slide-09">
+<header class="slide-header"><span class="order-num">№09</span><span class="slide-num">Секция 1</span><h2>Секция 1. Где применить</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Одночлены как детали перед сборкой механизма. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Упрощение выражений перед дальнейшими действиями.</strong> Например, в дроби \(\dfrac{15x^3 y^2}{3x^2 y}\) до сокращения удобно умножить или разделить одночлены по правилам выше — и увидеть, что числитель и знаменатель имеют общий множитель \(3x^2 y\).</li><li><strong>Сокращение дробей с одночленами.</strong> \(\dfrac{12x^5}{4x^2} = 3x^3\) — деление числителя и знаменателя друг на друга.</li><li><strong>Приведение подобных в многочленах.</strong> В многочлене \(3x^2 + 5x^2 + 7x\) первые два члена — подобные, складываем: \(8x^2 + 7x\).</li></ul></div>
+</section>
+<section class="slide" id="slide-10">
+<header class="slide-header"><span class="order-num">№10</span><span class="slide-num">Секция 1</span><h2>Секция 1. Где ошибиться</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Капкан: два разных кирпича пытаются склеить в один. Оранжевый акцент. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Перепутал знак коэффициента</strong> при перемножении отрицательных чисел. Например, \((-2x) \cdot 3x = -6x^2\), а <strong>не</strong> \(+6x^2\). Знак «минус» берётся из произведения знаков.</li><li><strong>Сложил степени с разными основаниями</strong> (\(x^2 + y^3\) НЕ складываются). Вид записи похож на «сумму», но \(x^2\) и \(y^3\) — разные одночлены, потому что основания разные.</li><li><strong>Забыл проверить делимость</strong> при делении одночленов. Например, \(x^3 : x^5\) — нельзя, потому что \(3 - 5 = -2\), а отрицательная степень в одночлене не допускается.</li><li><strong>Складываешь неподобные одночлены</strong> — это невозможно. \(2x^3 + 3x^2\) оставить как есть, нельзя превратить в \(5x^5\) или подобное.</li></ul></div>
+</section>
+<section class="slide slide-horizontal" id="slide-11">
+<header class="slide-header"><span class="order-num">№11</span><span class="slide-num">Секция 1</span><h2>Секция 1. Задача с полным разбором</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Россыпь множителей, которые собирают в один стандартный одночлен. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Условие.</strong> Приведи к стандартному виду: \(4 a b^2 \cdot a b \cdot b^4 \cdot a \cdot (-0.2 a)\).</p>
+<p><strong>Цепочка мыслей:</strong></p>
+<ol><li><strong>Распознаю тип.</strong> Произведение одночленов, все переменные — \(a\) и \(b\).</li><li><strong>Собираю коэффициенты:</strong> \(4 \cdot 1 \cdot 1 \cdot 1 \cdot (-0.2) = -0.8\).<blockquote class="note-cheat"><p><strong>Откуда единицы?</strong> У одночленов без числового множителя перед буквенной частью коэффициент считается равным \(1\) — просто он не пишется. То есть \(a b = 1 \cdot a \cdot b\), \(b^4 = 1 \cdot b^4\), \(a = 1 \cdot a\). Это соглашение: если число не написано — значит, \(1\).</p></blockquote></li><li><strong>Считаю степени \(a\):</strong> в первом одночлене \(a^1\), во втором \(a^1\), в третьем нет \(a\), в четвёртом \(a^1\), в пятом \(a^1\). Итого: \(a^{1+1+0+1+1} = a^4\).<blockquote class="note-cheat"><p><strong>Почему ноль для отсутствующей переменной?</strong> Если в одночлене нет переменной \(a\), её степень в этом одночлене = \(0\) (то есть \(a^0 = 1\), и умножение на \(1\) ничего не меняет). Поэтому вклад в общую степень = \(0\).</p></blockquote></li><li><strong>Считаю степени \(b\):</strong> в первом \(b^2\), во втором \(b^1\), в третьем \(b^4\), в четвёртом и пятом нет \(b\). Итого: \(b^{2+1+4} = b^7\).</li><li><strong>Записываю стандартный вид:</strong> \(-0.8 a^4 b^7\).</li><li><strong>Коэффициент:</strong> \(-0.8\). <strong>Степень:</strong> \(4 + 7 = 11\).</li></ol>
+<p><strong>Ответ:</strong> \(-0.8 a^4 b^7\), коэффициент \(-0.8\), степень \(11\).</p></div>
+</section>
+<section class="slide bridge-slide" id="slide-12">
+<header class="slide-header"><span class="order-num">№12</span><span class="slide-num">Секция 2</span><h2>Секция 2. Зачем</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Стена из разновысоких кирпичей — многочлен как сумма одночленов. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Многочлен — это сумма одночленов. Все уравнения, формулы, графики — это многочлены. Умеешь с ними работать — решаешь всё.</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-13">
+<header class="slide-header"><span class="order-num">№13</span><span class="slide-num">Секция 2</span><h2>Секция 2. Что это</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Линейка степеней: самый высокий кирпич задаёт степень многочлена. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Многочлен</strong> — это сумма одночленов. Один одночлен тоже считается многочленом.</p>
+<p><strong>Стандартный вид многочлена</strong> — все члены в стандартном виде, <strong>нет подобных</strong> (приведены).</p>
+<p><strong>Степень многочлена</strong> — наибольшая степень среди его членов (после приведения).</p>
+<p><strong>Приведённый многочлен</strong> — стандартный вид, причём коэффициент при члене с наибольшей степенью равен \(1\).</p>
+<p><strong>Однородный многочлен</strong> — все члены имеют одинаковую степень.</p>
+<p><strong>Пример.</strong> \(3x^4 - 2x^2 + 7x - 1\). Степень \(4\). Это многочлен <strong>в стандартном виде</strong>, но он <strong>не приведённый</strong>, потому что старший коэффициент равен \(3\), а не \(1\).</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-14">
+<header class="slide-header"><span class="order-num">№14</span><span class="slide-num">Секция 2</span><h2>Секция 2. Откуда берётся стандартный вид</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Сортировка кирпичей по убыванию высоты, одинаковые сливаются. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Чтобы привести многочлен к стандартному виду:</p>
+<ol><li>Каждый член приводим к стандартному виду одночлена.</li><li>Складываем (приводим) подобные члены.</li><li>Записываем в порядке убывания степени.</li></ol>
+<p><strong>Пример.</strong> \(a^3 c - a^2 c + 3a^3 c + 2a^2 c\):</p>
+<ol><li>Группируем подобные: \(a^3 c\) и \(3 a^3 c\) — подобные (отличаются коэффициентом). \(a^2 c\) и \(2 a^2 c\) — подобные.</li><li>Складываем: \(a^3 c + 3 a^3 c = 4 a^3 c\). \(-a^2 c + 2 a^2 c = a^2 c\).</li><li>Итог: \(4 a^3 c + a^2 c\). Степень \(4\) (это \(a^3 c\), степень \(3 + 1 = 4\)).</li></ol></div>
+</section>
+<section class="slide slide-horizontal" id="slide-15">
+<header class="slide-header"><span class="order-num">№15</span><span class="slide-num">Секция 2</span><h2>Секция 2. Как считать</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Три проверки: максимум высоты, старший коэффициент 1?, все одной высоты? Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Определение степени многочлена.</strong> Берём максимальную степень среди членов.</p>
+<div class="math-block">\[P(x) = 3x^4 - 2x^2 + 7x - 1.\]</div>
+<p>Степени членов: \(4, 2, 1, 0\). Максимум = \(4\). Значит, степень многочлена = \(4\).</p>
+<div class="math-block">\[Q(x, y) = 5x^3 y - 2x^2 y^2 + 7 x y^3.\]</div>
+<p>Степени членов (сумма показателей): \(3+1=4\), \(2+2=4\), \(1+3=4\). Все одинаковые = \(4\). Максимум = \(4\). Значит, степень = \(4\).</p>
+<p><strong>Проверка, приведённый ли многочлен.</strong> Смотрим на старший коэффициент.</p>
+<p>\(P(x) = 3x^4 - 2x^2 + 7x - 1\) — старший коэффициент \(3\), не \(1\). Значит, <strong>не</strong> приведённый.</p>
+<p>\(R(x) = x^3 + 5x^2 - 7\) — старший коэффициент \(1\). Значит, <strong>приведённый</strong>.</p>
+<p><strong>Проверка, однородный ли.</strong> Все члены должны иметь одну и ту же степень.</p>
+<p>\(Q(x, y) = 5x^3 y - 2x^2 y^2 + 7 x y^3\) — все члены степени \(4\). Однородный.</p>
+<p>\(P(x) = 3x^4 - 2x^2 + 7x - 1\) — степени \(4, 2, 1, 0\) — <strong>разные</strong>. <strong>Не</strong> однородный.</p></div>
+</section>
+<section class="slide" id="slide-16">
+<header class="slide-header"><span class="order-num">№16</span><span class="slide-num">Секция 2</span><h2>Секция 2. Где применить</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Указатели: степень 1 — прямая, степень 2 — парабола. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Приведение подобных в уравнениях.</strong> Например, в уравнении \(3x + 5x = 16\) складываем подобные: \(8x = 16\), откуда \(x = 2\). Без приведения подобных пришлось бы работать с четырьмя членами вместо двух.</li><li><strong>Определение степени многочлена (важно для дальнейшего: степень 1 — линейное уравнение, степень 2 — квадратное, и т.д.).</strong> Например, \(x^2 - 5x + 6 = 0\) — степень \(2\), это <strong>квадратное уравнение</strong>, решается через дискриминант. А \(x^3 - 8 = 0\) — степень \(3\), решается иначе (через разность кубов).</li><li><strong>Упрощение сложных выражений перед дальнейшими действиями.</strong> Например, \(2x^2 + 3x + 5x^2 - x = (2+5)x^2 + (3-1)x = 7x^2 + 2x\) — многочлен стал короче, с ним удобнее работать дальше.</li></ul></div>
+</section>
+<section class="slide" id="slide-17">
+<header class="slide-header"><span class="order-num">№17</span><span class="slide-num">Секция 2</span><h2>Секция 2. Где ошибиться</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Ловушка: сложили высоты всех кирпичей вместо того, чтобы взять максимум. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Степень считаешь по сумме показателей одного члена, а не по максимуму.</strong> Например, для \(P(x) = 3x^4 - 2x^2\) степень = \(4\) (максимум), а <strong>не</strong> \(4 + 2 = 6\). Степень многочлена — максимум, а не сумма.</li><li><strong>Забываешь привести подобные</strong> — стандартный вид требует, чтобы подобных не было. Например, \(5x + 3x\) без приведения подобных даёт \(8x\) только после сложения; в стандартном виде так и должно быть записано.</li><li><strong>Путаешь «приведённый» (старший коэффициент 1) с «приведённым к стандартному виду»</strong> — это разные вещи. «Приведённый к стандартному виду» = подобные приведены, записаны по убыванию степени. «Приведённый многочлен» = дополнительное условие, что старший коэффициент = \(1\).</li></ul></div>
+</section>
+<section class="slide slide-horizontal" id="slide-18">
+<header class="slide-header"><span class="order-num">№18</span><span class="slide-num">Секция 2</span><h2>Секция 2. Задача с полным разбором</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Четыре слагаемых, две пары подобных, итог — два кирпича разной высоты. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Условие.</strong> Приведи к стандартному виду многочлен: \(a^3 c - a^2 c + 3 a^3 c + 2 a^2 c\). Определи степень.</p>
+<p><strong>Цепочка мыслей:</strong></p>
+<ol><li><strong>Распознаю тип.</strong> Многочлен с переменными \(a\) и \(c\). Четыре члена.</li><li><strong>Группирую подобные.</strong> Подобные — это члены, отличающиеся только коэффициентом.<ul><li>\(a^3 c\) и \(3 a^3 c\) — подобные (одинаковая буквенная часть).</li><li>\(-a^2 c\) и \(2 a^2 c\) — подобные.</li></ul></li><li><strong>Складываю подобные:</strong><ul><li>\(a^3 c + 3 a^3 c = (1 + 3) \cdot a^3 c = 4 a^3 c\).</li><li>\(-a^2 c + 2 a^2 c = (-1 + 2) \cdot a^2 c = 1 \cdot a^2 c = a^2 c\).</li></ul></li><li><strong>Записываю стандартный вид</strong> (по убыванию степени): \(4 a^3 c + a^2 c\).</li><li><strong>Определяю степень.</strong> У первого члена \(a^3 c\) степень \(3 + 1 = 4\). У второго \(a^2 c\) степень \(2 + 1 = 3\). Максимальная: \(4\).</li><li><strong>Приведённый ли?</strong> Старший коэффициент — \(4\), не равен \(1\). Значит, <strong>не</strong> приведённый.</li></ol>
+<p><strong>Ответ:</strong> \(4 a^3 c + a^2 c\), степень \(4\).</p></div>
+</section>
+<section class="slide bridge-slide" id="slide-19">
+<header class="slide-header"><span class="order-num">№19</span><span class="slide-num">Секция 3</span><h2>Секция 3. Зачем</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Мостик: скобки раскрываются в сетку произведений. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Сложение, вычитание, умножение, деление многочленов — это основа для <strong>раскрытия скобок</strong>, <strong>приведения подобных</strong>, <strong>решения уравнений</strong>. Без этих операций никуда.</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-20">
+<header class="slide-header"><span class="order-num">№20</span><span class="slide-num">Секция 3</span><h2>Секция 3. Что это</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Сетка умножения двучленов: каждая клетка — произведение пары. Без формул в клетках.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Сложение/вычитание многочленов:</strong> раскрыть скобки (с учётом знака), привести подобные.</p>
+<p><strong>Умножение многочлена на одночлен:</strong> одночлен умножается на каждый член многочлена, результаты складываются.</p>
+<div class="math-block">\[a(b + c + d) = ab + ac + ad.\]</div>
+<p><strong>Умножение многочлена на многочлен:</strong> каждый член первого умножается на каждый член второго, всё складывается.</p>
+<div class="math-block">\[(a + b)(c + d) = ac + ad + bc + bd.\]</div>
+<p><strong>Деление многочлена на одночлен:</strong> каждый член делится на одночлен, результаты складываются. <strong>Важно:</strong> делитель \(d \neq 0\) — иначе операция не определена.</p>
+<div class="math-block">\[(a + b + c) : d = \frac{a}{d} + \frac{b}{d} + \frac{c}{d}, \quad d \neq 0.\]</div></div>
+</section>
+<section class="slide slide-horizontal" id="slide-21">
+<header class="slide-header"><span class="order-num">№21</span><span class="slide-num">Секция 3</span><h2>Секция 3. Откуда берётся распределительное свойство</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Один множитель раздаёт себя каждому слагаемому, как раздача карт. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Это <strong>распределительное свойство умножения</strong> (дистрибутивность): \(a(b + c) = ab + ac\). Оно следует из аксиом арифметики: умножение на сумму равно сумме произведений.</p>
+<p><strong>Применяем</strong> это свойство последовательно:</p>
+<ul><li>Для \(a(b + c)\): \(ab + ac\) (одно применение).</li><li>Для \(a(b + c + d)\): \(ab + ac + ad\) (два применения).</li><li>Для \((a + b)(c + d)\): \(a(c+d) + b(c+d) = ac + ad + bc + bd\) (три применения).</li></ul>
+<p><strong>Схема «веточка» (как распределяется умножение):</strong></p>
+<p>Чтобы увидеть распределение умножения на схеме, изобразим «веточку»:</p>
+<ul><li>Верхний уровень: выражение в скобках, например \((a + b)(c + d)\).</li><li>Каждый член одной скобки умножается на <strong>каждый</strong> член другой скобки — получается «крест» из произведений.</li><li>Все произведения складываются.</li></ul>
+<p>Та же идея для \(a(c + d)\): одночлен \(a\) умножается на \(c\) и на \(d\) — два произведения \(ac + ad\).</p>
+<p><strong>Главное правило:</strong> сколько слагаемых в скобках, столько отдельных умножений нужно сделать. Результаты складываются.</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-22">
+<header class="slide-header"><span class="order-num">№22</span><span class="slide-num">Секция 3</span><h2>Секция 3. Как считать</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Построчное умножение: линейка идёт по каждому члену. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Умножение многочленов «построчно»:</strong></p>
+<ol><li>Берём каждый член первого многочлена.</li><li>Умножаем его на каждый член второго.</li><li>Складываем все полученные произведения.</li><li>Приводим подобные.</li></ol>
+<p><strong>Пример 1. Одночлен на двучлен.</strong> \(3x \cdot (2x + 5) = 3x \cdot 2x + 3x \cdot 5 = 6x^2 + 15x\).</p>
+<p><strong>Пример 2. Двучлен на двучлен.</strong></p>
+<div class="math-block">\[(x + 3)(x - 2) = x \cdot x + x \cdot (-2) + 3 \cdot x + 3 \cdot (-2) = x^2 - 2x + 3x - 6 = x^2 + x - 6.\]</div>
+<p><strong>Пример 3. Двучлен на трёхчлен.</strong></p>
+<div class="math-block">\[(x + 2)(x^2 - x + 1) = x^3 - x^2 + x + 2x^2 - 2x + 2 = x^3 + x^2 - x + 2.\]</div>
+<p><strong>Сложение и вычитание многочленов.</strong> Раскрыть скобки, привести подобные.</p>
+<div class="math-block">\[(2x^2 + 3x) + (5x^2 - x) = 2x^2 + 3x + 5x^2 - x = 7x^2 + 2x.\]</div>
+<div class="math-block">\[(2x^2 + 3x) - (5x^2 - x) = 2x^2 + 3x - 5x^2 + x = -3x^2 + 4x.\]</div>
+<p>Обрати внимание на смену знаков во втором примере: \(-(5x^2 - x) = -5x^2 + x\).</p>
+<p><strong>Деление многочлена на одночлен:</strong></p>
+<ol><li>Делим каждый член многочлена на одночлен.</li><li>Если у какого-то члена показатель переменной меньше, чем у делителя, частное уже не многочлен (появляется отрицательная степень) — в школьном смысле операция «деление многочлена на одночлен» тогда не определена.</li></ol>
+<p><strong>Пример.</strong> \((12x^4 - 8x^3 + 4x^2) : 4x^2 = 3x^2 - 2x + 1\) (каждый член делим отдельно: \(12x^4 : 4x^2 = 3x^2\), \(-8x^3 : 4x^2 = -2x\), \(4x^2 : 4x^2 = 1\)).</p></div>
+</section>
+<section class="slide" id="slide-23">
+<header class="slide-header"><span class="order-num">№23</span><span class="slide-num">Секция 3</span><h2>Секция 3. Где применить</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Скобки в уравнении раскрываются в ряд кирпичей. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Раскрытие скобок в уравнениях.</strong> Например, \(3(x - 2) = 0\) раскрывается как \(3x - 6 = 0\), откуда \(x = 2\). Без раскрытия скобок уравнение не решить.</li><li><strong>Преобразование выражений.</strong> Например, чтобы упростить \((x + 1)(x + 2) + (x + 3)(x + 4)\), раскрываем обе скобки и складываем: \((x^2 + 3x + 2) + (x^2 + 7x + 12) = 2x^2 + 10x + 14\).</li><li><strong>Сокращение дробей с многочленами.</strong> Например, \(\dfrac{x^2 - 9}{x - 3}\) — числитель раскладывается по ФСУ как \((x-3)(x+3)\), после сокращения остаётся \(x + 3\).</li><li><strong>Упрощение формул.</strong> Например, площадь рамки: \(S = ab - (a-2)(b-2) = ab - (ab - 2a - 2b + 4) = 2a + 2b - 4\).</li></ul></div>
+</section>
+<section class="slide" id="slide-24">
+<header class="slide-header"><span class="order-num">№24</span><span class="slide-num">Секция 3</span><h2>Секция 3. Где ошибиться</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Капкан минуса перед скобкой: все знаки внутри переворачиваются. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Забыл сменить знаки</strong> при вычитании. Например, \((x + 5) - (x - 3) = x + 5 - x + 3 = 8\), а <strong>не</strong> \(x + 5 - x - 3 = 2\).</li><li><strong>Потерял член</strong> при раскрытии скобок. Например, \(2(x + 3 + y) = 2x + 6 + 2y\) — все три члена в скобках должны быть умножены на \(2\).</li><li><strong>Не привёл подобные</strong> после раскрытия. Например, \((x + 1)^2 = x^2 + 2x + 1\) — после раскрытия подобных нет; а если забыть, может получиться «\(x^2 + 2x + 1\)» как «три разных члена», и ученик не замечает, что приводить нечего (но в других задачах приведение обязательно).</li><li><strong>Делишь многочлен на двучлен столбиком, как на одночлен</strong> — это разные операции. Например, \((x^2 + 5x + 6) : (x + 2)\) — здесь нельзя просто поделить каждый член на \((x+2)\); нужно делать <strong>деление уголком</strong>, как в Секции 6.</li></ul></div>
+</section>
+<section class="slide slide-horizontal" id="slide-25">
+<header class="slide-header"><span class="order-num">№25</span><span class="slide-num">Секция 3</span><h2>Секция 3. Задача с полным разбором</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Деление каждого члена на одночлен, как разрезание ленты на равные доли. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Условие.</strong> Выполни деление многочлена на одночлен: \((15x^3 - 10x^2 + 5x) : 5x\).</p>
+<p><strong>Цепочка мыслей:</strong></p>
+<ol><li><strong>Распознаю тип.</strong> Деление многочлена на одночлен. Делитель — \(5x\), не ноль.</li><li><strong>Делю каждый член многочлена на \(5x\):</strong><ul><li>\(15x^3 : 5x = 3x^2\) (коэффициенты \(15 : 5 = 3\), степени \(x^{3-1} = x^2\)).</li><li>\(-10x^2 : 5x = -2x\) (коэффициенты \(-10 : 5 = -2\), степени \(x^{2-1} = x^1\)).</li><li>\(5x : 5x = 1\) (коэффициенты \(5 : 5 = 1\), степени \(x^{1-1} = x^0 = 1\)).</li></ul></li><li><strong>Складываю результаты:</strong> \(3x^2 + (-2x) + 1 = 3x^2 - 2x + 1\).</li><li><strong>Проверка</strong> — умножу результат на делитель: \((3x^2 - 2x + 1) \cdot 5x = 15x^3 - 10x^2 + 5x\). Получили исходный многочлен — деление выполнено верно.</li></ol>
+<p><strong>Ответ:</strong> \(3x^2 - 2x + 1\).</p></div>
+</section>
+<section class="slide bridge-slide" id="slide-26">
+<header class="slide-header"><span class="order-num">№26</span><span class="slide-num">Секция 4</span><h2>Секция 4. Зачем</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Готовый штамп вместо долгого раскрытия скобок. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Эти формулы — <strong>главный рабочий инструмент</strong> для упрощения выражений. Вместо того чтобы каждый раз раскрывать скобки «долго», используешь готовую формулу. Экономит минуты на каждой задаче.</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-27">
+<header class="slide-header"><span class="order-num">№27</span><span class="slide-num">Секция 4</span><h2>Секция 4. Что это</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Семь карточек ФСУ как марки в альбоме. На карточках пусто — формулы даст HTML.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>7 базовых формул.</strong> Условно делятся на две группы: <strong>формулы второй степени</strong> (содержат квадраты) и <strong>формулы третьей степени</strong> (содержат кубы). Разберём каждую группу отдельно.</p>
+<h3>Подсекция А. Формулы второй степени (3 штуки)</h3>
+<p><strong>Формула 1. Квадрат суммы.</strong></p>
+<div class="math-block">\[\boxed{(a + b)^2 = a^2 + 2ab + b^2}\]</div>
+<p><strong>Формула 2. Квадрат разности.</strong></p>
+<div class="math-block">\[\boxed{(a - b)^2 = a^2 - 2ab + b^2}\]</div>
+<p><strong>Формула 3. Разность квадратов.</strong></p>
+<div class="math-block">\[\boxed{a^2 - b^2 = (a - b)(a + b)}\]</div>
+<h3>Подсекция Б. Формулы третьей степени (4 штуки)</h3>
+<p><strong>Формула 4. Куб суммы.</strong></p>
+<div class="math-block">\[\boxed{(a + b)^3 = a^3 + 3a^2 b + 3a b^2 + b^3}\]</div>
+<p><strong>Формула 5. Куб разности.</strong></p>
+<div class="math-block">\[\boxed{(a - b)^3 = a^3 - 3a^2 b + 3a b^2 - b^3}\]</div>
+<p><strong>Формула 6. Сумма кубов.</strong></p>
+<div class="math-block">\[\boxed{a^3 + b^3 = (a + b)(a^2 - ab + b^2)}\]</div>
+<p><strong>Формула 7. Разность кубов.</strong></p>
+<div class="math-block">\[\boxed{a^3 - b^3 = (a - b)(a^2 + ab + b^2)}\]</div></div>
+</section>
+<section class="slide slide-horizontal" id="slide-28">
+<header class="slide-header"><span class="order-num">№28</span><span class="slide-num">Секция 4</span><h2>Секция 4. Откуда берутся формулы</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Квадрат (a+b) плитками: два квадрата и два прямоугольника. Геометрия, без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Каждая формула — <strong>прямое следствие распределительного свойства</strong>. Выведем все семь формул по порядку.</p>
+<h3>Вывод формул второй степени</h3>
+<p><strong>Вывод \((a + b)^2 = a^2 + 2ab + b^2\)</strong> (квадрат суммы):</p>
+<div class="math-block">\[(a + b)^2 = (a + b)(a + b) = a(a+b) + b(a+b) = a^2 + ab + ba + b^2 = a^2 + 2ab + b^2.\]</div>
+<p>Сократились подобные \(ab\) и \(ba\) (это одно и то же произведение, коэффициенты одинаковые, поэтому \(ab + ba = 2ab\)).</p>
+<p><strong>Вывод \((a - b)^2 = a^2 - 2ab + b^2\)</strong> (квадрат разности):</p>
+<div class="math-block">\[(a - b)^2 = (a - b)(a - b) = a(a-b) - b(a-b) = a^2 - ab - ba + b^2 = a^2 - 2ab + b^2.\]</div>
+<p>Здесь \(-ab - ba = -2ab\): коэффициенты одинаковые, знак минус перед обоими — это снова подобные.</p>
+<p><strong>Вывод \(a^2 - b^2 = (a-b)(a+b)\)</strong> (разность квадратов):</p>
+<div class="math-block">\[(a - b)(a + b) = a(a+b) - b(a+b) = a^2 + ab - ab - b^2 = a^2 - b^2.\]</div>
+<p><strong>Какие члены сократились:</strong> \(+ab - ab = 0\). Это <strong>пара подобных</strong> с противоположными знаками — взаимно уничтожаются. Именно поэтому в результате остаются только \(a^2\) и \(-b^2\).</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-29">
+<header class="slide-header"><span class="order-num">№29</span><span class="slide-num">Секция 4</span><h2>Секция 4. Вывод формул третьей степени</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Куб как три слоя плиток: крайние кубы и средние бруски. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Вывод \((a + b)^3 = a^3 + 3a^2 b + 3a b^2 + b^3\)</strong> (куб суммы):</p>
+<div class="math-block">\[(a + b)^3 = (a + b)(a + b)^2 = (a + b)(a^2 + 2ab + b^2).\]</div>
+<p>Раскрываем:</p>
+<div class="math-block">\[= a(a^2 + 2ab + b^2) + b(a^2 + 2ab + b^2)\]</div>
+<div class="math-block">\[= a^3 + 2a^2 b + a b^2 + a^2 b + 2a b^2 + b^3\]</div>
+<div class="math-block">\[= a^3 + (2 + 1)a^2 b + (1 + 2)a b^2 + b^3\]</div>
+<div class="math-block">\[= a^3 + 3a^2 b + 3a b^2 + b^3.\]</div>
+<p>Биномиальные коэффициенты \(1, 3, 3, 1\) — строка треугольника Паскаля для показателя \(3\).</p>
+<blockquote class="note-cheat"><p><strong>Треугольник Паскаля</strong> — таблица биномиальных коэффициентов. Каждая строка начинается и заканчивается \(1\), а каждый средний элемент равен сумме двух элементов над ним. Для куба (показатель \(3\)) строка такая: \(1, 3, 3, 1\).</p></blockquote>
+<p>Здесь подобные <strong>складываются</strong> (а не сокращаются), потому что знаки одинаковые.</p>
+<p><strong>Вывод \((a - b)^3 = a^3 - 3a^2 b + 3a b^2 - b^3\)</strong> (куб разности):</p>
+<div class="math-block">\[(a - b)^3 = (a - b)(a - b)^2 = (a - b)(a^2 - 2ab + b^2).\]</div>
+<p>Раскрываем:</p>
+<div class="math-block">\[= a(a^2 - 2ab + b^2) - b(a^2 - 2ab + b^2)\]</div>
+<div class="math-block">\[= a^3 - 2a^2 b + a b^2 - a^2 b + 2a b^2 - b^3\]</div>
+<div class="math-block">\[= a^3 + (-2 - 1)a^2 b + (1 + 2)a b^2 + (-b^3)\]</div>
+<div class="math-block">\[= a^3 - 3a^2 b + 3a b^2 - b^3.\]</div>
+<p><strong>Вывод \(a^3 + b^3 = (a+b)(a^2 - ab + b^2)\)</strong> (сумма кубов):</p>
+<div class="math-block">\[(a+b)(a^2 - ab + b^2) = a(a^2 - ab + b^2) + b(a^2 - ab + b^2)\]</div>
+<div class="math-block">\[= a^3 - a^2 b + a b^2 + a^2 b - a b^2 + b^3 = a^3 + b^3.\]</div>
+<p><strong>Какие члены сократились:</strong> \(-a^2 b + a^2 b = 0\) и \(+a b^2 - a b^2 = 0\). Это <strong>две пары подобных</strong> (внутри каждой пары коэффициенты одинаковые, отличаются только знаком). Благодаря этим сокращениям остаются только крайние члены \(a^3\) и \(b^3\).</p>
+<p><strong>Вывод \(a^3 - b^3 = (a - b)(a^2 + ab + b^2)\)</strong> (разность кубов):</p>
+<div class="math-block">\[(a - b)(a^2 + ab + b^2) = a(a^2 + ab + b^2) - b(a^2 + ab + b^2)\]</div>
+<div class="math-block">\[= a^3 + a^2 b + a b^2 - a^2 b - a b^2 - b^3 = a^3 - b^3.\]</div>
+<p>Снова две пары подобных сокращаются: \(+a^2 b - a^2 b = 0\) и \(+a b^2 - a b^2 = 0\).</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-30">
+<header class="slide-header"><span class="order-num">№30</span><span class="slide-num">Секция 4</span><h2>Секция 4. Как считать</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Подстановка: в штамп вставляют нужные куски вместо a и b. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Распознавание:</strong> видишь \((a+b)^2\), \((a-b)^2\), \(a^2 - b^2\), куб суммы/разности, сумму/разность кубов — <strong>сразу применяешь</strong> соответствующую формулу.</p>
+<p><strong>Подстановка:</strong> вместо \(a\) подставляешь нужное выражение, вместо \(b\) — нужное.</p>
+<p><strong>Пример 1. Квадрат суммы.</strong> \((x + 3)^2 = x^2 + 2 \cdot x \cdot 3 + 3^2 = x^2 + 6x + 9\).</p>
+<p><strong>Пример 2. Квадрат разности.</strong> \((2x - 5)^2 = (2x)^2 - 2 \cdot (2x) \cdot 5 + 5^2 = 4x^2 - 20x + 25\).</p>
+<p><strong>Пример 3. Разность квадратов.</strong> \(9x^2 - 16 = (3x)^2 - 4^2 = (3x - 4)(3x + 4)\).</p>
+<p><strong>Пример 4. Куб суммы.</strong> \((x + 2)^3 = x^3 + 3 \cdot x^2 \cdot 2 + 3 \cdot x \cdot 4 + 8 = x^3 + 6x^2 + 12x + 8\).</p>
+<p><strong>Пример 5. Куб разности.</strong> \((x - 1)^3 = x^3 - 3x^2 + 3x - 1\).</p>
+<p><strong>Пример 6. Сумма кубов.</strong> \(x^3 + 27 = x^3 + 3^3 = (x + 3)(x^2 - 3x + 9)\).</p>
+<p><strong>Пример 7. Разность кубов.</strong> \(x^3 - 64 = x^3 - 4^3 = (x - 4)(x^2 + 4x + 16)\).</p></div>
+</section>
+<section class="slide" id="slide-31">
+<header class="slide-header"><span class="order-num">№31</span><span class="slide-num">Секция 4</span><h2>Секция 4. Где применить</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">ФСУ открывает дробь или уравнение. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Упрощение выражений.</strong> Например, \((x + 1)^2 - (x - 1)^2 = [(x+1) - (x-1)][(x+1) + (x-1)] = 2 \cdot 2x = 4x\) — разность квадратов вместо раскрытия двух квадратов.</li><li><strong>Разложение на множители (обратное преобразование).</strong> Например, \(x^2 - 25 = (x - 5)(x + 5)\) — обратно к формуле.</li><li><strong>Сокращение дробей.</strong> Например, \(\dfrac{x^2 - 9}{x + 3} = \dfrac{(x-3)(x+3)}{x + 3} = x - 3\).</li><li><strong>Решение уравнений.</strong> Например, \(x^2 - 6x + 9 = 0\) — это \((x - 3)^2 = 0\), откуда \(x = 3\). Без ФСУ пришлось бы считать дискриминант.</li></ul></div>
+</section>
+<section class="slide" id="slide-32">
+<header class="slide-header"><span class="order-num">№32</span><span class="slide-num">Секция 4</span><h2>Секция 4. Где ошибиться</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Капкан знака в квадрате разности: средний прямоугольник со знаком минус. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Перепутал знак в \((a - b)^2\)</strong>: там \(a^2 - 2ab + b^2\), не \(a^2 + 2ab + b^2\). Например, \((x - 3)^2 = x^2 - 6x + 9\) (минус!), а не \(x^2 + 6x + 9\).</li><li><strong>Забыл удвоенное произведение</strong> в квадрате суммы/разности. Например, \((x + 3)^2 = x^2 + 9\) — это <strong>неверно</strong>, должно быть \(x^2 + 6x + 9\).</li><li><strong>Перепутал местами</strong> \(a\) и \(b\) в \(a^3 - b^3\). Например, \(x^3 - 8 = (x - 2)(x^2 + 2x + 4)\), а <strong>не</strong> \((x - 4)(x^2 + 4x + 16)\) (это было бы \(x^3 - 64\)).</li><li><strong>Применил формулу к неподходящему выражению</strong> — например, \(a^2 + b^2\) НЕ разлагается на простые множители. Конкретно: \(x^2 + 9\) — нельзя разложить как \((x - 3)(x + 3)\), потому что \((x - 3)(x + 3) = x^2 - 9\), а не \(x^2 + 9\).</li></ul></div>
+</section>
+<section class="slide slide-horizontal" id="slide-33">
+<header class="slide-header"><span class="order-num">№33</span><span class="slide-num">Секция 4</span><h2>Секция 4. Задача с полным разбором</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Два квадрата вычитаются, остаётся крест из четырёх одинаковых прямоугольников. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Условие.</strong> Упрости: \((x + y)^2 - (x - y)^2\).</p>
+<p><strong>Цепочка мыслей:</strong></p>
+<ol><li><strong>Распознаю тип.</strong> Вижу две разности квадратов. Это <strong>разность</strong> двух выражений. Применю формулы ФСУ.</li><li><strong>Раскрываю первую разность</strong> по формуле \((a + b)^2 = a^2 + 2ab + b^2\):<div class="math-block">\[(x + y)^2 = x^2 + 2xy + y^2.\]</div></li><li><strong>Раскрываю вторую</strong> по формуле \((a - b)^2 = a^2 - 2ab + b^2\):<div class="math-block">\[(x - y)^2 = x^2 - 2xy + y^2.\]</div></li><li><strong>Вычитаю:</strong><div class="math-block">\[(x^2 + 2xy + y^2) - (x^2 - 2xy + y^2).\]</div></li><li><strong>Раскрываю скобки</strong> (внимание: знак «минус» меняет знаки):<div class="math-block">\[= x^2 + 2xy + y^2 - x^2 + 2xy - y^2.\]</div></li><li><strong>Привожу подобные:</strong><ul><li>\(x^2 - x^2 = 0\).</li><li>\(2xy + 2xy = 4xy\).</li><li>\(y^2 - y^2 = 0\).</li></ul></li><li><strong>Итог:</strong> \(4xy\).</li></ol>
+<p><strong>Ответ:</strong> \(4xy\).</p>
+<p><strong>Альтернативный способ</strong> (быстрее): используй разность квадратов \(A^2 - B^2 = (A - B)(A + B)\) с \(A = x + y\) и \(B = x - y\):</p>
+<div class="math-block">\[(x + y)^2 - (x - y)^2 = [(x + y) - (x - y)] \cdot [(x + y) + (x - y)] = 2y \cdot 2x = 4xy.\]</div>
+<p>Тот же ответ за 2 действия вместо 7.</p></div>
+</section>
+<section class="slide bridge-slide" id="slide-34">
+<header class="slide-header"><span class="order-num">№34</span><span class="slide-num">Секция 5</span><h2>Секция 5. Зачем</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Стена разбирается обратно на блоки — разложение. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Разложение на множители</strong> — обратная операция к умножению. Это главный приём для <strong>сокращения дробей</strong> и <strong>решения уравнений</strong>.</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-35">
+<header class="slide-header"><span class="order-num">№35</span><span class="slide-num">Секция 5</span><h2>Секция 5. Что это</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Четыре ключа разложения: вынести, сгруппировать, ФСУ, комбинация. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Разложение на множители</strong> — это представление многочлена в виде произведения многочленов (одночленов).</p>
+<p><strong>Основные способы:</strong></p>
+<ol><li><strong>Вынесение общего множителя за скобки:</strong> \(ab + ac \to a(b + c)\).</li><li><strong>Способ группировки:</strong> перегруппируем члены, чтобы в каждой группе был общий множитель.</li><li><strong>Применение формул сокращённого умножения:</strong> \(a^2 - b^2 = (a-b)(a+b)\), и т.д.</li><li><strong>Комбинация способов:</strong> сначала выносим, потом применяем ФСУ.</li></ol></div>
+</section>
+<section class="slide slide-horizontal" id="slide-36">
+<header class="slide-header"><span class="order-num">№36</span><span class="slide-num">Секция 5</span><h2>Секция 5. Откуда берётся способ группировки</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Члены встают парами, в каждой паре общий кусок, потом общий кусок обеих пар. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Это <strong>распределительное свойство</strong> в обратную сторону. Если в многочлене можно сгруппировать члены так, что в каждой группе есть общий множитель — выносим его.</p>
+<p><strong>Схема группировки (визуально):</strong></p>
+<p>Группировка — это «перетасовка» членов многочлена парами (или тройками), чтобы в каждой группе появился свой общий множитель. Идеальный итог группировки — когда оба множителя оказываются <strong>одинаковыми</strong>, и тогда этот множитель выносится за скобки.</p>
+<p>Возьмём для примера \(9x^2 - y^2 + 6x + 2y\) и представим его в виде «ленты» из четырёх членов:</p>
+<div class="math-block">\[\boxed{9x^2} \quad \boxed{-y^2} \quad \boxed{+6x} \quad \boxed{+2y}\]</div>
+<p>Группируем <strong>первый с последним</strong> или <strong>первый со вторым, третий с четвёртым</strong> — пробуем разные варианты, пока не увидим общий множитель:</p>
+<ul><li><strong>Вариант 1:</strong> \((9x^2 - y^2) + (6x + 2y)\) — первая группа сворачивается по ФСУ, вторая — вынесением \(2\). Получается <strong>общий</strong> множитель \((3x + y)\).</li><li><strong>Вариант 2:</strong> \((9x^2 + 6x) + (-y^2 + 2y) = 3x(3x + 2) + y(-y + 2) = 3x(3x + 2) - y(y - 2)\). Общего множителя нет — вариант не подходит.</li></ul>
+<p>Работает <strong>первый</strong> вариант — значит, его и используем.</p>
+<p><strong>Пример.</strong> \(9x^2 - y^2 + 6x + 2y\):</p>
+<ol><li>Группируем: \((9x^2 - y^2) + (6x + 2y)\).</li><li>Первая группа — разность квадратов: \(9x^2 - y^2 = (3x)^2 - y^2 = (3x - y)(3x + y)\).</li><li>Вторая группа выносит \(2\): \(6x + 2y = 2(3x + y)\).</li><li>Собираем: \((3x - y)(3x + y) + 2(3x + y) = (3x + y)(3x - y + 2)\).</li></ol>
+<p><strong>Общий множитель</strong> в обоих группах — \((3x + y)\). Вынесли.</p>
+<p><strong>Главный признак успешной группировки:</strong> в обеих группах появляется <strong>один и тот же</strong> множитель (одночлен или двучлен). Если общий множитель не находится — попробуй другую комбинацию пар.</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-37">
+<header class="slide-header"><span class="order-num">№37</span><span class="slide-num">Секция 5</span><h2>Секция 5. Как считать</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Лесенка из четырёх шагов разложения. Пустые ступени под HTML.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Шаг 1.</strong> Попробуй вынести общий множитель (если есть одинаковые множители во всех членах).</p>
+<p><strong>Шаг 2.</strong> Если не получилось — попробуй сгруппировать члены.</p>
+<p><strong>Шаг 3.</strong> Проверь, не подходит ли формула ФСУ (разность квадратов, куб суммы/разности, и т.д.).</p>
+<p><strong>Шаг 4.</strong> Комбинируй способы.</p>
+<p><strong>Пример 1. Вынесение общего множителя.</strong> \(6x^3 - 9x^2 = 3x^2 (2x - 3)\) — общий множитель \(3x^2\), вынесли.</p>
+<p><strong>Пример 2. Разность квадратов.</strong> \(x^2 - 49 = (x - 7)(x + 7)\) — применили ФСУ.</p>
+<p><strong>Пример 3. Группировка.</strong> \(ab + ac + 3b + 3c = (ab + ac) + (3b + 3c) = a(b + c) + 3(b + c) = (b + c)(a + 3)\) — общий множитель в обеих группах \((b + c)\).</p>
+<p><strong>Пример 4. Комбинация.</strong> \(3x^2 - 12 = 3(x^2 - 4) = 3(x - 2)(x + 2)\) — сначала вынесли \(3\), потом применили разность квадратов.</p></div>
+</section>
+<section class="slide" id="slide-38">
+<header class="slide-header"><span class="order-num">№38</span><span class="slide-num">Секция 5</span><h2>Секция 5. Где применить</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Дробь сокращается, когда числитель и знаменатель стали скобками. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Сокращение дробей (главное применение).</strong> Например, \(\dfrac{x^2 - 25}{x + 5} = \dfrac{(x - 5)(x + 5)}{x + 5} = x - 5\) — без разложения на множители числитель не сократить.</li><li><strong>Решение уравнений (приравниваем каждый множитель к нулю).</strong> Например, \(x^2 - 5x + 6 = 0 \Rightarrow (x - 2)(x - 3) = 0 \Rightarrow x = 2\) или \(x = 3\). Произведение = 0, когда хотя бы один множитель = 0.</li><li><strong>Упрощение сложных выражений.</strong> Например, \(\dfrac{x^3 - 8}{x - 2} = \dfrac{(x - 2)(x^2 + 2x + 4)}{x - 2} = x^2 + 2x + 4\).</li></ul></div>
+</section>
+<section class="slide" id="slide-39">
+<header class="slide-header"><span class="order-num">№39</span><span class="slide-num">Секция 5</span><h2>Секция 5. Где ошибиться</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Капкан: x² + 1 не раскладывается, замок не открывается. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Не вынес общий множитель</strong> (если он есть во всех членах). Например, \(2x^2 + 4x = 2x(x + 2)\) — общий \(2x\), без вынесения дробь \(\dfrac{2x^2 + 4x}{2x}\) не сократится до \(x + 2\).</li><li><strong>Сгруппировал неправильно</strong> — не тот общий множитель в группах. Например, \(2x + 2y + 3x + 3y\) можно сгруппировать как \((2x + 2y) + (3x + 3y) = 2(x + y) + 3(x + y) = (x + y)(2 + 3) = 5(x + y)\) — общий множитель \((x + y)\). Но если сгруппировать как \((2x + 3x) + (2y + 3y) = x(2 + 3) + y(2 + 3) = 5(x + y)\) — тоже работает, потому что <strong>группировка может быть разной</strong>, главное — общий множитель.</li><li><strong>Забыл проверить формулы ФСУ.</strong> Например, \(x^2 - 9 = (x - 3)(x + 3)\) — это разность квадратов, не нужно раскрывать через дискриминант или ещё как-то.</li><li><strong>Думаешь, что «должно разложиться»</strong> — иногда многочлен не раскладывается на простые множители (например, \(x^2 + 1\)).</li></ul>
+<blockquote class="note-cheat"><p><strong>Почему \(a^2 + b^2\) не раскладывается?</strong> Если бы \(a^2 + b^2 = (a+b)(a+b) = a^2 + 2ab + b^2\), то получилось бы \(+2ab\) — а у нас этого члена нет. Значит, так разложить нельзя. То же с \((a-b)(a-b) = a^2 - 2ab + b^2\) — появляется \(-2ab\), которого нет. Значит, <strong>сумма квадратов в общем случае неразложима</strong> (над вещественными числами).</p></blockquote></div>
+</section>
+<section class="slide slide-horizontal" id="slide-40">
+<header class="slide-header"><span class="order-num">№40</span><span class="slide-num">Секция 5</span><h2>Секция 5. Задача с полным разбором</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Куб минус куб: брусок раскалывается на линейный и квадратный куски. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Условие.</strong> Разложи на множители: \(x^3 - 8\).</p>
+<p><strong>Цепочка мыслей:</strong></p>
+<ol><li><strong>Распознаю тип.</strong> Вижу \(x^3 - 8 = x^3 - 2^3\). Это <strong>разность кубов</strong>!</li><li><strong>Применяю формулу</strong> \(a^3 - b^3 = (a - b)(a^2 + ab + b^2)\):<ul><li>\(a = x\), \(b = 2\).</li><li>\((x - 2)(x^2 + x \cdot 2 + 2^2) = (x - 2)(x^2 + 2x + 4)\).</li></ul></li><li><strong>Проверка раскрытием:</strong><div class="math-block">\[(x - 2)(x^2 + 2x + 4) = x \cdot (x^2 + 2x + 4) - 2 \cdot (x^2 + 2x + 4) = x^3 + 2x^2 + 4x - 2x^2 - 4x - 8 = x^3 - 8. — верно\]</div></li></ol>
+<p><strong>Ответ:</strong> \((x - 2)(x^2 + 2x + 4)\).</p>
+<p><strong>Альтернативный способ</strong> (через вынесение общего множителя — здесь <strong>не работает</strong>, потому что общего множителя нет, но полезно знать, что <strong>сначала</strong> проверяют именно его).</p></div>
+</section>
+<section class="slide bridge-slide" id="slide-41">
+<header class="slide-header"><span class="order-num">№41</span><span class="slide-num">Секция 6</span><h2>Секция 6. Зачем</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Корень как ключ, который обнуляет многочлен. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Уравнения с многочленами решаются через <strong>корни</strong>. Если знаешь, как искать целые корни и проверять делимость — экономишь время на сложных задачах.</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-42">
+<header class="slide-header"><span class="order-num">№42</span><span class="slide-num">Секция 6</span><h2>Секция 6. Что это</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Деление уголком многочлена на (x − c). Схема без чисел.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Корень многочлена</strong> — это значение переменной, при котором многочлен равен нулю. Если \(M(c) = 0\), то \(c\) — корень многочлена \(M(x)\).</p>
+<p><strong>Деление «уголком»</strong> — аналогично делению чисел столбиком, только работаем с многочленами.</p>
+<p><strong>Теорема о делимости:</strong> многочлен \(M(x)\) делится на двучлен \((x - c)\) без остатка тогда и только тогда, когда \(c\) — корень \(M(x)\).</p>
+<p><strong>Следствие:</strong> если многочлен с <strong>целыми коэффициентами</strong> имеет <strong>целый</strong> корень, то этот корень — <strong>делитель свободного члена</strong>.</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-43">
+<header class="slide-header"><span class="order-num">№43</span><span class="slide-num">Секция 6</span><h2>Секция 6. Откуда берётся теорема</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Подстановка x = c обнуляет скобку, остаток = значение многочлена. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Теорема Безу — это <strong>следствие деления многочлена на двучлен</strong>. Чтобы её вывести, разберём деление по шагам.</p>
+<p><strong>Шаг 1. Делим \(M(x)\) на \((x - c)\) «уголком».</strong> В результате всегда получается:</p>
+<div class="math-block">\[M(x) = (x - c) \cdot Q(x) + R.\]</div>
+<p>Здесь \(Q(x)\) — частное (многочлен степени \(n - 1\), если \(M(x)\) — степени \(n\)), а \(R\) — остаток. Почему остаток — именно число, а не многочлен? Потому что делитель \((x - c)\) — первой степени: при делении на двучлен степени \(1\) остаток имеет степень меньше \(1\), то есть является <strong>числом</strong> (константой).</p>
+<p><strong>Шаг 2. Подставляем \(x = c\).</strong> Это ключевой шаг — именно в нём «спрятана» теорема:</p>
+<div class="math-block">\[M(c) = (c - c) \cdot Q(c) + R.\]</div>
+<p>Поскольку \(c - c = 0\), первое слагаемое обнуляется:</p>
+<div class="math-block">\[M(c) = 0 \cdot Q(c) + R = R.\]</div>
+<p>Получаем <strong>равенство</strong> \(M(c) = R\). Это значит: остаток от деления \(M(x)\) на \((x - c)\) <strong>равен значению многочлена</strong> в точке \(c\).</p>
+<p><strong>Шаг 3. Выводим теорему.</strong> Если \(c\) — корень многочлена, то по определению \(M(c) = 0\). Но мы только что показали, что \(M(c) = R\). Значит, \(R = 0\) — деление нацело. И наоборот: если деление на \((x - c)\) нацело (то есть \(R = 0\)), то \(M(c) = R = 0\), и \(c\) — корень. Получаем <strong>эквивалентность</strong>:</p>
+<div class="math-block">\[M(c) = 0 \quad \Longleftrightarrow \quad R = 0 \quad \Longleftrightarrow \quad (x - c) \text{ делит } M(x) \text{ нацело}.\]</div>
+<p>Это и есть теорема о делимости (теорема Безу).</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-44">
+<header class="slide-header"><span class="order-num">№44</span><span class="slide-num">Секция 6</span><h2>Секция 6. Следствие о делителе свободного члена</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Ключ c открывает свободный член. Цепочка: остаток ноль → делимость. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Пусть \(M(x) = a_n x^n + a_{n-1} x^{n-1} + \ldots + a_1 x + a_0\) — многочлен с <strong>целыми</strong> коэффициентами, и пусть \(c\) — <strong>целый</strong> корень.</p>
+<p><strong>Шаг А.</strong> По теореме Безу \(M(c) = 0\). Раскроем:</p>
+<div class="math-block">\[a_n c^n + a_{n-1} c^{n-1} + \ldots + a_1 c + a_0 = 0.\]</div>
+<p><strong>Шаг Б.</strong> Перенесём свободный член \(a_0\) в правую часть:</p>
+<div class="math-block">\[a_n c^n + a_{n-1} c^{n-1} + \ldots + a_1 c = -a_0.\]</div>
+<p><strong>Шаг В.</strong> Вынесем \(c\) из левой части (в каждом слагаемом есть множитель \(c\)):</p>
+<div class="math-block">\[c \cdot \left( a_n c^{n-1} + a_{n-1} c^{n-2} + \ldots + a_1 \right) = -a_0.\]</div>
+<p><strong>Шаг Г.</strong> Обозначим выражение в скобках через \(K\) (это целое число, потому что все коэффициенты \(a_i\) — целые и \(c\) — целое):</p>
+<div class="math-block">\[c \cdot K = -a_0.\]</div>
+<p><strong>Шаг Д.</strong> По определению делимости: если произведение двух целых чисел равно третьему целому числу, то каждый из сомножителей — делитель этого числа. Значит, <strong>\(c\) делит \(a_0\)</strong>.</p>
+<p>Это и есть следствие: целый корень многочлена с целыми коэффициентами обязательно является делителем свободного члена.</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-45">
+<header class="slide-header"><span class="order-num">№45</span><span class="slide-num">Секция 6</span><h2>Секция 6. Как считать</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Список делителей свободного члена как связка ключей. Без цифр в кадре.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Найти целые корни многочлена с целыми коэффициентами:</strong></p>
+<ol><li>Запиши делители свободного члена.</li><li>Подставь каждый делитель в многочлен.</li><li>Если получается \(0\) — корень найден.</li></ol>
+<p><strong>Пример.</strong> \(P(x) = x^2 - 5x + 6\). Свободный член \(6\). Делители: \(\pm 1, \pm 2, \pm 3, \pm 6\).</p>
+<ul><li>\(P(1) = 1 - 5 + 6 = 2 \neq 0\).</li><li>\(P(-1) = 1 + 5 + 6 = 12 \neq 0\).</li><li>\(P(2) = 4 - 10 + 6 = 0\) — корень \(x = 2\).</li><li>\(P(3) = 9 - 15 + 6 = 0\) — корень \(x = 3\).</li></ul>
+<p>Корни: \(2\) и \(3\). Можно проверить через Виета: \(2 \cdot 3 = 6 = c\) — верно, \(2 + 3 = 5 = -b\) — верно.</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-46">
+<header class="slide-header"><span class="order-num">№46</span><span class="slide-num">Секция 6</span><h2>Секция 6. Полная формулировка теоремы Виета</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Два корня как пара ключей: сумма и произведение. Без формул в кадре.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Теорема Виета</strong> (для приведённого квадратного трёхчлена \(x^2 + px + q\)):</p>
+<div class="math-block">\[\begin{cases} x_1 + x_2 = -p, \\ x_1 \cdot x_2 = q. \end{cases}\]</div>
+<p>То есть <strong>сумма корней</strong> равна второму коэффициенту с противоположным знаком, а <strong>произведение корней</strong> равно свободному члену.</p>
+<p><strong>Здесь используются буквы \(p, q\)</strong> вместо привычных \(b, c\) — это та же самая теорема, просто с другими обозначениями (чтобы не путать с коэффициентами \(a, b, c\) из других формул). Если у трёхчлена другой вид \(a x^2 + b x + c\), формула Виета принимает вид:</p>
+<div class="math-block">\[x_1 + x_2 = -\frac{b}{a}, \qquad x_1 \cdot x_2 = \frac{c}{a}.\]</div>
+<p><strong>Применение к нашему примеру.</strong> Для \(P(x) = x^2 - 5x + 6\): \(p = -5\), \(q = 6\). По Виету: \(x_1 + x_2 = -(-5) = 5\), \(x_1 \cdot x_2 = 6\). Действительно, \(2 + 3 = 5\) — верно, \(2 \cdot 3 = 6\) — верно.</p>
+<p>Виета позволяет <strong>проверить</strong> найденные корни, не подставляя их обратно в многочлен. А ещё — <strong>угадать</strong> их: если ты знаешь, что сумма корней = \(S\), а произведение = \(P\), можно искать пару чисел с такими \(S\) и \(P\) подбором.</p></div>
+</section>
+<section class="slide" id="slide-47">
+<header class="slide-header"><span class="order-num">№47</span><span class="slide-num">Секция 6</span><h2>Секция 6. Где применить</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Найденный корень открывает разложение и сокращение дроби. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Решение уравнений третьей и более степеней.</strong> Например, \(x^3 - 6x^2 + 11x - 6 = 0\). Свободный член = \(-6\). Делители: \(\pm 1, \pm 2, \pm 3, \pm 6\). Подставляем: \(P(1) = 1 - 6 + 11 - 6 = 0\) — корень \(x = 1\). Делим на \((x - 1)\), получаем квадратное уравнение \(x^2 - 5x + 6 = 0\), его корни \(2\) и \(3\). Итого: \(x \in \{1, 2, 3\}\).</li><li><strong>Разложение многочленов на множители (если нашли целые корни).</strong> Например, \(x^3 - 6x^2 + 11x - 6 = (x - 1)(x - 2)(x - 3)\) — три линейных множителя.</li><li><strong>Сокращение дробей с многочленами.</strong> Например, \(\dfrac{x^3 - 8}{x - 2} = \dfrac{(x - 2)(x^2 + 2x + 4)}{x - 2} = x^2 + 2x + 4\) — числитель раскладывается через разность кубов.</li><li><strong>Проверка делимости многочленов.</strong> Например, \(x^2 - 9\) делится на \((x - 3)\), потому что \(P(3) = 9 - 9 = 0\). По теореме Безу это значит, что деление нацело.</li></ul></div>
+</section>
+<section class="slide" id="slide-48">
+<header class="slide-header"><span class="order-num">№48</span><span class="slide-num">Секция 6</span><h2>Секция 6. Где ошибиться</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Капкан: забыли отрицательные ключи. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Забыл отрицательные делители</strong> — корни могут быть отрицательными. Например, в \(x^2 + x - 6 = 0\) корень \(x = -3\), но если проверять только положительные делители \(6\) (\(1, 2, 3, 6\)), корень не найдёшь.</li><li><strong>Забыл делитель \(1\) и \(-1\)</strong> — проверь их обязательно. Например, в \(x^3 - 1 = 0\) корень \(x = 1\) (потому что \(1 - 1 = 0\)); без проверки \(1\) можно его пропустить.</li><li><strong>Путаешь делители свободного члена с делителями старшего коэффициента</strong> — это разные вещи. Делители <strong>свободного члена</strong> дают <strong>возможные целые корни</strong>. Например, в \(2x^2 - 5x + 3 = 0\) свободный член \(3\) (делители \(\pm 1, \pm 3\)), а старший коэффициент \(2\) (делители \(\pm 1, \pm 2\)) — корни ищем через \(3\), не через \(2\).</li><li><strong>Не проверил подстановкой</strong> — даже если делитель, может не быть корнем. Например, для \(x^2 - 5x + 6\) делитель \(x = 1\) даёт \(P(1) = 2 \neq 0\), корень не найден.</li></ul></div>
+</section>
+<section class="slide slide-horizontal" id="slide-49">
+<header class="slide-header"><span class="order-num">№49</span><span class="slide-num">Секция 6</span><h2>Секция 6. Задача с полным разбором</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Парабола пересекает ось в двух точках-ключах. Без чисел.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Условие.</strong> Найди корни многочлена \(P(x) = x^2 - 5x + 6\). Проверь делители свободного члена.</p>
+<p><strong>Цепочка мыслей:</strong></p>
+<ol><li><strong>Распознаю тип.</strong> Многочлен второй степени с целыми коэффициентами. Свободный член = \(6\).</li><li><strong>Записываю делители свободного члена (\(6\)):</strong> \(\pm 1, \pm 2, \pm 3, \pm 6\). Всего \(8\) чисел для проверки.</li><li><strong>Подставляю по очереди:</strong><ul><li>\(P(1) = 1 - 5 + 6 = 2 \neq 0\).</li><li>\(P(-1) = 1 + 5 + 6 = 12 \neq 0\).</li><li>\(P(2) = 4 - 10 + 6 = 0\) — <strong>корень \(x = 2\)</strong>.</li><li>\(P(3) = 9 - 15 + 6 = 0\) — <strong>корень \(x = 3\)</strong>.</li><li>\(P(-2) = 4 + 10 + 6 = 20 \neq 0\). (Можно не проверять, если нашли оба корня и знаем по Виету, что произведение = \(6\). Но для надёжности проверил.)</li><li>Другие делители можно не проверять — уже нашли 2 корня.</li></ul></li><li><strong>Проверка через Виета</strong> (для приведённого \(x^2 + px + q\)): \(x_1 + x_2 = 5\), \(x_1 \cdot x_2 = 6\). Действительно, \(2 + 3 = 5\) — верно, \(2 \cdot 3 = 6\) — верно.</li></ol>
+<p><strong>Ответ:</strong> корни \(x_1 = 2\), \(x_2 = 3\).</p>
+<p><strong>Альтернативный способ:</strong> дискриминант \(D = 25 - 24 = 1\), \(\sqrt{D} = 1\), \(x = \dfrac{5 \pm 1}{2}\), то есть \(3\) и \(2\). Тот же ответ.</p></div>
+</section>
+<section class="slide bridge-slide" id="slide-50">
+<header class="slide-header"><span class="order-num">№50</span><span class="slide-num">Секция 7</span><h2>Секция 7. Зачем</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Несколько инструментов на одном столе: скобки, ФСУ, дроби. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Проверить, что ты умеешь <strong>соединять приёмы из секций 1–6 в одну задачу</strong>. Реальная алгебраическая задача почти никогда не решается одним действием — нужно выстроить <strong>цепочку</strong> из разложения на множители, ФСУ, делимости, действий с дробями.</p>
+<blockquote class="note-cheat"><p><strong>Это секция-практикум.</strong> Здесь нет блоков «Что это / Откуда берётся» — потому что они уже разобраны в секциях 1–6. Цель секции — показать, как все изученные приёмы <strong>складываются</strong> в одну задачу. Каждый пример — это комбинация минимум двух-трёх тем: разложение на множители, ФСУ, делимость, действия с дробями.</p></blockquote></div>
+</section>
+<section class="slide slide-horizontal" id="slide-51">
+<header class="slide-header"><span class="order-num">№51</span><span class="slide-num">Секция 7</span><h2>Секция 7. Что это</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Цепочка из нескольких приёмов на одном листе. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Комбинированная задача</strong> — это задача, в которой нужно применить несколько приёмов в правильном порядке. Ошибка в порядке (например, сначала сложить дроби, а потом раскладывать) обычно делает решение невозможным или сильно его усложняет.</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-52">
+<header class="slide-header"><span class="order-num">№52</span><span class="slide-num">Секция 7</span><h2>Секция 7. Как считать</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Алгоритм: распознать, разложить, общий знаменатель, сократить, проверить. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Общий алгоритм решения комбинированной задачи:</strong></p>
+<ol><li><strong>Распознай структуру.</strong> Что дано: многочлены, дроби, корни? Какие операции предстоит делать?</li><li><strong>Раскрой скобки / разложи на множители</strong> — приведи выражение к удобному виду.</li><li><strong>Найди общий знаменатель / общий множитель</strong> — если работаем с дробями.</li><li><strong>Выполни действия</strong> (сложение, вычитание, умножение, деление) в правильном порядке.</li><li><strong>Сократи</strong> общие множители.</li><li><strong>Проверь ответ</strong> подстановкой конкретного значения.</li></ol>
+<p><strong>Алгоритм подбора целого корня (через делители свободного члена):</strong></p>
+<ol><li>Запиши свободный член многочлена \(a_0\).</li><li>Найди все его делители (включая отрицательные).</li><li>Подставляй каждый делитель по очереди в многочлен.</li><li>Получил \(0\)? — корень найден. Не получил — переходи к следующему.</li><li>Когда нашёл нужное число корней (по степени многочлена), подбор можно прекратить.</li></ol></div>
+</section>
+<section class="slide" id="slide-53">
+<header class="slide-header"><span class="order-num">№53</span><span class="slide-num">Секция 7</span><h2>Секция 7. Где применить</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Четыре типа задач, где одного приёма мало. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Типы задач, где без комбинации приёмов не обойтись:</strong></p>
+<ul><li><strong>Сокращение сложной дроби</strong>, где числитель и знаменатель нужно сначала разложить на множители, а потом уже искать общий множитель. <strong>Пример:</strong> \(\dfrac{x^2 + 5x}{x + 3} = \dfrac{x(x + 5)}{x + 3}\) — числитель разложили, общий множитель с знаменателем не нашёлся, дробь не сокращается (но теперь видно, что при \(x = -3\) знаменатель = 0, а числитель = \(-6\)).</li><li><strong>Решение уравнений третьей и более степеней</strong>, когда один корень находится через делители свободного члена, а оставшийся множитель снова решается как квадратное уравнение. <strong>Пример:</strong> \(x^3 - 6x^2 + 11x - 6 = 0 \Rightarrow x = 1\) (подстановкой) \(\Rightarrow\) деление на \((x - 1)\) даёт \(x^2 - 5x + 6 = 0 \Rightarrow x = 2\) или \(x = 3\).</li><li><strong>Сложные выражения из нескольких слагаемых</strong>, которые нужно сначала разложить на множители, а потом уже упрощать. <strong>Пример:</strong> \(\dfrac{x^3 + 5x^2 + 6x}{x^2 + 3x} = \dfrac{x(x + 2)(x + 3)}{x(x + 3)} = x + 2\) — три приёма в одной задаче (разложение, сокращение, упрощение).</li><li><strong>Задачи с многоэтапной подстановкой</strong>, где результат первого действия становится входом для следующего. <strong>Пример:</strong> найти корни \(x^3 - 1 = 0\): подбираем \(x = 1\) как корень, делим на \((x - 1)\) уголком, получаем \(x^2 + x + 1 = 0\), дискриминант отрицательный — значит, других вещественных корней нет.</li></ul>
+<p>В таких задачах одного приёма недостаточно — нужна <strong>цепочка</strong>.</p></div>
+</section>
+<section class="slide" id="slide-54">
+<header class="slide-header"><span class="order-num">№54</span><span class="slide-num">Секция 7</span><h2>Секция 7. Где ошибиться</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Капкан: забытые ограничения после сокращения дроби. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><ul><li><strong>Перепутал порядок действий</strong> — например, сократил дробь до того, как нашёл общий знаменатель. <strong>Пример:</strong> в \(\dfrac{x^2 - 4}{x + 2} + \dfrac{3}{x}\) нельзя сначала сократить первую дробь до \(x - 2\) и сложить со второй — нужно сначала привести к общему знаменателю \(x(x + 2)\), потом сложить, потом сократить.</li><li><strong>Потерял ограничения</strong> — забыл, что на ноль делить нельзя (\(a \neq 0\), \(a \neq -3\) и т.п.). <strong>Пример:</strong> после сокращения \(\dfrac{x^2 - 9}{x - 3}\) до \(x + 3\) забыл, что \(x \neq 3\) — это уже не многочлен, а <strong>дробно-рациональная функция</strong> с выколотой точкой.</li><li><strong>Раскладываешь не то</strong> — например, пытаешься разложить \(a^2 + b^2\), которое не раскладывается. <strong>Пример:</strong> \(\dfrac{x^2 + 9}{x + 3}\) — числитель <strong>не</strong> раскладывается как \((x - 3)(x + 3)\) (это было бы \(x^2 - 9\)), дробь не сокращается.</li><li><strong>Не проверил ответ</strong> подстановкой — формально верная цепочка может дать неверный итог из-за ошибки в знаке или коэффициенте. <strong>Пример:</strong> вместо \(\dfrac{a^2 + 5a}{a + 3}\) написал \(\dfrac{a^2 + 5a}{a + 2}\) — алгебраически проходит, но проверка при \(a = 1\) даёт расхождение.</li></ul></div>
+</section>
+<section class="slide slide-horizontal" id="slide-55">
+<header class="slide-header"><span class="order-num">№55</span><span class="slide-num">Секция 7</span><h2>Секция 7. Задача с полным разбором</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Две дроби складываются в одну ленту, общий кусок отрывается. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Условие.</strong> Упрости: \(\dfrac{a^2 + 5a}{a + 3} + \dfrac{6a}{a^2 + 3a}\).</p>
+<p><strong>Цепочка мыслей:</strong></p>
+<ol><li><strong>Распознаю тип.</strong> Сумма двух дробей. Нужен общий знаменатель.</li><li><strong>ОДЗ.</strong> Знаменатели не ноль: \(a + 3 \neq 0\) и \(a^2 + 3a \neq 0\), то есть \(a \neq -3\) и \(a \neq 0\).</li><li><strong>Раскладываю знаменатели</strong> (если возможно):<ul><li>\(a + 3\) — уже линейный, не раскладывается.</li><li>\(a^2 + 3a = a(a + 3)\) — выношу \(a\): \(a \cdot (a + 3)\).</li></ul></li><li><strong>Общий знаменатель</strong> для двух дробей: \(a(a + 3)\).</li><li><strong>Привожу первую дробь к общему знаменателю:</strong><div class="math-block">\[\frac{a^2 + 5a}{a + 3} = \frac{(a^2 + 5a) \cdot a}{a(a + 3)} = \frac{a(a^2 + 5a)}{a(a + 3)}.\]</div> Умножаю числитель и знаменатель на \(a\).</li><li><strong>Привожу вторую дробь к общему знаменателю:</strong><div class="math-block">\[\frac{6a}{a^2 + 3a} = \frac{6a}{a(a + 3)}.\]</div> Знаменатель уже общий.</li><li><strong>Складываю дроби:</strong><div class="math-block">\[\frac{a(a^2 + 5a) + 6a}{a(a + 3)} = \frac{a^3 + 5a^2 + 6a}{a(a + 3)}.\]</div></li><li><strong>Раскладываю числитель на множители</strong> (по теореме о делимости через подбор):<ul><li>Числитель \(P(a) = a^3 + 5a^2 + 6a = a(a^2 + 5a + 6)\). Свободный член \(a_0 = 0\) (в скобках) — но вынесенный \(a\) уже даёт корень \(a = 0\). Этот корень исключён областью определения (делим на \(a\)).</li><li>В скобках \(a^2 + 5a + 6\) — приведённый квадратный трёхчлен. Свободный член = \(6\). Делители \(6\): \(\pm 1, \pm 2, \pm 3, \pm 6\).</li><li>Подбор: \(a = -2\)? \((-2)^2 + 5 \cdot (-2) + 6 = 4 - 10 + 6 = 0\) — корень \(a = -2\).</li><li>Подбор: \(a = -3\)? \((-3)^2 + 5 \cdot (-3) + 6 = 9 - 15 + 6 = 0\) — корень \(a = -3\).</li><li>Значит, \(a^2 + 5a + 6 = (a + 2)(a + 3)\).</li><li>Проверка: \((a + 2)(a + 3) = a^2 + 5a + 6\). Получаем \(a(a + 2)(a + 3)\) — раскладывание верно.</li></ul></li><li><strong>Сокращаю</strong> общие множители \(a\) и \(a + 3\). Они исчезают из формулы, но остаются в ОДЗ:<div class="math-block">\[\frac{a(a + 2)(a + 3)}{a(a + 3)} = a + 2, \quad a \neq 0,\ a \neq -3.\]</div></li><li><strong>Проверка</strong> (например, при \(a = 1\)):<ul><li>Исходное выражение: \(\frac{1 + 5}{1 + 3} + \frac{6}{1 + 3} = \frac{6}{4} + \frac{6}{4} = 3\).</li><li>Результат: \(a + 2 = 3\). Совпало — решение верно.</li></ul></li></ol>
+<p><strong>Ответ:</strong> \(a + 2\), при \(a \neq 0\), \(a \neq -3\).</p></div>
+</section>
+<section class="slide slide-horizontal" id="slide-56">
+<header class="slide-header"><span class="order-num">№56</span><span class="slide-num">Секция 7</span><h2>Секция 7. Проверка через теорему Виета</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Два корня как пара ключей: сумма и произведение. Без формул в кадре.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><blockquote class="note-cheat"><p>Теорема Виета подробно разобрана в Секции 6 (блок «Полная формулировка теоремы Виета»). Здесь — короткое применение к нашей задаче.</p></blockquote>
+<p><strong>Применение к числителю \(a^2 + 5a + 6\):</strong> \(p = 5\), \(q = 6\). По Виету: \(x_1 + x_2 = -5\), \(x_1 \cdot x_2 = 6\). Подбор пары с произведением \(6\) и суммой \(-5\): это \(-2\) и \(-3\) (произведение \(6\), сумма \(-5\)). Значит корни \(a = -2\) и \(a = -3\) — Виета подтверждает.</p></div>
+</section>
+<section class="slide cheat-sheet reference-slide" id="slide-57">
+<header class="slide-header"><span class="order-num">№57</span><span class="slide-num">Сборник</span><h2>Сборник формул</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot sketch-full" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Разворот шпаргалки: семь штампов ФСУ пустые внутри. Подписи даст таблица.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><table><thead><tr><th>Формула</th><th>Переменные</th><th>Когда использовать</th><th>Когда НЕ использовать</th></tr></thead><tbody><tr><td>\((a + b)^2 = a^2 + 2ab + b^2\)</td><td>\(a, b\) — любые выражения</td><td>Квадрат суммы двух слагаемых</td><td>Трёхчленный квадрат \((a+b+c)^2\) — раскрывать поэлементно</td></tr><tr><td>\((a - b)^2 = a^2 - 2ab + b^2\)</td><td>\(a, b\)</td><td>Квадрат разности</td><td>То же</td></tr><tr><td>\(a^2 - b^2 = (a - b)(a + b)\)</td><td>\(a, b\)</td><td>Разность квадратов — раскладывается</td><td>Сумма квадратов \(a^2 + b^2\) — <strong>не</strong> раскладывается на простые множители</td></tr><tr><td>\((a + b)^3 = a^3 + 3a^2 b + 3ab^2 + b^3\)</td><td>\(a, b\)</td><td>Куб суммы двух слагаемых</td><td>Четвёртая степень — другая формула</td></tr><tr><td>\((a - b)^3 = a^3 - 3a^2 b + 3ab^2 - b^3\)</td><td>\(a, b\)</td><td>Куб разности</td><td>То же</td></tr><tr><td>\(a^3 + b^3 = (a + b)(a^2 - ab + b^2)\)</td><td>\(a, b\)</td><td>Сумма кубов — раскладывается</td><td>Сумма кубов с коэффициентом: \(4a^3 + 27b^3\) — другая история</td></tr><tr><td>\(a^3 - b^3 = (a - b)(a^2 + ab + b^2)\)</td><td>\(a, b\)</td><td>Разность кубов — раскладывается</td><td>То же</td></tr><tr><td>\(a(b + c) = ab + ac\) (распределительное свойство)</td><td>\(a, b, c\) — любые</td><td>Раскрытие скобок, вынесение общего множителя, умножение многочленов</td><td>Когда в скобках нет операции сложения (например, \(a \cdot bc\) — нет скобок для раскрытия)</td></tr><tr><td>\(M(x) = (x - c) Q(x) + R\) (теорема Безу)</td><td>\(M, Q\) — многочлены, \(c\) — число, \(R\) — число</td><td>Деление многочлена на двучлен \((x - c)\); проверка, что \(c\) — корень</td><td>Для деления на двучлен степени выше \(1\) (например, \((x^2 + 1)\)) — остаток будет многочленом, не числом</td></tr><tr><td>Если \(M(c) = 0\), то \(R = 0\) и \((x - c) \mid M(x)\)</td><td>\(c\) — корень</td><td>Эквивалентность: корень \(\leftrightarrow\) делимость нацело</td><td>Когда \(c\) не число, а выражение — нужно сначала подставить</td></tr><tr><td>\(x_1 + x_2 = -p,\; x_1 \cdot x_2 = q\) (теорема Виета)</td><td>\(x^2 + px + q\) — приведённый квадратный трёхчлен</td><td>Проверка корней; подбор корней через сумму и произведение</td><td>Для <strong>не</strong> приведённого \(a x^2 + b x + c\) — формула меняется на \(x_1 + x_2 = -\dfrac{b}{a}\), \(x_1 \cdot x_2 = \dfrac{c}{a}\)</td></tr><tr><td>\(M(x) = a_n x^n + \ldots + a_0\) — делители \(a_0\)</td><td>\(a_0\) — свободный член</td><td>Поиск целых корней многочлена с целыми коэффициентами</td><td>Когда коэффициенты дробные (дроби не обязаны быть целыми корнями)</td></tr></tbody></table></div>
+</section>
+<section class="slide slide-dark" id="slide-58">
+<header class="slide-header"><span class="order-num">№58</span><span class="slide-num">Чек-лист</span><h2>Чек-лист</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot sketch-full" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Тёмный разворот: чекбоксы как штампы в паспорте. Без текста в кадре.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>После прочтения этого гайда проверь себя:</p>
+<ol><li>[ ] Могу привести одночлен к стандартному виду.</li><li>[ ] Могу умножать, делить, возводить в степень одночлены.</li><li>[ ] Могу складывать подобные одночлены.</li><li>[ ] Могу привести многочлен к стандартному виду и определить его степень.</li><li>[ ] Могу умножить многочлен на одночлен и на многочлен.</li><li>[ ] Могу разделить многочлен на одночлен.</li><li>[ ] Могу применить все 7 формул сокращённого умножения.</li><li>[ ] Могу разложить многочлен на множители (вынесение, группировка, ФСУ, комбинация).</li><li>[ ] Могу найти целые корни многочлена через делители свободного члена.</li><li>[ ] Могу привести подобные слагаемые в сложном выражении.</li><li>[ ] Могу сократить дробь с многочленами через разложение.</li><li>[ ] Могу упростить сложное выражение, комбинируя несколько приёмов.</li></ol>
+<p><strong>Если хотя бы один пункт — «нет» — вернись к соответствующей секции.</strong></p></div>
+</section>
+<section class="slide slide-dark" id="slide-59">
+<header class="slide-header"><span class="order-num">№59</span><span class="slide-num">Ловушки</span><h2>Типичные ловушки</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot sketch-full" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Семь оранжевых капканов на столе. Без формул и без текста.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Эти ловушки дополняют блоки «Где ошибиться» из секций — здесь собраны ошибки, которые <strong>не вошли</strong> в секции, но встречаются на практике.</p>
+<p><strong>Ловушка 1. Подстановка в ФСУ с числовым коэффициентом.</strong> При возведении в квадрат выражения вида \((3x + 2)^2\) легко забыть, что коэффициент \(3\) тоже возводится в квадрат: \((3x + 2)^2 = 9x^2 + 12x + 4\), а <strong>не</strong> \(9x^2 + 4\). Общее правило: каждый «кусок» выражения в скобках возводится в степень целиком.</p>
+<p><strong>Ловушка 2. Путаница «удвоенное произведение» vs «квадрат произведения».</strong> \(2ab\) и \((ab)^2\) — это разные вещи! Удвоенное произведение \(2ab\) появляется в формулах квадрата суммы/разности. Квадрат произведения \((ab)^2 = a^2 b^2\) появляется при возведении <strong>произведения</strong> в степень (не суммы).</p>
+<p><strong>Ловушка 3. Потеря старшего члена при делении уголком.</strong> При делении многочлена на двучлен легко «потерять» старший член частного — особенно когда старший коэффициент делимого меньше старшего коэффициента делителя. <strong>Всегда проверяй</strong> раскрытием обратно: \((\text{частное}) \cdot (\text{делитель}) + (\text{остаток}) = \text{делимое}\).</p>
+<p><strong>Ловушка 4. Неверная область допустимых значений после сокращения.</strong> Если в дроби \(\frac{x^2 - 9}{x - 3}\) сократить на \((x - 3)\), получится \(x + 3\). Но при \(x = 3\) исходная дробь <strong>не определена</strong> (деление на \(0\))! После сокращения всегда проверяй, не появились ли «выколотые» точки.</p></div>
+</section>
+<section class="slide slide-dark" id="slide-60">
+<header class="slide-header"><span class="order-num">№60</span><span class="slide-num">Ловушки</span><h2>Ловушки 5–7</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot sketch-full" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Семь оранжевых капканов на столе. Без формул и без текста.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Ловушка 5. Забыл раскрыть скобки в «удвоенном произведении».</strong> В формуле \((a + b)^2\) член \(2ab\) означает \(2 \cdot a \cdot b\). Если \(a\) и \(b\) сами — многочлены, нужно раскрыть произведение. Например, \((x + y + z)^2\) — это НЕ формула квадрата суммы двух слагаемых. Раскрывать нужно поэлементно.</p>
+<p><strong>Ловушка 6. Путаница со знаком при подстановке в бином.</strong> Если в формуле \((a - b)^2\) подставить \(a = 5, b = -3\), то получится \((5 - (-3))^2 = (5 + 3)^2 = 64\). Знак «минус» в формуле относится к <strong>выражению</strong> \(b\), а не к самому числу, которое подставляем.</p>
+<p><strong>Ловушка 7. Степень одночлена vs степень входящих переменных.</strong> Степень одночлена \(3x^2 y\) — это \(3\), а не \(2\). Нужно <strong>сложить</strong> показатели всех переменных. И не забыть, что у переменной без явной степени показатель = \(1\) (то есть \(x = x^1\), и его тоже нужно учесть).</p></div>
+</section>
+<section class="slide" id="slide-61">
+<header class="slide-header"><span class="order-num">№61</span><span class="slide-num">Дальше</span><h2>Что дальше</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Открытая дверь к квадратному трёхчлену и рациональным дробям. Без формул.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p>Одночлены и многочлены — фундамент. Дальше:</p>
+<ul><li><strong>Квадратный трёхчлен</strong> (отдельный гайд) — многочлен второй степени.</li><li><strong>Рациональные дроби</strong> — дроби с многочленами.</li><li><strong>Уравнения и неравенства</strong> — многочлены как функции.</li><li><strong>Степени с рациональным показателем</strong> — обобщение понятия степени.</li></ul>
+<p>Все эти темы опираются на то, что разобрано здесь.</p></div>
+</section>
+<section class="slide slide-dark final-slide" id="slide-62">
+<header class="slide-header"><span class="order-num">№62</span><span class="slide-num">Финал</span><h2>Финал</h2></header>
+<div class="slide-body"><figure class="sketch sketch-slot sketch-full" aria-label="Место для картинки"><div class="sketch-slot-frame"><span class="sketch-slot-hint">Разворот шпаргалки: семь штампов ФСУ пустые внутри. Подписи даст таблица.</span></div><figcaption>Сюда вставить кадр. Формулы не рисовать — их даст HTML.</figcaption></figure><p><strong>Картинка даёт образ. HTML даёт точность.</strong> Если чек-лист закрыт — одночлены и многочлены больше не набор слов, а инструмент.</p></div>
+</section>
+
+</main>
+</div>
+<button class="back-to-toc" type="button">Наверх</button>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/cancel.min.js"></script>
+<script>
+
+function renderMath() {
+  if (typeof renderMathInElement === "undefined") return;
+  renderMathInElement(document.body, {
+    delimiters: [{left: "\\(", right: "\\)", display: false}, {left: "\\[", right: "\\]", display: true}],
+    throwOnError: false
+  });
+}
+window.addEventListener("load", renderMath);
+if (document.readyState === "complete") renderMath();
+
+(function () {
+  var toc = document.querySelector('nav.toc');
+  var back = document.querySelector('button.back-to-toc');
+  if (back) {
+    back.addEventListener('click', function () {
+      if (toc) toc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a[href^="#"]'));
+  var linksByHash = new Map();
+  links.forEach(function (link) {
+    var hash = link.getAttribute('href');
+    if (!linksByHash.has(hash)) linksByHash.set(hash, []);
+    linksByHash.get(hash).push(link);
+  });
+  function setActive(hash) {
+    links.forEach(function (link) { link.classList.remove('is-active'); });
+    (linksByHash.get(hash) || []).forEach(function (link) { link.classList.add('is-active'); });
+  }
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main.content section[id]'));
+  if ('IntersectionObserver' in window && sections.length) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) setActive('#' + entry.target.id);
+      });
+    }, { root: null, rootMargin: '-22% 0px -68% 0px', threshold: 0 });
+    sections.forEach(function (section) { observer.observe(section); });
+  }
+  window.addEventListener('hashchange', function () {
+    if (window.location.hash) setActive(window.location.hash);
+  });
+  if (window.location.hash) setActive(window.location.hash);
+})();
+
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4307c736cff798e',t:'MTc5MDc0MjU2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
