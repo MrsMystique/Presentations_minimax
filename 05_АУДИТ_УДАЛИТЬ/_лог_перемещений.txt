@@ -1,0 +1,40 @@
+=== НОРМАТИВНЫЕ (из архива) ===
+  OK  arefieva_pirytko__sbornik_zadach_11kl__2020.pdf
+  OK  arefieva_pirytko__uchebnik_11kl_glava1__2020.pdf
+=== НОРМАТИВНЫЕ (не нормативный учебник -> отдельной папкой) ===
+  OK  tretyak__ves_shkolny_kurs__2014.pdf
+=== АРХИВ ЭКЗАМЕНОВ ===
+  OK  .gitkeep
+  OK  mathsmogilev_drt2021.pdf
+  OK  corpus_1070_final_report.md
+  OK  corpus_1070_topic_analysis.md
+  OK  istochniki_ssylki.txt
+  OK  mavis_exam_patterns_final_report.md
+  OK  mavis_pattern_analysis.md
+  OK  mavis_readme.md
+  OK  mavis_source_audit.md
+  OK  minimax_roots_and_fractional_powers.md
+=== АНАЛИЗ ===
+  OK  all_test_variants.json
+  OK  lessons_60_variants.json
+  ЗАНЯТО: all_test_variants.json
+  OK  build_consolidated.py
+  OK  find_root_tasks.py
+  ЗАНЯТО: lessons_60_variants.json
+  OK  pdf_riks_summary.py
+  OK  РИКС_СВОДНЫЙ_ИСТОЧНИК.md
+=== ДУБЛИ БАНКА из архива -> АУДИТ ===
+  OK  rikz_bank_2022_04_1_chisla_i_vychisleniya.pdf
+  OK  rikz_bank_2022_04_2_vyrazheniya.pdf
+  OK  rikz_bank_2022_04_3_1_uravneniya.pdf
+  OK  rikz_bank_2022_04_3_2_uravneniya.pdf
+  OK  rikz_bank_2022_04_4_1_koordinaty.pdf
+  OK  rikz_bank_2022_04_4_2_koordinaty.pdf
+  OK  rikz_bank_2022_04_5_1_geometriya.pdf
+  OK  rikz_bank_2022_04_5_2_geometriya.pdf
+=== ДУБЛИ СЛАЙДОВ 1-3 и json из архива -> АУДИТ ===
+  OK  68a8a153ea99c7.90110620urok-1.pdf
+  OK  689ecd9c5feda7.22431247urok-2.pdf
+  OK  689ecdad2d9b48.03417385urok-3.pdf
+=== ПРЕДЫДУЩИЙ ПРОЕКТ целиком ===
+  OK  Арефьева математика источники
